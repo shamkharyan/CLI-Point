@@ -12,7 +12,6 @@ public:
 	std::optional<std::string> getNextToken();
 
 	bool fail() const noexcept;
-	void resetStream();
 private:
 	std::optional<std::string> getStringToken();
 	std::optional<std::string> getToken();

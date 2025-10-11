@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,23 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="includes\AllCommands.h" />
     <ClInclude Include="includes\ArgVal.h" />
-    <ClInclude Include="includes\Parser.h" />
-    <ClInclude Include="includes\Tokenizer.h" />
-    <ClInclude Include="srcs\Commands\AddShapeCommand.h" />
-    <ClInclude Include="srcs\Commands\AddSlideCommand.h" />
-    <ClInclude Include="srcs\Commands\AddTextCommand.h" />
-    <ClInclude Include="srcs\Commands\CloseCommand.h" />
-    <ClInclude Include="srcs\Commands\Command.h" />
-    <ClInclude Include="srcs\Commands\CreateCommand.h" />
-    <ClInclude Include="srcs\Commands\DeleteCommand.h" />
-    <ClInclude Include="srcs\Commands\GotoCommand.h" />
-    <ClInclude Include="srcs\Commands\HelpCommand.h" />
-    <ClInclude Include="srcs\Commands\MoveCommand.h" />
-    <ClInclude Include="srcs\Commands\OpenCommand.h" />
-    <ClInclude Include="srcs\Commands\QuitCommand.h" />
-    <ClInclude Include="srcs\Commands\SaveCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="srcs\main.cpp" />

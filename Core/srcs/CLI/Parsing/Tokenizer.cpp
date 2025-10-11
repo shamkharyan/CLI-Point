@@ -1,4 +1,4 @@
-#include "Tokenizer.h"
+#include "controller/parsing/Tokenizer.h"
 
 #include <string>
 #include <istream>
@@ -7,12 +7,6 @@
 Tokenizer::Tokenizer(std::istream& is) : m_is(is), m_fail(false) {}
 
 bool Tokenizer::fail() const noexcept { return m_fail; }
-
-std::nullopt_t Tokenizer::failReturn() noexcept
-{
-	m_fail = true;
-	return std::nullopt;
-}
 
 std::optional<std::string> Tokenizer::getNextToken()
 {
@@ -100,9 +94,8 @@ std::optional<std::string> Tokenizer::getToken()
 	return token;
 }
 
-void Tokenizer::resetStream()
+std::nullopt_t Tokenizer::failReturn() noexcept
 {
-	m_is.clear();
-	m_is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	m_fail = false;
+	m_fail = true;
+	return std::nullopt;
 }

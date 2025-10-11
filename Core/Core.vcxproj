@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -107,6 +107,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Users\pavel\source\repos\PowerPoint\Core\includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,6 +129,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="includes\AllCommands.h" />
+    <ClInclude Include="includes\Configuration.h" />
+    <ClInclude Include="includes\model\AppContext.h" />
+    <ClInclude Include="includes\ArgVal.h" />
+    <ClInclude Include="includes\CommandRegistry.h" />
+    <ClInclude Include="includes\controller\CLIController.h" />
+    <ClInclude Include="includes\model\utils\BBox.h" />
+    <ClInclude Include="includes\model\utils\Coord.h" />
+    <ClInclude Include="includes\controller\parsing\Parser.h" />
+    <ClInclude Include="includes\model\Presentation.h" />
+    <ClInclude Include="includes\model\objects\Shape.h" />
+    <ClInclude Include="includes\Slide.h" />
+    <ClInclude Include="includes\controller\parsing\Tokenizer.h" />
+    <ClInclude Include="srcs\CLI\Commands\AddShapeCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\AddSlideCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\AddTextCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\CloseCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\Command.h" />
+    <ClInclude Include="srcs\CLI\Commands\CreateSlideCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\DeleteCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\ExitCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\GotoCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\HelpCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\MoveCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\OpenCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\QuitCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\SaveCommand.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="srcs\ArgVal.cpp" />
+    <ClCompile Include="srcs\CLI\Commands\CreateSlideCommand.cpp" />
+    <ClCompile Include="srcs\CLI\Parsing\Parser.cpp" />
+    <ClCompile Include="srcs\CLI\Parsing\Tokenizer.cpp" />
+    <ClCompile Include="srcs\CommandRegistry.cpp" />
+    <ClCompile Include="srcs\controller\CLIController.cpp" />
+    <ClCompile Include="srcs\CLI\Commands\ExitCommand.cpp" />
+    <ClCompile Include="srcs\main.cpp" />
+    <ClCompile Include="srcs\model\utils\BBox.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

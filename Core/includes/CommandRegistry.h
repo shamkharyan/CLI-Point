@@ -1,0 +1,31 @@
+#pragma once
+
+#include "AllCommands.h"
+
+#include "model/AppContext.h"
+
+#include <memory>
+#include <functional>
+#include <unordered_map>
+#include <string>
+
+using CommandFactory = std::function<std::unique_ptr<Command>(std::istream&, AppContext&)>;
+
+class CommandRegistry
+{
+public:
+	static CommandRegistry& instance();
+	CommandFactory getFactory(const std::string& name) const;
+	void registerCommand(const std::string& name, CommandFactory factory);
+
+private:
+	CommandRegistry() = default;
+	CommandRegistry(const CommandRegistry&) = delete;
+	CommandRegistry(CommandRegistry&&) noexcept = delete;
+	CommandRegistry& operator=(const CommandRegistry&) = delete;
+	CommandRegistry& operator=(CommandRegistry&&) noexcept = delete;
+private:
+	std::unordered_map<std::string, CommandFactory> m_factories;
+};
+
+void registerMainCommands();
