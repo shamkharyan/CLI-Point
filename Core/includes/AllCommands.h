@@ -6,7 +6,7 @@
 #include "../srcs/CLI/Commands/AddSlideCommand.h"
 #include "../srcs/CLI/Commands/AddTextCommand.h"
 #include "../srcs/CLI/Commands/CloseCommand.h"
-#include "../srcs/CLI/Commands/CreateSlideCommand.h"
+#include "../srcs/CLI/Commands/CreatePresentationCommand.h"
 #include "../srcs/CLI/Commands/DeleteCommand.h"
 #include "../srcs/CLI/Commands/GotoCommand.h"
 #include "../srcs/CLI/Commands/HelpCommand.h"

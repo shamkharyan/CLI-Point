@@ -2,18 +2,21 @@
 
 #include "model/AppContext.h"
 #include "CommandRegistry.h"
+#include "viewer/CLIViewer.h"
+#include "model/PPModel.h"
 
 class CLIController
 {
 public:
-	static CLIController& instance();
+	static CLIController& instance(PPModel& model, CLIViewer& viewer);
 	void run();
 private:
-	CLIController() = default;
+	CLIController(PPModel& model, CLIViewer& viewer);
 	CLIController(const CLIController&) = delete;
 	CLIController(CLIController&&) noexcept = delete;
 	CLIController& operator=(const CLIController&) = delete;
 	CLIController& operator=(CLIController&&) noexcept = delete;
 private:
-	AppContext m_context;
+	PPModel& m_model;
+	CLIViewer& m_viewer;
 };

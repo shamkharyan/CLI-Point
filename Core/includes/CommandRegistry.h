@@ -3,13 +3,14 @@
 #include "AllCommands.h"
 
 #include "model/AppContext.h"
+#include "controller/parsing/Tokenizer.h"
 
 #include <memory>
 #include <functional>
 #include <unordered_map>
 #include <string>
 
-using CommandFactory = std::function<std::unique_ptr<Command>(std::istream&, AppContext&)>;
+using CommandFactory = std::function<std::unique_ptr<Command>(Tokenizer&, AppContext&, IViewer&)>;
 
 class CommandRegistry
 {

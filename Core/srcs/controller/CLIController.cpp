@@ -1,33 +1,48 @@
 #include "controller/CLIController.h"
 #include "controller/parsing/Parser.h"
 #include "CommandRegistry.h"
+#include "model/PPModel.h"
+#include "viewer/CLIViewer.h"
 
 #include <iostream>
 
-CLIController& CLIController::instance()
+CLIController::CLIController(PPModel& model, CLIViewer& viewer) : 
+	m_model(model),
+	m_viewer(viewer)
+{ }
+
+CLIController& CLIController::instance(PPModel& model, CLIViewer& viewer)
 {
-	static CLIController obj;
+	static CLIController obj(model, viewer);
 	return obj;
 }
 
 void CLIController::run()
 {
-	registerMainCommands();
-	Parser parser(m_context, std::cin);
+	m_viewer.showPrompt("PowerPoint CLI v0.1\n");
 
-	while (!m_context.m_exit)
+	auto& context = m_model.getContext();
+	registerMainCommands();
+	Parser parser(context, m_viewer);
+
+	while (!context.exit)
 	{
 		try
 		{
-			std::cout << ">> ";
+			m_viewer.showPrompt();
 			std::unique_ptr<Command> cmd = parser.parse();
-			cmd->execute();
-			std::cout << "OK\n";
+			if (cmd)
+			{
+				cmd->execute();
+				m_viewer.showInfo("OK");
+			}
+			else
+				m_viewer.showInfo("Empty input");
 		}
 		catch (const std::runtime_error& e)
 		{
-			std::cerr << e.what() << '\n';
-			parser.resetStream();
+			m_viewer.showError(e.what());
+			m_viewer.resetStream();
 		}
 	}
 }

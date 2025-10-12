@@ -4,19 +4,25 @@
 #include <string>
 #include <optional>
 
+#include "controller/parsing/Token.h"
+
 class Tokenizer
 {
 public:
 	Tokenizer(std::istream& is);
 
-	std::optional<std::string> getNextToken();
+	Token getNextToken();
 
-	bool fail() const noexcept;
+	void reset() noexcept;
+	bool isError() const noexcept;
+	bool isEOL() const noexcept;
 private:
-	std::optional<std::string> getStringToken();
-	std::optional<std::string> getToken();
-	std::nullopt_t failReturn() noexcept;
+	Token getStringToken();
+	Token getToken();
+	Token errorReturn() noexcept;
+	Token eolReturn() noexcept;
 private:
 	std::istream& m_is;
-	bool m_fail;
+	bool m_error;
+	bool m_eol;
 };

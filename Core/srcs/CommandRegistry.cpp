@@ -1,6 +1,7 @@
 #include "CommandRegistry.h"
 #include "AllCommands.h"
 #include <stdexcept>
+#include <optional>
 
 #include "controller/parsing/Tokenizer.h"
 
@@ -27,15 +28,48 @@ void registerMainCommands()
 {
 	auto& registry = CommandRegistry::instance();
 
-	auto exitFactory = [](std::istream& is, AppContext& context)
+	auto exitFactory = [](Tokenizer& tok, AppContext& context, IViewer& viewer)
 		{
-			Tokenizer tok(is);
-
-			if (!is.eof() && tok.getNextToken())
-				throw std::runtime_error("Exit command don't have arguments");
-			return std::make_unique<ExitCommand>(context);
+			bool force = false;
+			while (true)
+			{
+				auto token = tok.getNextToken();
+				if (token.type == Token::Type::EOL)
+					break;
+				else if (token.value == "-f")
+					force = true;
+				else
+					throw std::runtime_error("Invalid argument: " + token.value);
+			}
+			return std::make_unique<ExitCommand>(context, viewer, force);
 		};
 
 	registry.registerCommand("exit", exitFactory);
+
+	auto createPresentationFactory = [](Tokenizer& tok, AppContext& context, IViewer& viewer)
+		{
+			std::string name = "Untitled";
+
+			while (true)
+			{
+				auto token = tok.getNextToken();
+				if (token.type == Token::Type::EOL)
+					break;
+				else if (token.value == "-name")
+				{
+					auto val = tok.getNextToken();
+					if (val.type == Token::Type::EOL)
+						throw std::runtime_error("Empty argument value");
+					else if (val.type == Token::Type::Error)
+						throw std::runtime_error("Invalid argument value: " + val.value);
+					name = val.value;
+				}
+				else
+					throw std::runtime_error("Invalid argument: " + token.value);
+			}
+			return std::make_unique<CreatePresentationCommand>(context, viewer, name);
+		};
+
+	registry.registerCommand("create", createPresentationFactory);
 }
 

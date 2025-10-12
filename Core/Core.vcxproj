@@ -131,10 +131,11 @@
   <ItemGroup>
     <ClInclude Include="includes\AllCommands.h" />
     <ClInclude Include="includes\Configuration.h" />
+    <ClInclude Include="includes\controller\parsing\Token.h" />
     <ClInclude Include="includes\model\AppContext.h" />
-    <ClInclude Include="includes\ArgVal.h" />
     <ClInclude Include="includes\CommandRegistry.h" />
     <ClInclude Include="includes\controller\CLIController.h" />
+    <ClInclude Include="includes\model\PPModel.h" />
     <ClInclude Include="includes\model\utils\BBox.h" />
     <ClInclude Include="includes\model\utils\Coord.h" />
     <ClInclude Include="includes\controller\parsing\Parser.h" />
@@ -142,12 +143,14 @@
     <ClInclude Include="includes\model\objects\Shape.h" />
     <ClInclude Include="includes\Slide.h" />
     <ClInclude Include="includes\controller\parsing\Tokenizer.h" />
+    <ClInclude Include="includes\viewer\CLIViewer.h" />
+    <ClInclude Include="includes\viewer\IViewer.h" />
     <ClInclude Include="srcs\CLI\Commands\AddShapeCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\AddSlideCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\AddTextCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\CloseCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\Command.h" />
-    <ClInclude Include="srcs\CLI\Commands\CreateSlideCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\CreatePresentationCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\DeleteCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\ExitCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\GotoCommand.h" />
@@ -158,15 +161,17 @@
     <ClInclude Include="srcs\CLI\Commands\SaveCommand.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="srcs\ArgVal.cpp" />
-    <ClCompile Include="srcs\CLI\Commands\CreateSlideCommand.cpp" />
-    <ClCompile Include="srcs\CLI\Parsing\Parser.cpp" />
-    <ClCompile Include="srcs\CLI\Parsing\Tokenizer.cpp" />
+    <ClCompile Include="srcs\CLI\Commands\CreatePresentationCommand.cpp" />
+    <ClCompile Include="srcs\controller\parsing\Parser.cpp" />
+    <ClCompile Include="srcs\controller\parsing\Tokenizer.cpp" />
     <ClCompile Include="srcs\CommandRegistry.cpp" />
     <ClCompile Include="srcs\controller\CLIController.cpp" />
     <ClCompile Include="srcs\CLI\Commands\ExitCommand.cpp" />
     <ClCompile Include="srcs\main.cpp" />
+    <ClCompile Include="srcs\model\PPModel.cpp" />
+    <ClCompile Include="srcs\model\Presentation.cpp" />
     <ClCompile Include="srcs\model\utils\BBox.cpp" />
+    <ClCompile Include="srcs\viewer\CLIViewer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

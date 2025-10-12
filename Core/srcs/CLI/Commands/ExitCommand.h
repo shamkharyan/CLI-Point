@@ -6,6 +6,8 @@
 class ExitCommand : public Command
 {
 public:
-	ExitCommand(AppContext& context);
+	ExitCommand(AppContext& context, IViewer& viewer, bool force);
 	void execute() override;
+private:
+	bool m_force;
 };

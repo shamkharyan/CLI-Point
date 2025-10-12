@@ -21,25 +21,31 @@
     <ClCompile Include="srcs\CLI\Commands\ExitCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\CLI\Commands\CreateSlideCommand.cpp">
+    <ClCompile Include="srcs\CLI\Commands\CreatePresentationCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\CLI\Parsing\Parser.cpp">
+    <ClCompile Include="srcs\controller\parsing\Parser.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\CLI\Parsing\Tokenizer.cpp">
+    <ClCompile Include="srcs\controller\parsing\Tokenizer.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="srcs\model\utils\BBox.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="srcs\ArgVal.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="srcs\controller\CLIController.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="srcs\CommandRegistry.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\viewer\CLIViewer.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\model\Presentation.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\model\PPModel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +86,7 @@
     <ClInclude Include="srcs\CLI\Commands\Command.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\CreateSlideCommand.h">
+    <ClInclude Include="srcs\CLI\Commands\CreatePresentationCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="srcs\CLI\Commands\DeleteCommand.h">
@@ -116,13 +122,22 @@
     <ClInclude Include="includes\model\utils\Coord.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\ArgVal.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="includes\controller\CLIController.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\Configuration.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\controller\parsing\Token.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\viewer\CLIViewer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\viewer\IViewer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\model\PPModel.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

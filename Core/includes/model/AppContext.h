@@ -7,6 +7,6 @@
 
 struct AppContext
 {
-	std::unique_ptr<Presentation> m_presentation;
-	bool m_exit;
+	std::unique_ptr<Presentation> presentation;
+	bool exit = false;
 };

@@ -5,10 +5,10 @@
 
 #include <string>
 
-class CreateSlideCommand : public Command
+class CreatePresentationCommand : public Command
 {
 public:
-	CreateSlideCommand(AppContext& context);
+	CreatePresentationCommand(AppContext& context, IViewer& viewer, const std::string& name);
 	void execute() override;
 private:
 	std::string m_name;

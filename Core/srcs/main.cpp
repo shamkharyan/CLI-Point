@@ -1,8 +1,16 @@
+#include "model/PPModel.h"
+#include "viewer/CLIViewer.h"
 #include "controller/CLIController.h"
+
+#include <iostream>
 
 int main()
 {
-	CLIController::instance().run();
+	auto& model = PPModel::instance();
+	auto& viewer = CLIViewer::instance(std::cin, std::cout);
+	auto& controller = CLIController::instance(model, viewer);
+
+	controller.run();
 
 	return 0;
 }
@@ -38,6 +46,7 @@ int main()
 // close -> closes current project
 
 // exit -> closes the program
+//   -f : null -> force exit
 
 // move -> move the object
 //   -id    : pos integer -> id of the movable object
