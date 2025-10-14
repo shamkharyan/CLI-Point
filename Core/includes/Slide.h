@@ -7,6 +7,8 @@
 
 class Slide
 {
+public:
+	Slide() = default;
 private:
 	std::list<std::unique_ptr<Shape>> m_shapes;
 };

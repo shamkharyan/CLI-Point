@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClInclude Include="includes\AllCommands.h" />
     <ClInclude Include="includes\Configuration.h" />
+    <ClInclude Include="includes\controller\parsing\Converter.h" />
     <ClInclude Include="includes\controller\parsing\Token.h" />
     <ClInclude Include="includes\model\AppContext.h" />
     <ClInclude Include="includes\CommandRegistry.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="srcs\CLI\Commands\AddTextCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\CloseCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\Command.h" />
+    <ClInclude Include="srcs\CLI\Commands\ConfirmCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\CreatePresentationCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\DeleteCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\ExitCommand.h" />
@@ -161,7 +163,9 @@
     <ClInclude Include="srcs\CLI\Commands\SaveCommand.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="srcs\CLI\Commands\AddSlideCommand.cpp" />
     <ClCompile Include="srcs\CLI\Commands\CreatePresentationCommand.cpp" />
+    <ClCompile Include="srcs\controller\parsing\Converter.cpp" />
     <ClCompile Include="srcs\controller\parsing\Parser.cpp" />
     <ClCompile Include="srcs\controller\parsing\Tokenizer.cpp" />
     <ClCompile Include="srcs\CommandRegistry.cpp" />

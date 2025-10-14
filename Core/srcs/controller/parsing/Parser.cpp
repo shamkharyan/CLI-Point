@@ -5,10 +5,10 @@
 #include "CommandRegistry.h"
 #include "viewer/CLIViewer.h"
 
-Parser::Parser(AppContext& context, CLIViewer& viewer) : 
+Parser::Parser(AppContext& context, std::istream& istream) : 
 	m_context(context),
-	m_viewer(viewer),
-	m_tokenizer(viewer.getIStream())
+	m_istream(istream),
+	m_tokenizer(istream)
 { }
 
 std::unique_ptr<Command> Parser::parse()
@@ -24,5 +24,5 @@ std::unique_ptr<Command> Parser::parse()
 
 	auto factory = registry.getFactory(token.value);
 
-	return factory(m_tokenizer, m_context, m_viewer);
+	return factory(m_tokenizer, m_context);
 }

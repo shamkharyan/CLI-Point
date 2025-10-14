@@ -1,15 +1,19 @@
 #pragma once
 
 #include "model/AppContext.h"
-#include "Command.h"
+#include "viewer/IViewer.h"
+#include "ConfirmCommand.h"
 
 #include <string>
 
-class CreatePresentationCommand : public Command
+class CreatePresentationCommand : public ConfirmCommand
 {
 public:
-	CreatePresentationCommand(AppContext& context, IViewer& viewer, const std::string& name);
-	void execute() override;
+	CreatePresentationCommand(AppContext& context, const std::string& name);
+	Result execute() override;
+	Result confirm(bool ans) override;
+	std::string confirmQuestion() const override;
+
 private:
 	std::string m_name;
 };

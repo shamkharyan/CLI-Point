@@ -1,22 +1,31 @@
 #include "ExitCommand.h"
-#include "Command.h"
+#include "ConfirmCommand.h"
 #include "model/AppContext.h"
 #include "viewer/IViewer.h"
 #include <stdexcept>
 
-ExitCommand::ExitCommand(AppContext& context, IViewer& viewer, bool force) :
-	Command(context, viewer), m_force(force) {}
+ExitCommand::ExitCommand(AppContext& context, bool force) :
+	ConfirmCommand(context),
+	m_force(force) {}
 
-void ExitCommand::execute()
+Command::Result ExitCommand::execute()
 {
 	if (m_force)
 	{
 		m_context.exit = true;
-		return;
+		return Command::Result::Success;
 	}
-	auto ans = m_viewer.askConfirmation("Do you want to exit programm?");
+	return Command::Result::Confirmation;
+}
 
-	if (!ans.has_value())
-		throw std::runtime_error("Command aborted");
-	m_context.exit = ans.value();
+Command::Result ExitCommand::confirm(bool ans)
+{
+	if (ans)
+		m_context.exit = true;
+	return Command::Result::Success;
+}
+
+std::string ExitCommand::confirmQuestion() const
+{
+	return "Do you want to exit programm?";
 }

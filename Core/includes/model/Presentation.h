@@ -12,6 +12,9 @@ public:
 
 	void addSlide(std::size_t pos);
 	void removeSlide(std::size_t pos);
+
+	const std::string& getName() const;
+	std::size_t slidesCount() const;
 private:
 	std::string m_name;
 	std::list<Slide> m_slides;

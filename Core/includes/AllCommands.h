@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../srcs/CLI/Commands/Command.h"
+#include "../srcs/CLI/Commands/ConfirmCommand.h"
 
 #include "../srcs/CLI/Commands/AddShapeCommand.h"
 #include "../srcs/CLI/Commands/AddSlideCommand.h"

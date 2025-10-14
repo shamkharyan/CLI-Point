@@ -10,11 +10,11 @@
 class Parser
 {
 public:
-	Parser(AppContext& context, CLIViewer& viewer);
+	Parser(AppContext& context, std::istream& istream);
 
 	std::unique_ptr<Command> parse();
 private:
 	Tokenizer m_tokenizer;
 	AppContext& m_context;
-	CLIViewer& m_viewer;
+	std::istream& m_istream;
 };

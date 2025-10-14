@@ -31,15 +31,15 @@ void CLIViewer::showInfo(const std::string& msg)
 
 void CLIViewer::showPrompt(const std::string& msg)
 {
-	m_os << msg;
+	m_os << msg << " >> ";
 }
 
 std::optional<bool> CLIViewer::askConfirmation(const std::string& msg)
 {
 	char ans;
 
-	showPrompt(msg + " (y/n)\n");
-	showPrompt();
+	showText(msg + " (y/n)");
+	showPrompt("");
 	m_is.get(ans);
 	resetStream();
 	switch (std::tolower(ans))
@@ -67,5 +67,10 @@ void CLIViewer::resetStream()
 	m_is.clear();
 	if (m_is.rdbuf()->in_avail() != 0)
 		m_is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+void CLIViewer::showText(const std::string& msg)
+{
+	m_os << msg << '\n';
 }
 

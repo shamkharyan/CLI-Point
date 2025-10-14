@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include <string>
 
-using CommandFactory = std::function<std::unique_ptr<Command>(Tokenizer&, AppContext&, IViewer&)>;
+using CommandFactory = std::function<std::unique_ptr<Command>(Tokenizer&, AppContext&)>;
 
 class CommandRegistry
 {

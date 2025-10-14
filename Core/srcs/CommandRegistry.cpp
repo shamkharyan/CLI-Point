@@ -4,6 +4,7 @@
 #include <optional>
 
 #include "controller/parsing/Tokenizer.h"
+#include "controller/parsing/Converter.h"
 
 CommandRegistry& CommandRegistry::instance()
 {
@@ -28,7 +29,7 @@ void registerMainCommands()
 {
 	auto& registry = CommandRegistry::instance();
 
-	auto exitFactory = [](Tokenizer& tok, AppContext& context, IViewer& viewer)
+	auto exitFactory = [](Tokenizer& tok, AppContext& context)
 		{
 			bool force = false;
 			while (true)
@@ -41,12 +42,12 @@ void registerMainCommands()
 				else
 					throw std::runtime_error("Invalid argument: " + token.value);
 			}
-			return std::make_unique<ExitCommand>(context, viewer, force);
+			return std::make_unique<ExitCommand>(context, force);
 		};
 
 	registry.registerCommand("exit", exitFactory);
 
-	auto createPresentationFactory = [](Tokenizer& tok, AppContext& context, IViewer& viewer)
+	auto createPresentationFactory = [](Tokenizer& tok, AppContext& context)
 		{
 			std::string name = "Untitled";
 
@@ -67,9 +68,35 @@ void registerMainCommands()
 				else
 					throw std::runtime_error("Invalid argument: " + token.value);
 			}
-			return std::make_unique<CreatePresentationCommand>(context, viewer, name);
+			return std::make_unique<CreatePresentationCommand>(context, name);
 		};
 
 	registry.registerCommand("create", createPresentationFactory);
+
+	/*auto addSlideFactory = [](Tokenizer& tok, AppContext& context)
+		{
+			int at = -1;
+
+			while (true)
+			{
+				auto token = tok.getNextToken();
+				if (token.type == Token::Type::EOL)
+					break;
+				else if (token.value == "-at")
+				{
+					auto val = tok.getNextToken();
+					if (val.type == Token::Type::EOL)
+						throw std::runtime_error("Empty argument value");
+					else if (val.type != Token::Type::Word)
+						throw std::runtime_error("Invalid argument value: " + val.value);
+					at = Converter::stringToPosNumer(val.value);
+				}
+				else
+					throw std::runtime_error("Invalid argument: " + token.value);
+			}
+			return std::make_unique<AddSlideCommand>(context, at);
+		};
+
+	registry.registerCommand("add-slide", addSlideFactory);*/
 }
 

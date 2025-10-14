@@ -6,11 +6,17 @@
 class Command
 {
 public:
-	Command(AppContext& context, IViewer& viewer) : m_context(context), m_viewer(viewer) {}
+	enum class Result
+	{
+		Success,
+		Confirmation,
+		Fail
+	};
+public:
+	Command(AppContext& context) : m_context(context) {}
 	virtual ~Command() = default;
 
-	virtual void execute() = 0;
+	virtual Result execute() = 0;
 protected:
 	AppContext& m_context;
-	IViewer& m_viewer;
 };

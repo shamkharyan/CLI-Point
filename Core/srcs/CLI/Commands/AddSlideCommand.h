@@ -1,14 +1,14 @@
 #pragma once
 
+#include "model/AppContext.h"
+#include "viewer/IViewer.h"
 #include "Command.h"
-
-#include <optional>
 
 class AddSlideCommand : public Command
 {
 public:
-	AddSlideCommand();
-
+	AddSlideCommand(AppContext& context, int at);
+	Result execute() override;
 private:
-	std::optional<std::size_t> m_id;
+	int m_at;
 };

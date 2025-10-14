@@ -3,6 +3,7 @@
 #include "CommandRegistry.h"
 #include "model/PPModel.h"
 #include "viewer/CLIViewer.h"
+#include "AllCommands.h"
 
 #include <iostream>
 
@@ -19,22 +20,62 @@ CLIController& CLIController::instance(PPModel& model, CLIViewer& viewer)
 
 void CLIController::run()
 {
-	m_viewer.showPrompt("PowerPoint CLI v0.1\n");
+	m_viewer.showText("PowerPoint CLI v0.1");
 
-	auto& context = m_model.getContext();
 	registerMainCommands();
-	Parser parser(context, m_viewer);
+	auto& context = m_model.getContext();
+	Parser parser(context, m_viewer.getIStream());
 
 	while (!context.exit)
 	{
+		auto name = (context.presentation) ? context.presentation->getName() : "";
+		m_viewer.showPrompt(name);
 		try
 		{
-			m_viewer.showPrompt();
 			std::unique_ptr<Command> cmd = parser.parse();
 			if (cmd)
 			{
-				cmd->execute();
-				m_viewer.showInfo("OK");
+				switch (cmd->execute())
+				{
+				case Command::Result::Success:
+				{
+					m_viewer.showInfo("OK");
+					break;
+				}
+				case Command::Result::Confirmation:
+				{
+					ConfirmCommand* ccmd = dynamic_cast<ConfirmCommand*>(cmd.get());
+					auto ans = m_viewer.askConfirmation(ccmd->confirmQuestion());
+					if (!ans)
+						m_viewer.showInfo("Command Aborted");
+					else
+					{
+						switch (ccmd->confirm(ans.value()))
+						{
+						case Command::Result::Success:
+							m_viewer.showInfo("OK");
+							break;
+						case Command::Result::Fail:
+							m_viewer.showError("Command Failed");
+							break;
+						default:
+							m_viewer.showError("Undefined Error");
+							break;
+						}
+					}
+					break;
+				}
+				case Command::Result::Fail:
+				{
+					m_viewer.showError("Command Failed");
+					break;
+				}
+				default:
+				{
+					m_viewer.showError("Undefined Error");
+					break;
+				}
+				}
 			}
 			else
 				m_viewer.showInfo("Empty input");
@@ -46,4 +87,3 @@ void CLIController::run()
 		}
 	}
 }
-

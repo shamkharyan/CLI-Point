@@ -14,7 +14,8 @@ public:
 	void showInfo(const std::string& msg) override;
 	std::optional<bool> askConfirmation(const std::string& msg) override;
 
-	void showPrompt(const std::string& msg = ">> ");
+	void showPrompt(const std::string& msg = "(no data)");
+	void showText(const std::string& msg);
 	void resetStream();
 
 	std::istream& getIStream();
