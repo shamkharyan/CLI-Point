@@ -2,11 +2,11 @@
 
 #include "model/AppContext.h"
 #include "viewer/IViewer.h"
-#include "ConfirmCommand.h"
+#include "AConfirmCommand.h"
 
 #include <string>
 
-class CreatePresentationCommand : public ConfirmCommand
+class CreatePresentationCommand : public AConfirmCommand
 {
 public:
 	CreatePresentationCommand(AppContext& context, const std::string& name);

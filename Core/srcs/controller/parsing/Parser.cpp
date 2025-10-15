@@ -11,18 +11,18 @@ Parser::Parser(AppContext& context, std::istream& istream) :
 	m_tokenizer(istream)
 { }
 
-std::unique_ptr<Command> Parser::parse()
+std::unique_ptr<ACommand> Parser::parse()
 {
 	auto& registry = CommandRegistry::instance();
 	m_tokenizer.reset();
 
-	auto token = m_tokenizer.getNextToken();
-	if (token.type == Token::Type::EOL)
+	auto cmdName = m_tokenizer.getNextToken();
+	if (cmdName.type == Token::Type::EOL)
 		return nullptr;
-	if (token.type != Token::Type::Word)
+	if (cmdName.type != Token::Type::Word)
 		throw std::runtime_error("Invalid input");
 
-	auto factory = registry.getFactory(token.value);
+	auto factory = registry.getFactory(cmdName.value);
 
 	return factory(m_tokenizer, m_context);
 }

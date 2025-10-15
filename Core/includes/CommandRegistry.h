@@ -1,7 +1,6 @@
 #pragma once
 
-#include "AllCommands.h"
-
+#include "model/commands/ACommand.h"
 #include "model/AppContext.h"
 #include "controller/parsing/Tokenizer.h"
 
@@ -10,7 +9,7 @@
 #include <unordered_map>
 #include <string>
 
-using CommandFactory = std::function<std::unique_ptr<Command>(Tokenizer&, AppContext&)>;
+using CommandFactory = std::function<std::unique_ptr<ACommand>(Tokenizer&, AppContext&)>;
 
 class CommandRegistry
 {

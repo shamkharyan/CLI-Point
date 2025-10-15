@@ -18,10 +18,10 @@
     <ClCompile Include="srcs\main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\CLI\Commands\ExitCommand.cpp">
+    <ClCompile Include="srcs\model\commands\ExitCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\CLI\Commands\CreatePresentationCommand.cpp">
+    <ClCompile Include="srcs\model\commands\CreatePresentationCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="srcs\controller\parsing\Parser.cpp">
@@ -48,7 +48,7 @@
     <ClCompile Include="srcs\model\PPModel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\CLI\Commands\AddSlideCommand.cpp">
+    <ClCompile Include="srcs\model\commands\AddSlideCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="srcs\controller\parsing\Converter.cpp">
@@ -56,9 +56,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="includes\AllCommands.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="includes\model\AppContext.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -77,46 +74,46 @@
     <ClInclude Include="includes\controller\parsing\Tokenizer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\AddShapeCommand.h">
+    <ClInclude Include="includes\model\commands\AddShapeCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\AddSlideCommand.h">
+    <ClInclude Include="includes\model\commands\AddSlideCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\AddTextCommand.h">
+    <ClInclude Include="includes\model\commands\AddTextCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\CloseCommand.h">
+    <ClInclude Include="includes\model\commands\CloseCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\Command.h">
+    <ClInclude Include="includes\model\commands\ACommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\CreatePresentationCommand.h">
+    <ClInclude Include="includes\model\commands\CreatePresentationCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\DeleteCommand.h">
+    <ClInclude Include="includes\model\commands\DeleteCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\GotoCommand.h">
+    <ClInclude Include="includes\model\commands\GotoCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\HelpCommand.h">
+    <ClInclude Include="includes\model\commands\HelpCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\MoveCommand.h">
+    <ClInclude Include="includes\model\commands\MoveCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\OpenCommand.h">
+    <ClInclude Include="includes\model\commands\OpenCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="srcs\CLI\Commands\QuitCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\SaveCommand.h">
+    <ClInclude Include="includes\model\commands\SaveCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\ExitCommand.h">
+    <ClInclude Include="includes\model\commands\ExitCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\model\objects\Shape.h">
@@ -149,7 +146,7 @@
     <ClInclude Include="includes\controller\parsing\Converter.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="srcs\CLI\Commands\ConfirmCommand.h">
+    <ClInclude Include="includes\model\commands\AConfirmCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

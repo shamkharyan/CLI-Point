@@ -1,9 +1,10 @@
+#include "model/PPModel.h"
+#include "model/commands/ACommand.h"
+#include "model/commands/AConfirmCommand.h"
 #include "controller/CLIController.h"
 #include "controller/parsing/Parser.h"
 #include "CommandRegistry.h"
-#include "model/PPModel.h"
 #include "viewer/CLIViewer.h"
-#include "AllCommands.h"
 
 #include <iostream>
 
@@ -32,19 +33,19 @@ void CLIController::run()
 		m_viewer.showPrompt(name);
 		try
 		{
-			std::unique_ptr<Command> cmd = parser.parse();
+			std::unique_ptr<ACommand> cmd = parser.parse();
 			if (cmd)
 			{
 				switch (cmd->execute())
 				{
-				case Command::Result::Success:
+				case ACommand::Result::Success:
 				{
 					m_viewer.showInfo("OK");
 					break;
 				}
-				case Command::Result::Confirmation:
+				case ACommand::Result::Confirmation:
 				{
-					ConfirmCommand* ccmd = dynamic_cast<ConfirmCommand*>(cmd.get());
+					AConfirmCommand* ccmd = dynamic_cast<AConfirmCommand*>(cmd.get());
 					auto ans = m_viewer.askConfirmation(ccmd->confirmQuestion());
 					if (!ans)
 						m_viewer.showInfo("Command Aborted");
@@ -52,10 +53,10 @@ void CLIController::run()
 					{
 						switch (ccmd->confirm(ans.value()))
 						{
-						case Command::Result::Success:
+						case ACommand::Result::Success:
 							m_viewer.showInfo("OK");
 							break;
-						case Command::Result::Fail:
+						case ACommand::Result::Fail:
 							m_viewer.showError("Command Failed");
 							break;
 						default:
@@ -65,7 +66,7 @@ void CLIController::run()
 					}
 					break;
 				}
-				case Command::Result::Fail:
+				case ACommand::Result::Fail:
 				{
 					m_viewer.showError("Command Failed");
 					break;

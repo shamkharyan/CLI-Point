@@ -1,17 +1,17 @@
-#include "AddSlideCommand.h"
+#include "model/commands/AddSlideCommand.h"
 
 #include "model/AppContext.h"
 #include "viewer/IViewer.h"
-#include "Command.h"
+#include "model/commands/ACommand.h"
 
 #include <stdexcept>
 
 AddSlideCommand::AddSlideCommand(AppContext& context, int at) :
-	Command(context),
+	ACommand(context),
 	m_at(at)
 { }
 
-Command::Result AddSlideCommand::execute()
+ACommand::Result AddSlideCommand::execute()
 {
 	auto& presentation = m_context.presentation;
 	if (!presentation)

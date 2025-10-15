@@ -2,9 +2,9 @@
 
 #include "model/AppContext.h"
 #include "viewer/IViewer.h"
-#include "Command.h"
+#include "model/commands/ACommand.h"
 
-class AddSlideCommand : public Command
+class AddSlideCommand : public ACommand
 {
 public:
 	AddSlideCommand(AppContext& context, int at);

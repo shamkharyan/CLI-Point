@@ -1,10 +1,12 @@
 #include "CommandRegistry.h"
-#include "AllCommands.h"
 #include <stdexcept>
 #include <optional>
 
 #include "controller/parsing/Tokenizer.h"
 #include "controller/parsing/Converter.h"
+
+#include "model/commands/ExitCommand.h"
+#include "model/commands/CreatePresentationCommand.h"
 
 CommandRegistry& CommandRegistry::instance()
 {

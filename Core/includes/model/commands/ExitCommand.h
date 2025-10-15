@@ -1,9 +1,9 @@
 #pragma once
 
 #include "model/AppContext.h"
-#include "ConfirmCommand.h"
+#include "model/commands/AConfirmCommand.h"
 
-class ExitCommand : public ConfirmCommand
+class ExitCommand : public AConfirmCommand
 {
 public:
 	ExitCommand(AppContext& context, bool force);

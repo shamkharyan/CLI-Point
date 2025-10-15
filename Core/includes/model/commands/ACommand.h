@@ -3,7 +3,7 @@
 #include "model/AppContext.h"
 #include "viewer/IViewer.h"
 
-class Command
+class ACommand
 {
 public:
 	enum class Result
@@ -13,8 +13,8 @@ public:
 		Fail
 	};
 public:
-	Command(AppContext& context) : m_context(context) {}
-	virtual ~Command() = default;
+	ACommand(AppContext& context) : m_context(context) {}
+	virtual ~ACommand() = default;
 
 	virtual Result execute() = 0;
 protected:

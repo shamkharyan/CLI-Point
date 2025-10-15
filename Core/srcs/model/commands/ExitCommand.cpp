@@ -1,28 +1,28 @@
-#include "ExitCommand.h"
-#include "ConfirmCommand.h"
+#include "model/commands/ExitCommand.h"
+#include "model/commands/AConfirmCommand.h"
 #include "model/AppContext.h"
 #include "viewer/IViewer.h"
 #include <stdexcept>
 
 ExitCommand::ExitCommand(AppContext& context, bool force) :
-	ConfirmCommand(context),
+	AConfirmCommand(context),
 	m_force(force) {}
 
-Command::Result ExitCommand::execute()
+ACommand::Result ExitCommand::execute()
 {
 	if (m_force)
 	{
 		m_context.exit = true;
-		return Command::Result::Success;
+		return ACommand::Result::Success;
 	}
-	return Command::Result::Confirmation;
+	return ACommand::Result::Confirmation;
 }
 
-Command::Result ExitCommand::confirm(bool ans)
+ACommand::Result ExitCommand::confirm(bool ans)
 {
 	if (ans)
 		m_context.exit = true;
-	return Command::Result::Success;
+	return ACommand::Result::Success;
 }
 
 std::string ExitCommand::confirmQuestion() const
