@@ -2,14 +2,13 @@
 
 #include "model/AppContext.h"
 #include "model/commands/AConfirmCommand.h"
+#include "viewer/IViewer.h"
 
 class ExitCommand : public AConfirmCommand
 {
 public:
-	ExitCommand(AppContext& context, bool force);
-	Result execute() override;
-	Result confirm(bool ans) override;
-	std::string confirmQuestion() const override;
+	ExitCommand(AppContext& context, IViewer& viewer, bool force);
+	void execute() override;
 private:
 	bool m_force;
 };

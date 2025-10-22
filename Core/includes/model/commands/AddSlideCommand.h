@@ -8,7 +8,7 @@ class AddSlideCommand : public ACommand
 {
 public:
 	AddSlideCommand(AppContext& context, int at);
-	Result execute() override;
+	void execute() override;
 private:
 	int m_at;
 };

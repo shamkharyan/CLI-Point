@@ -18,6 +18,8 @@ public:
 	CommandFactory getFactory(const std::string& name) const;
 	void registerCommand(const std::string& name, CommandFactory factory);
 
+	bool findCommand(const std::string& name) const;
+
 private:
 	CommandRegistry() = default;
 	CommandRegistry(const CommandRegistry&) = delete;

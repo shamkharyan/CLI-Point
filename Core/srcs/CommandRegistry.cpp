@@ -27,6 +27,11 @@ CommandFactory CommandRegistry::getFactory(const std::string& name) const
 	return it->second;
 }
 
+bool CommandRegistry::findCommand(const std::string& name) const
+{
+	return m_factories.find(name) != m_factories.end();
+}
+
 void registerMainCommands()
 {
 	auto& registry = CommandRegistry::instance();

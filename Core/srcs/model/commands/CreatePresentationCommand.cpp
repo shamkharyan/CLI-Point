@@ -4,27 +4,18 @@
 #include <stdexcept>
 
 
-CreatePresentationCommand::CreatePresentationCommand(AppContext& context, const std::string& name) :
-	AConfirmCommand(context),
+CreatePresentationCommand::CreatePresentationCommand(AppContext& context, IViewer& viewer, const std::string& name) :
+	AConfirmCommand(context, viewer),
 	m_name(name)
 {}
 
-ACommand::Result CreatePresentationCommand::execute()
+void CreatePresentationCommand::execute()
 {
 	if (m_context.presentation)
-		return ACommand::Result::Confirmation;
+	{
+		auto ans = m_viewer.askConfirmation("Do you want to rewrite old presentation?");
+		if (ans)
+			m_context.presentation = std::make_unique<Presentation>(m_name);
+	}
 	m_context.presentation = std::make_unique<Presentation>(m_name);
-	return ACommand::Result::Success;
-}
-
-std::string CreatePresentationCommand::confirmQuestion() const
-{
-	return "Do you want to rewrite old presentation?";
-}
-
-ACommand::Result CreatePresentationCommand::confirm(bool ans)
-{
-	if (ans)
-		m_context.presentation = std::make_unique<Presentation>(m_name);
-	return ACommand::Result::Success;
 }

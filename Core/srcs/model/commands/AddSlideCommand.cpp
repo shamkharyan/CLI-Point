@@ -11,7 +11,7 @@ AddSlideCommand::AddSlideCommand(AppContext& context, int at) :
 	m_at(at)
 { }
 
-ACommand::Result AddSlideCommand::execute()
+void AddSlideCommand::execute()
 {
 	auto& presentation = m_context.presentation;
 	if (!presentation)

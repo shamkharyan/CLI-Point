@@ -4,28 +4,18 @@
 #include "viewer/IViewer.h"
 #include <stdexcept>
 
-ExitCommand::ExitCommand(AppContext& context, bool force) :
-	AConfirmCommand(context),
+ExitCommand::ExitCommand(AppContext& context, IViewer& viewer, bool force) :
+	AConfirmCommand(context, viewer),
 	m_force(force) {}
 
-ACommand::Result ExitCommand::execute()
+void ExitCommand::execute()
 {
-	if (m_force)
+	if (!m_force)
 	{
-		m_context.exit = true;
-		return ACommand::Result::Success;
+		auto ans = m_viewer.askConfirmation("Do you want to exit programm?");
+		if (ans)
+			m_context.exit = true;
 	}
-	return ACommand::Result::Confirmation;
-}
-
-ACommand::Result ExitCommand::confirm(bool ans)
-{
-	if (ans)
+	else
 		m_context.exit = true;
-	return ACommand::Result::Success;
-}
-
-std::string ExitCommand::confirmQuestion() const
-{
-	return "Do you want to exit programm?";
 }

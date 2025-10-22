@@ -9,10 +9,8 @@
 class CreatePresentationCommand : public AConfirmCommand
 {
 public:
-	CreatePresentationCommand(AppContext& context, const std::string& name);
-	Result execute() override;
-	Result confirm(bool ans) override;
-	std::string confirmQuestion() const override;
+	CreatePresentationCommand(AppContext& context, IViewer& viewer, const std::string& name);
+	void execute() override;
 
 private:
 	std::string m_name;

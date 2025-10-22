@@ -1,13 +1,13 @@
 #pragma once
 
 #include "ACommand.h"
+#include "viewer/IViewer.h"
 
 class AConfirmCommand : public ACommand
 {
 public:
-	AConfirmCommand(AppContext& context) : ACommand(context) {}
+	AConfirmCommand(AppContext& context, IViewer& viewer) : ACommand(context), m_viewer(viewer) {}
 	virtual ~AConfirmCommand() = default;
-
-	virtual Result confirm(bool ans) = 0;
-	virtual std::string confirmQuestion() const = 0;
+protected:
+	IViewer& m_viewer;
 };

@@ -35,49 +35,7 @@ void CLIController::run()
 		{
 			std::unique_ptr<ACommand> cmd = parser.parse();
 			if (cmd)
-			{
-				switch (cmd->execute())
-				{
-				case ACommand::Result::Success:
-				{
-					m_viewer.showInfo("OK");
-					break;
-				}
-				case ACommand::Result::Confirmation:
-				{
-					AConfirmCommand* ccmd = dynamic_cast<AConfirmCommand*>(cmd.get());
-					auto ans = m_viewer.askConfirmation(ccmd->confirmQuestion());
-					if (!ans)
-						m_viewer.showInfo("Command Aborted");
-					else
-					{
-						switch (ccmd->confirm(ans.value()))
-						{
-						case ACommand::Result::Success:
-							m_viewer.showInfo("OK");
-							break;
-						case ACommand::Result::Fail:
-							m_viewer.showError("Command Failed");
-							break;
-						default:
-							m_viewer.showError("Undefined Error");
-							break;
-						}
-					}
-					break;
-				}
-				case ACommand::Result::Fail:
-				{
-					m_viewer.showError("Command Failed");
-					break;
-				}
-				default:
-				{
-					m_viewer.showError("Undefined Error");
-					break;
-				}
-				}
-			}
+				cmd->execute();
 			else
 				m_viewer.showInfo("Empty input");
 		}
