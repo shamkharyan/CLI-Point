@@ -122,6 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,11 +131,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="includes\Configuration.h" />
+    <ClInclude Include="includes\controller\factories\errors\InvalidArgumentException.h" />
+    <ClInclude Include="includes\controller\factories\errors\MissingArgumentException.h" />
+    <ClInclude Include="includes\controller\factories\errors\MissingArgumentValueException.h" />
+    <ClInclude Include="includes\controller\parsing\errors\InvalidInputException.h" />
+    <ClInclude Include="includes\controller\factories\errors\InvalidArgumentValueException.h" />
+    <ClInclude Include="includes\controller\parsing\errors\UnknownCommandException.h" />
+    <ClInclude Include="includes\controller\IController.h" />
     <ClInclude Include="includes\controller\parsing\Converter.h" />
     <ClInclude Include="includes\controller\parsing\Token.h" />
     <ClInclude Include="includes\model\AppContext.h" />
-    <ClInclude Include="includes\CommandRegistry.h" />
+    <ClInclude Include="includes\controller\CommandRegistry.h" />
     <ClInclude Include="includes\controller\CLIController.h" />
+    <ClInclude Include="includes\controller\factories\ACommandFactory.h" />
+    <ClInclude Include="includes\controller\factories\AConfirmCommandFactory.h" />
+    <ClInclude Include="includes\controller\factories\CreatePresentationCommandFactory.h" />
+    <ClInclude Include="includes\controller\factories\ExitCommandFactory.h" />
     <ClInclude Include="includes\model\PPModel.h" />
     <ClInclude Include="includes\model\utils\BBox.h" />
     <ClInclude Include="includes\model\utils\Coord.h" />
@@ -145,32 +157,34 @@
     <ClInclude Include="includes\controller\parsing\Tokenizer.h" />
     <ClInclude Include="includes\viewer\CLIViewer.h" />
     <ClInclude Include="includes\viewer\IViewer.h" />
-    <ClInclude Include="includes\model\commands\AddShapeCommand.h" />
-    <ClInclude Include="includes\model\commands\AddSlideCommand.h" />
-    <ClInclude Include="includes\model\commands\AddTextCommand.h" />
-    <ClInclude Include="includes\model\commands\CloseCommand.h" />
-    <ClInclude Include="includes\model\commands\ACommand.h" />
-    <ClInclude Include="includes\model\commands\AConfirmCommand.h" />
-    <ClInclude Include="includes\model\commands\CreatePresentationCommand.h" />
-    <ClInclude Include="includes\model\commands\DeleteCommand.h" />
-    <ClInclude Include="includes\model\commands\ExitCommand.h" />
-    <ClInclude Include="includes\model\commands\GotoCommand.h" />
-    <ClInclude Include="includes\model\commands\HelpCommand.h" />
-    <ClInclude Include="includes\model\commands\MoveCommand.h" />
-    <ClInclude Include="includes\model\commands\OpenCommand.h" />
+    <ClInclude Include="includes\controller\commands\AddShapeCommand.h" />
+    <ClInclude Include="includes\controller\commands\AddSlideCommand.h" />
+    <ClInclude Include="includes\controller\commands\AddTextCommand.h" />
+    <ClInclude Include="includes\controller\commands\CloseCommand.h" />
+    <ClInclude Include="includes\controller\commands\ACommand.h" />
+    <ClInclude Include="includes\controller\commands\AConfirmCommand.h" />
+    <ClInclude Include="includes\controller\commands\CreatePresentationCommand.h" />
+    <ClInclude Include="includes\controller\commands\DeleteCommand.h" />
+    <ClInclude Include="includes\controller\commands\ExitCommand.h" />
+    <ClInclude Include="includes\controller\commands\GotoCommand.h" />
+    <ClInclude Include="includes\controller\commands\HelpCommand.h" />
+    <ClInclude Include="includes\controller\commands\MoveCommand.h" />
+    <ClInclude Include="includes\controller\commands\OpenCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\QuitCommand.h" />
-    <ClInclude Include="includes\model\commands\SaveCommand.h" />
+    <ClInclude Include="includes\controller\commands\SaveCommand.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="srcs\model\commands\AddSlideCommand.cpp" />
-    <ClCompile Include="srcs\model\commands\CreatePresentationCommand.cpp" />
+    <ClCompile Include="srcs\controller\commands\AddSlideCommand.cpp" />
+    <ClCompile Include="srcs\controller\commands\CreatePresentationCommand.cpp" />
     <ClCompile Include="srcs\controller\parsing\Converter.cpp" />
     <ClCompile Include="srcs\controller\parsing\Parser.cpp" />
     <ClCompile Include="srcs\controller\parsing\Tokenizer.cpp" />
-    <ClCompile Include="srcs\CommandRegistry.cpp" />
+    <ClCompile Include="srcs\controller\CommandRegistry.cpp" />
     <ClCompile Include="srcs\controller\CLIController.cpp" />
-    <ClCompile Include="srcs\model\commands\ExitCommand.cpp" />
+    <ClCompile Include="srcs\controller\commands\ExitCommand.cpp" />
     <ClCompile Include="srcs\main.cpp" />
+    <ClCompile Include="srcs\controller\factories\CreatePresentationCommandFactory.cpp" />
+    <ClCompile Include="srcs\controller\factories\ExitCommandFactory.cpp" />
     <ClCompile Include="srcs\model\PPModel.cpp" />
     <ClCompile Include="srcs\model\Presentation.cpp" />
     <ClCompile Include="srcs\model\utils\BBox.cpp" />

@@ -1,15 +1,16 @@
 #pragma once
 
+#include "controller/IController.h"
 #include "model/AppContext.h"
 #include "CommandRegistry.h"
 #include "viewer/CLIViewer.h"
 #include "model/PPModel.h"
 
-class CLIController
+class CLIController : public IController
 {
 public:
 	static CLIController& instance(PPModel& model, CLIViewer& viewer);
-	void run();
+	void run() override;
 private:
 	CLIController(PPModel& model, CLIViewer& viewer);
 	CLIController(const CLIController&) = delete;

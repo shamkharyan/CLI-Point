@@ -1,10 +1,10 @@
 #include "model/PPModel.h"
-#include "model/commands/ACommand.h"
-#include "model/commands/AConfirmCommand.h"
+#include "viewer/CLIViewer.h"
+#include "controller/commands/ACommand.h"
+#include "controller/commands/AConfirmCommand.h"
 #include "controller/CLIController.h"
 #include "controller/parsing/Parser.h"
-#include "CommandRegistry.h"
-#include "viewer/CLIViewer.h"
+#include "controller/CommandRegistry.h"
 
 #include <iostream>
 
@@ -22,15 +22,15 @@ CLIController& CLIController::instance(PPModel& model, CLIViewer& viewer)
 void CLIController::run()
 {
 	m_viewer.showText("PowerPoint CLI v0.1");
-
-	registerMainCommands();
 	auto& context = m_model.getContext();
-	Parser parser(context, m_viewer.getIStream());
+
+	registerMainCommands(context, m_viewer);
+	Parser parser(m_viewer.getIStream());
 
 	while (!context.exit)
 	{
-		auto name = (context.presentation) ? context.presentation->getName() : "";
-		m_viewer.showPrompt(name);
+		auto presentationName = (context.presentation) ? context.presentation->getName() : "";
+		m_viewer.showPrompt(presentationName);
 		try
 		{
 			std::unique_ptr<ACommand> cmd = parser.parse();
@@ -39,7 +39,7 @@ void CLIController::run()
 			else
 				m_viewer.showInfo("Empty input");
 		}
-		catch (const std::runtime_error& e)
+		catch (const std::exception& e)
 		{
 			m_viewer.showError(e.what());
 			m_viewer.resetStream();

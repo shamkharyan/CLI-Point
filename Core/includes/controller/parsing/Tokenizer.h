@@ -2,7 +2,6 @@
 
 #include <istream>
 #include <string>
-#include <optional>
 
 #include "controller/parsing/Token.h"
 

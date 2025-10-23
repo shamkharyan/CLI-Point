@@ -2,7 +2,7 @@
 
 #include "model/AppContext.h"
 #include "viewer/IViewer.h"
-#include "AConfirmCommand.h"
+#include "controller/commands/AConfirmCommand.h"
 
 #include <string>
 

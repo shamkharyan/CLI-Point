@@ -2,19 +2,41 @@
 
 #include "model/AppContext.h"
 #include "controller/parsing/Tokenizer.h"
-#include "model/commands/ACommand.h"
+#include "controller/commands/ACommand.h"
 #include "viewer/CLIViewer.h"
 
 #include <memory>
 
+//                              DFA of Parser
+// -----------------------------------------------------------------------
+// | State/Input | Command |   EOL   | Argument | Value  |   ,   | Other |
+// -----------------------------------------------------------------------
+// |    Empty    | Command | Empty   | Error    | Error  | Error | Error | 
+// -----------------------------------------------------------------------
+// |   Command   | Error   | Success | ArgName  | Error  | Error | Error |
+// -----------------------------------------------------------------------
+// |   ArgName   | Error   | Success | ArgName  | ArgVal | Error | Error |
+// -----------------------------------------------------------------------
+// |   ArgVal    | Error   | Success | ArgName  | Error  | Comma | Error |
+// -----------------------------------------------------------------------
+// |    Comma    | Error   | Error   | Error    | ArgVal | Error | Error |
+// -----------------------------------------------------------------------
+// |    Error    | Error   | Error   | Error    | Error  | Error | Error |
+// -----------------------------------------------------------------------
+// |   Success   | Error   | Success | Error    | Error  | Error | Error |
+// -----------------------------------------------------------------------
+
 class Parser
 {
 public:
-	Parser(AppContext& context, std::istream& istream);
-
+	Parser(std::istream& istream);
 	std::unique_ptr<ACommand> parse();
 private:
+	enum class State { Empty, Command, ArgName, ArgVal, Comma, Error, Success };
+private:
+	bool isArgName(Token tok) const;
+	bool isArgVal(Token tok) const;
+private:
 	Tokenizer m_tokenizer;
-	AppContext& m_context;
 	std::istream& m_istream;
 };

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ACommand.h"
 #include "viewer/IViewer.h"
+#include "controller/commands/ACommand.h"
 
 class AConfirmCommand : public ACommand
 {

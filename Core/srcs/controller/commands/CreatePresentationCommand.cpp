@@ -1,6 +1,7 @@
-#include "model/commands/CreatePresentationCommand.h"
-#include "model/commands/AConfirmCommand.h"
+#include "controller/commands/CreatePresentationCommand.h"
+#include "controller/commands/AConfirmCommand.h"
 #include "model/AppContext.h"
+
 #include <stdexcept>
 
 
@@ -14,8 +15,9 @@ void CreatePresentationCommand::execute()
 	if (m_context.presentation)
 	{
 		auto ans = m_viewer.askConfirmation("Do you want to rewrite old presentation?");
-		if (ans)
+		if (ans && ans.value())
 			m_context.presentation = std::make_unique<Presentation>(m_name);
 	}
-	m_context.presentation = std::make_unique<Presentation>(m_name);
+	else
+		m_context.presentation = std::make_unique<Presentation>(m_name);
 }

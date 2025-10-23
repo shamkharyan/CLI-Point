@@ -1,25 +1,21 @@
 #pragma once
 
-#include "model/commands/ACommand.h"
 #include "model/AppContext.h"
+#include "viewer/IViewer.h"
+#include "controller/commands/ACommand.h"
+#include "controller/factories/ACommandFactory.h"
 #include "controller/parsing/Tokenizer.h"
 
 #include <memory>
-#include <functional>
 #include <unordered_map>
 #include <string>
-
-using CommandFactory = std::function<std::unique_ptr<ACommand>(Tokenizer&, AppContext&)>;
 
 class CommandRegistry
 {
 public:
 	static CommandRegistry& instance();
-	CommandFactory getFactory(const std::string& name) const;
-	void registerCommand(const std::string& name, CommandFactory factory);
-
-	bool findCommand(const std::string& name) const;
-
+	std::shared_ptr<ACommandFactory> getFactory(const std::string& name) const;
+	void registerFactory(const std::string& name, std::shared_ptr<ACommandFactory> factory);
 private:
 	CommandRegistry() = default;
 	CommandRegistry(const CommandRegistry&) = delete;
@@ -27,7 +23,7 @@ private:
 	CommandRegistry& operator=(const CommandRegistry&) = delete;
 	CommandRegistry& operator=(CommandRegistry&&) noexcept = delete;
 private:
-	std::unordered_map<std::string, CommandFactory> m_factories;
+	std::unordered_map<std::string, std::shared_ptr<ACommandFactory>> m_factories;
 };
 
-void registerMainCommands();
+void registerMainCommands(AppContext& context, IViewer& viewer);

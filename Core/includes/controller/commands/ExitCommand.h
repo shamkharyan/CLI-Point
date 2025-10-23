@@ -1,8 +1,8 @@
 #pragma once
 
 #include "model/AppContext.h"
-#include "model/commands/AConfirmCommand.h"
 #include "viewer/IViewer.h"
+#include "controller/commands/AConfirmCommand.h"
 
 class ExitCommand : public AConfirmCommand
 {
