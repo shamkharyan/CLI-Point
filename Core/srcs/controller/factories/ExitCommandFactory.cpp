@@ -12,14 +12,12 @@ std::unique_ptr<ACommand> ExitCommandFactory::createCommand(const Arguments& arg
 {
   bool force = false;
 
-  for (const auto& arg : args)
+  for (const auto& [argName, argVals] : args)
   {
-    const auto& argName = arg.first;
-    const auto& argVals = arg.second;
     if (argName == "-f")
     {
       if (!argVals.empty())
-        throw InvalidArgumentValueException(arg.second[0]);
+        throw InvalidArgumentValueException(argVals[0]);
       force = true;
     }
     else

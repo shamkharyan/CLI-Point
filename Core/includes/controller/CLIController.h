@@ -17,6 +17,8 @@ private:
 	CLIController(CLIController&&) noexcept = delete;
 	CLIController& operator=(const CLIController&) = delete;
 	CLIController& operator=(CLIController&&) noexcept = delete;
+
+	void registerMainCommands();
 private:
 	PPModel& m_model;
 	CLIViewer& m_viewer;

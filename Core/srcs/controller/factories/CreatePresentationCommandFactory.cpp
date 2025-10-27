@@ -8,10 +8,8 @@ std::unique_ptr<ACommand> CreatePresentationCommandFactory::createCommand(const 
 {
   std::string name = "Untitled";
 
-  for (const auto& arg : args)
+  for (const auto& [argName, argVals] : args)
   {
-    const auto& argName = arg.first;
-    const auto& argVals = arg.second;
     if (argName == "-name")
     {
       if (argVals.size() < 1)

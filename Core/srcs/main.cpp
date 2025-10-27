@@ -22,6 +22,9 @@ int main()
 //   [-at]      : pos integer -> insert index, by default appends from back
 //   [-bgcolor] : color       -> background color, by default is white
 
+// remove-slide -> removes existing slide
+//   [-at] : pos integer -> remove index, by default removes from back
+
 // add-shape -> add new shape in the slide
 //   -type       : shape       -> shape type (rectangle, circle, line, arrow)
 //   -start      : coord       -> start coord for shape (top left corner for rect, center for circle)

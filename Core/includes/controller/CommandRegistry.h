@@ -25,5 +25,3 @@ private:
 private:
 	std::unordered_map<std::string, std::shared_ptr<ACommandFactory>> m_factories;
 };
-
-void registerMainCommands(AppContext& context, IViewer& viewer);

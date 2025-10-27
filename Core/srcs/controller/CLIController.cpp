@@ -2,6 +2,10 @@
 #include "viewer/CLIViewer.h"
 #include "controller/commands/ACommand.h"
 #include "controller/commands/AConfirmCommand.h"
+#include "controller/factories/CreatePresentationCommandFactory.h"
+#include "controller/factories/ExitCommandFactory.h"
+#include "controller/factories/AddSlideCommandFactory.h"
+#include "controller/factories/RemoveSlideCommandFactory.h"
 #include "controller/CLIController.h"
 #include "controller/parsing/Parser.h"
 #include "controller/CommandRegistry.h"
@@ -24,7 +28,7 @@ void CLIController::run()
 	m_viewer.showText("PowerPoint CLI v0.1");
 	auto& context = m_model.getContext();
 
-	registerMainCommands(context, m_viewer);
+	registerMainCommands();
 	Parser parser(m_viewer.getIStream());
 
 	while (!context.exit)
@@ -36,8 +40,6 @@ void CLIController::run()
 			std::unique_ptr<ACommand> cmd = parser.parse();
 			if (cmd)
 				cmd->execute();
-			else
-				m_viewer.showInfo("Empty input");
 		}
 		catch (const std::exception& e)
 		{
@@ -45,4 +47,15 @@ void CLIController::run()
 			m_viewer.resetStream();
 		}
 	}
+}
+
+void CLIController::registerMainCommands()
+{
+	auto& registry = CommandRegistry::instance();
+	auto& context = m_model.getContext();
+
+	registry.registerFactory("exit", std::make_shared<ExitCommandFactory>(context, m_viewer));
+	registry.registerFactory("create", std::make_shared<CreatePresentationCommandFactory>(context, m_viewer));
+	registry.registerFactory("add-slide", std::make_shared<AddSlideCommandFactory>(context));
+	registry.registerFactory("remove-slide", std::make_shared<RemoveSlideCommandFactory>(context));
 }

@@ -60,6 +60,18 @@
     <ClCompile Include="srcs\controller\factories\CreatePresentationCommandFactory.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="srcs\controller\factories\AddSlideCommandFactory.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\controller\utils\Converter.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\controller\commands\RemoveSlideCommand.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\controller\factories\RemoveSlideCommandFactory.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\model\AppContext.h">
@@ -71,25 +83,13 @@
     <ClInclude Include="includes\controller\parsing\Parser.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\model\Presentation.h">
+    <ClInclude Include="includes\model\presentation\Presentation.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\Slide.h">
+    <ClInclude Include="includes\model\presentation\Slide.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\controller\parsing\Tokenizer.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\controller\commands\AddShapeCommand.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\controller\commands\AddSlideCommand.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\controller\commands\AddTextCommand.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\controller\commands\CloseCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\controller\commands\ACommand.h">
@@ -98,31 +98,13 @@
     <ClInclude Include="includes\controller\commands\CreatePresentationCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\controller\commands\DeleteCommand.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\controller\commands\GotoCommand.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\controller\commands\HelpCommand.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\controller\commands\MoveCommand.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\controller\commands\OpenCommand.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="srcs\CLI\Commands\QuitCommand.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\controller\commands\SaveCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\controller\commands\ExitCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\model\objects\Shape.h">
+    <ClInclude Include="includes\model\presentation\objects\AShape.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\model\utils\BBox.h">
@@ -132,9 +114,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\controller\CLIController.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\Configuration.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\controller\parsing\Token.h">
@@ -186,6 +165,24 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\controller\factories\errors\MissingArgumentValueException.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\controller\factories\AddSlideCommandFactory.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\model\utils\Color.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\controller\commands\AddSlideCommand.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\controller\utils\Converter.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\controller\commands\RemoveSlideCommand.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\controller\factories\RemoveSlideCommandFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

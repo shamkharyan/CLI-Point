@@ -3,9 +3,6 @@
 #include "controller/parsing/Tokenizer.h"
 #include "controller/parsing/Converter.h"
 
-#include "controller/factories/ExitCommandFactory.h"
-#include "controller/factories/CreatePresentationCommandFactory.h"
-
 CommandRegistry& CommandRegistry::instance()
 {
 	static CommandRegistry obj;
@@ -23,13 +20,5 @@ std::shared_ptr<ACommandFactory> CommandRegistry::getFactory(const std::string& 
 	if (it == m_factories.end())
 		return nullptr;
 	return it->second;
-}
-
-void registerMainCommands(AppContext& context, IViewer& viewer)
-{
-	auto& registry = CommandRegistry::instance();
-
-	registry.registerFactory("exit", std::make_shared<ExitCommandFactory>(context, viewer));
-	registry.registerFactory("create", std::make_shared<CreatePresentationCommandFactory>(context, viewer));
 }
 
