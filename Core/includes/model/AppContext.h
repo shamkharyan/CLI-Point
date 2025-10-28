@@ -1,12 +1,15 @@
 #pragma once
 
-#include "model/presentation/Presentation.h"
+#include "model/Presentation.h"
 
 #include <memory>
 #include <stack>
 
-struct AppContext
+namespace ppt::model
 {
-	std::unique_ptr<Presentation> presentation;
-	bool exit = false;
-};
+	struct AppContext
+	{
+		std::unique_ptr<Presentation> presentation;
+		bool exit = false;
+	};
+}

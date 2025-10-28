@@ -1,7 +1,9 @@
-#include "viewer/CLIViewer.h"
+#include "viewer/cli/CLIViewer.h"
 #include <string>
 #include <iostream>
 #include <optional>
+
+using namespace ppt::viewer::cli;
 
 CLIViewer::CLIViewer(std::istream& is, std::ostream& os) :
 	m_is(is),

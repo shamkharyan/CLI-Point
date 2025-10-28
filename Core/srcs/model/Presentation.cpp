@@ -1,5 +1,7 @@
-#include "model/presentation/Presentation.h"
+#include "model/Presentation.h"
 #include <stdexcept>
+
+using namespace ppt::model;
 
 Presentation::Presentation(const std::string& name) : m_name(name) {}
 

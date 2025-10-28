@@ -1,7 +1,10 @@
 #pragma once
 
-struct Coord
+namespace ppt::model::utils
 {
-	float x;
-	float y;
-};
+	struct Coord
+	{
+		float x;
+		float y;
+	};
+}

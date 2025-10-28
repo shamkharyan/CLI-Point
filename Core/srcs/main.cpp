@@ -1,14 +1,14 @@
 #include "model/PPModel.h"
-#include "viewer/CLIViewer.h"
-#include "controller/CLIController.h"
+#include "viewer/cli/CLIViewer.h"
+#include "cli/CLIController.h"
 
 #include <iostream>
 
 int main()
 {
-	auto& model = PPModel::instance();
-	auto& viewer = CLIViewer::instance(std::cin, std::cout);
-	auto& controller = CLIController::instance(model, viewer);
+	auto& model = ppt::model::PPModel::instance();
+	auto& viewer = ppt::viewer::cli::CLIViewer::instance(std::cin, std::cout);
+	auto& controller = ppt::cli::CLIController::instance(model, viewer);
 
 	controller.run();
 

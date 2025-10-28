@@ -2,11 +2,14 @@
 
 #include <cstddef>
 
-struct Color
+namespace ppt::model::utils
 {
-	std::size_t r;
-	std::size_t g;
-	std::size_t b;
+	struct Color
+	{
+		std::size_t r;
+		std::size_t g;
+		std::size_t b;
 
-	Color(std::size_t r = 0, std::size_t g = 0, std::size_t b = 0) : r(r), g(g), b(b) {}
-};
+		Color(std::size_t r = 0, std::size_t g = 0, std::size_t b = 0) : r(r), g(g), b(b) {}
+	};
+}

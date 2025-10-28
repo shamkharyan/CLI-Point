@@ -1,6 +1,8 @@
 #include "model/utils/BBox.h"
 #include "model/utils/Coord.h"
 
+using namespace ppt::model::utils;
+
 BBox::BBox(Coord corner, Coord size) noexcept :
 	m_corner(corner),
 	m_size(size)
