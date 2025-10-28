@@ -2,17 +2,17 @@
 
 #include "model/AppContext.h"
 #include "viewer/IViewer.h"
-#include "core/commands/ACommand.h"
+#include "core/commands/ICommand.h"
 
 #include <string>
 #include <optional>
 
 namespace ppt::core::cmds
 {
-	class AddSlideCommand : public ACommand
+	class AddSlideCommand : public ICommand
 	{
 	public:
-		AddSlideCommand(model::AppContext& context, std::optional<std::size_t> at, model::utils::Color bgColor);
+		AddSlideCommand(std::optional<std::size_t> at, model::utils::Color bgColor);
 		void execute() override;
 
 	private:

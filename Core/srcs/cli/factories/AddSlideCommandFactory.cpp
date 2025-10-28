@@ -1,17 +1,17 @@
-#include "core/factories/AddSlideCommandFactory.h"
+#include "cli/factories/AddSlideCommandFactory.h"
 #include "core/commands/AddSlideCommand.h"
-#include "core/errors/InvalidArgumentException.h"
-#include "core/errors/InvalidArgumentValueException.h"
-#include "core/errors/MissingArgumentValueException.h"
-#include "utils/Converter.h"
+#include "cli/errors/InvalidArgumentException.h"
+#include "cli/errors/InvalidArgumentValueException.h"
+#include "cli/errors/MissingArgumentValueException.h"
+#include "cli/utils/Converter.h"
 
-using namespace ppt::core;
-using namespace ppt::core::factories;
+using namespace ppt;
+using namespace ppt::cli::factories;
 
-std::unique_ptr<cmds::ACommand> AddSlideCommandFactory::createCommand(const Arguments& args)
+std::unique_ptr<core::cmds::ICommand> AddSlideCommandFactory::createCommand(const Arguments& args)
 {
     model::utils::Color bgColor(255, 255, 255);
-	  std::optional<std::size_t> at;
+	std::optional<std::size_t> at;
 
     for (const auto& [argName, argVals] : args)
     {
@@ -24,7 +24,7 @@ std::unique_ptr<cmds::ACommand> AddSlideCommandFactory::createCommand(const Argu
             else
                 throw err::InvalidArgumentValueException(argVals[0]);
         }
-        else if (argName == "-bgcolor")
+        else if (argName == "-bg")
         {
             std::optional<model::utils::Color> ans;
             if (argVals.size() == 1)
@@ -32,7 +32,7 @@ std::unique_ptr<cmds::ACommand> AddSlideCommandFactory::createCommand(const Argu
             else if (argVals.size() == 3)
                 ans = utils::Converter::vectorToColor(argVals);
             else
-                throw err::InvalidArgumentValueException("'-bgcolor' takes 1 or 3 values");
+                throw err::InvalidArgumentValueException("'-bg' takes 1 or 3 values");
             if (!ans)
                 throw err::InvalidArgumentValueException("Invalid color");
             bgColor = ans.value();
@@ -40,5 +40,5 @@ std::unique_ptr<cmds::ACommand> AddSlideCommandFactory::createCommand(const Argu
         else 
             throw err::InvalidArgumentException(argName);
     }
-    return std::make_unique<cmds::AddSlideCommand>(m_context, at, bgColor);
+    return std::make_unique<core::cmds::AddSlideCommand>(at, bgColor);
 }

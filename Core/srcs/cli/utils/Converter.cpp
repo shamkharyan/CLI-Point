@@ -1,9 +1,9 @@
-#include "utils/Converter.h"
+#include "cli/utils/Converter.h"
 
 #include <unordered_map>
 
 using namespace ppt;
-using namespace ppt::utils;
+using namespace ppt::cli::utils;
 
 std::optional<std::size_t> Converter::stringToSizeT(const std::string& str)
 {

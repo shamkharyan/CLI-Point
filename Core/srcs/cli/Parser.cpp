@@ -1,7 +1,7 @@
 #include "cli/Parser.h"
 #include "cli/Tokenizer.h"
-#include "core/factories/ACommandFactory.h"
-#include "core/CommandRegistry.h"
+#include "cli/factories/ICommandFactory.h"
+#include "cli/CommandRegistry.h"
 #include "cli/errors/UnknownCommandException.h"
 #include "cli/errors/InvalidInputException.h"
 
@@ -15,7 +15,7 @@ Parser::Parser(std::istream& istream) :
 	m_tokenizer(istream)
 { }
 
-std::unique_ptr<cmds::ACommand> Parser::parse()
+std::unique_ptr<cmds::ICommand> Parser::parse()
 {
 	State st = State::Empty;
 	auto& registry = CommandRegistry::instance();
@@ -27,7 +27,7 @@ std::unique_ptr<cmds::ACommand> Parser::parse()
 	if (cmdName.type != Token::Type::Word)
 		throw err::InvalidInputException("Invalid command syntax");
 
-	std::shared_ptr<factories::ACommandFactory> factory = registry.getFactory(cmdName.value);
+	auto factory = registry.getFactory(cmdName.value);
 	if (!factory)
 		throw err::UnknownCommandException(cmdName.value);
 

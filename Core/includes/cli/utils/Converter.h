@@ -6,7 +6,7 @@
 
 #include "model/utils/Color.h"
 
-namespace ppt::utils
+namespace ppt::cli::utils
 {
 	class Converter
 	{

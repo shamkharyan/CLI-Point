@@ -2,7 +2,7 @@
 
 #include "core/IController.h"
 #include "model/AppContext.h"
-#include "core/CommandRegistry.h"
+#include "cli/CommandRegistry.h"
 #include "viewer/cli/CLIViewer.h"
 #include "model/PPModel.h"
 

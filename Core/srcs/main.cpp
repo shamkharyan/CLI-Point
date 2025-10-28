@@ -15,54 +15,72 @@ int main()
 	return 0;
 }
 
-// create -> creates new project
-//   [-name] : string -> project name
+// create-presentation [-n] <presentation name> -> creates new presentation
+
+// add-slide [-at] <index> [-bg] <color> -> creates new slide
+
+// remove-slide -at <index> -> removes existing slide
+
+// add-shape -at <slide index> -type <shape type> -coord <x>,<y> -w <width> -h <height>
+
+// create-presentation -> creates new project
+//   [-n] : string -> project name
 
 // add-slide -> creates new slide
-//   [-at]      : pos integer -> insert index, by default appends from back
-//   [-bgcolor] : color       -> background color, by default is white
+//   [-at] : pos integer -> insert index, by default appends from back
+//   [-bg] : color       -> background color, by default is white
 
 // remove-slide -> removes existing slide
-//   [-at] : pos integer -> remove index, by default removes from back
+//   -at : pos integer -> remove index
 
 // add-shape -> add new shape in the slide
-//   -type       : shape       -> shape type (rectangle, circle, line, arrow)
-//   -start      : coord       -> start coord for shape (top left corner for rect, center for circle)
-//   -end        : coord       -> end coord for shape (optional for rect, wrong for circle)
-//   -w          : pos integer -> shape width (wrong for circle and rect with -end option)
-//   -h          : pos integer -> shape height (only for rect without -end option)
-//   -r          : pos integer -> radius of the circle (only for circle)
-//   [-bgcolor]  : color       -> background color of shape, by default is white
-//   [-olcolor]  : color       -> outline color of shape, by default is black
+//   -at	: pos integer -> slide number
+//   -type  : shape       -> shape type (rectangle, circle, line, arrow)
+//   -c     : coord       -> top left corner of bounding box
+//   -w     : pos integer -> shape width
+//   -h     : pos integer -> shape height
+//   [-pos] : pos integer -> position in the slide
+//   [-bg]  : color       -> background color of shape, by default is white
+//   [-oc]  : color       -> outline color of shape, by default is black
+//   [-ot]  : pos integer -> outline thickness of shape, be default is 1
+//   [-t]   : string      -> text inside shape
+//   [-tc]  : color       -> inline text color
+//   [-tf]  : string      -> inline text font
+//   [-ts]  : string      -> inline text style
+//   [-tl]  : string      -> inline text link
 
-// add-text -> add new text in the slide
-//   -t       : string      -> text 
-//   -start   : coord       -> start coord of the text
-//   -size    : pos integer -> font size of the text
-//   [-color] : color       -> color of the text
-//   [-font]  : string      -> font of the text
-//   [-style] : string      -> style of the text (bold, italic, underline, none)
-//   [-link]  : string      -> link inside the text
+// remove-shape -> remove shape from the slide
+//   -id : pos integer -> shape id
+
+// edit-shape -> edit existing shape
+//   -id    : pos integer -> shape if
+//   [-type]: shape       -> shape type (rectangle, circle, line, arrow)
+//   [-c]   : coord       -> top left corner of bounding box
+//   [-w]   : pos integer -> shape width
+//   [-h]   : pos integer -> shape height
+//   [-pos] : pos integer -> position in the slide
+//   [-bg]  : color       -> background color of shape, by default is white
+//   [-oc]  : color       -> outline color of shape, by default is black
+//   [-ot]  : pos integer -> outline thickness of shape, be default is 1
+//   [-t]   : string      -> text inside shape
+//   [-tc]  : color       -> inline text color
+//   [-tf]  : string      -> inline text font
+//   [-ts]  : string      -> inline text style
+//   [-tl]  : string      -> inline text link
 
 // help -> print manual
 
 // close -> closes current project
+//   [-f] : null -> force close
 
 // exit -> closes the program
-//   -f : null -> force exit
+//   [-f] : null -> force exit
 
-// move -> move the object
-//   -id    : pos integer -> id of the movable object
-//   -start : coord       -> new coord of the object
-//   [-abs] : null        -> move by absolute coord system
+// save -> saves the current project as JSON file
+//   [-path] : string -> save path
 
-// save -> saves the current project
+// export -> exports the current project to images
+//   [-path] : string -> export path
 
 // open -> opens the project
-//   -name : string -> name of the project
-
-// goto -> goes to the selected slide
-//   -at : pos integer -> index of the slide
-
-// delete -> deletes the selected object
-//   -id : pos integer -> id of the deletable
+//   -path : string -> path to the JSON

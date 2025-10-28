@@ -1,14 +1,14 @@
-#include "core/factories/RemoveSlideCommandFactory.h"
+#include "cli/factories/RemoveSlideCommandFactory.h"
 #include "core/commands/RemoveSlideCommand.h"
-#include "core/errors/InvalidArgumentException.h"
-#include "core/errors/InvalidArgumentValueException.h"
-#include "core/errors/MissingArgumentException.h"
-#include "utils/Converter.h"
+#include "cli/errors/InvalidArgumentException.h"
+#include "cli/errors/InvalidArgumentValueException.h"
+#include "cli/errors/MissingArgumentException.h"
+#include "cli/utils/Converter.h"
 
 using namespace ppt::core;
-using namespace ppt::core::factories;
+using namespace ppt::cli::factories;
 
-std::unique_ptr<cmds::ACommand> RemoveSlideCommandFactory::createCommand(const Arguments& args)
+std::unique_ptr<cmds::ICommand> RemoveSlideCommandFactory::createCommand(const Arguments& args)
 {
     std::optional<std::size_t> at;
 
@@ -28,5 +28,5 @@ std::unique_ptr<cmds::ACommand> RemoveSlideCommandFactory::createCommand(const A
     }
     if (!at)
         throw err::MissingArgumentException("-at");
-    return std::make_unique<cmds::RemoveSlideCommand>(m_context, at.value());
+    return std::make_unique<cmds::RemoveSlideCommand>(at.value());
 }

@@ -1,7 +1,6 @@
 #include "core/commands/RemoveSlideCommand.h"
-#include "core/commands/ACommand.h"
 
-#include "model/AppContext.h"
+#include "model/PPModel.h"
 #include "viewer/IViewer.h"
 
 #include <stdexcept>
@@ -9,14 +8,12 @@
 using namespace ppt::model;
 using namespace ppt::core::cmds;
 
-RemoveSlideCommand::RemoveSlideCommand(AppContext& context, std::size_t at) :
-	ACommand(context),
-	m_at(at) { }
+RemoveSlideCommand::RemoveSlideCommand(std::size_t at) : m_at(at) {}
 
 void RemoveSlideCommand::execute()
 {
-	auto& presentation = m_context.presentation;
-	if (!presentation)
+	auto& context = PPModel::instance().getContext();
+	if (!context.presentation)
 		throw std::runtime_error("No presentation for removing a slide");
-	presentation->removeSlide(m_at);
+	context.presentation->removeSlide(m_at);
 }

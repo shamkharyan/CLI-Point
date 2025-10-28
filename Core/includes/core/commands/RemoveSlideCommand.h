@@ -2,16 +2,16 @@
 
 #include "model/AppContext.h"
 #include "viewer/IViewer.h"
-#include "core/commands/ACommand.h"
+#include "core/commands/ICommand.h"
 
 #include <string>
 
 namespace ppt::core::cmds
 {
-	class RemoveSlideCommand : public ACommand
+	class RemoveSlideCommand : public ICommand
 	{
 	public:
-		RemoveSlideCommand(model::AppContext& context, std::size_t at);
+		RemoveSlideCommand(std::size_t at);
 		void execute() override;
 
 	private:

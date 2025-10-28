@@ -1,14 +1,12 @@
 #include "model/PPModel.h"
 #include "viewer/cli/CLIViewer.h"
-#include "core/commands/ACommand.h"
-#include "core/commands/AConfirmCommand.h"
-#include "core/factories/CreatePresentationCommandFactory.h"
-#include "core/factories/ExitCommandFactory.h"
-#include "core/factories/AddSlideCommandFactory.h"
-#include "core/factories/RemoveSlideCommandFactory.h"
+#include "cli/factories/CreatePresentationCommandFactory.h"
+#include "cli/factories/ExitCommandFactory.h"
+#include "cli/factories/AddSlideCommandFactory.h"
+#include "cli/factories/RemoveSlideCommandFactory.h"
 #include "cli/CLIController.h"
 #include "cli/Parser.h"
-#include "core/CommandRegistry.h"
+#include "cli/CommandRegistry.h"
 
 #include <iostream>
 
@@ -41,7 +39,7 @@ void CLIController::run()
 		m_viewer.showPrompt(presentationName);
 		try
 		{
-			std::unique_ptr<cmds::ACommand> cmd = parser.parse();
+			std::unique_ptr<cmds::ICommand> cmd = parser.parse();
 			if (cmd)
 				cmd->execute();
 		}
@@ -58,8 +56,8 @@ void CLIController::registerMainCommands()
 	auto& registry = CommandRegistry::instance();
 	auto& context = m_model.getContext();
 
-	registry.registerFactory("exit", std::make_shared<factories::ExitCommandFactory>(context, m_viewer));
-	registry.registerFactory("create", std::make_shared<factories::CreatePresentationCommandFactory>(context, m_viewer));
-	registry.registerFactory("add-slide", std::make_shared<factories::AddSlideCommandFactory>(context));
-	registry.registerFactory("remove-slide", std::make_shared<factories::RemoveSlideCommandFactory>(context));
+	registry.registerFactory("create-presentation", std::make_shared<factories::CreatePresentationCommandFactory>(m_viewer));
+	registry.registerFactory("exit", std::make_shared<factories::ExitCommandFactory>(m_viewer));
+	registry.registerFactory("add-slide", std::make_shared<factories::AddSlideCommandFactory>());
+	registry.registerFactory("remove-slide", std::make_shared<factories::RemoveSlideCommandFactory>());
 }

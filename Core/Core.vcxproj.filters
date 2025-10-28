@@ -36,7 +36,7 @@
     <ClCompile Include="srcs\cli\CLIController.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\core\CommandRegistry.cpp">
+    <ClCompile Include="srcs\cli\CommandRegistry.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="srcs\viewer\CLIViewer.cpp">
@@ -51,22 +51,22 @@
     <ClCompile Include="srcs\core\commands\AddSlideCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\core\factories\ExitCommandFactory.cpp">
+    <ClCompile Include="srcs\cli\factories\ExitCommandFactory.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\core\factories\CreatePresentationCommandFactory.cpp">
+    <ClCompile Include="srcs\cli\factories\CreatePresentationCommandFactory.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\core\factories\AddSlideCommandFactory.cpp">
+    <ClCompile Include="srcs\cli\factories\AddSlideCommandFactory.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\utils\Converter.cpp">
+    <ClCompile Include="srcs\cli\utils\Converter.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="srcs\core\commands\RemoveSlideCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\core\factories\RemoveSlideCommandFactory.cpp">
+    <ClCompile Include="srcs\cli\factories\RemoveSlideCommandFactory.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,7 +74,7 @@
     <ClInclude Include="includes\model\AppContext.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\CommandRegistry.h">
+    <ClInclude Include="includes\cli\CommandRegistry.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\cli\Parser.h">
@@ -87,9 +87,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\cli\Tokenizer.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\core\commands\ACommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\core\commands\CreatePresentationCommand.h">
@@ -125,22 +122,13 @@
     <ClInclude Include="includes\model\PPModel.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\commands\AConfirmCommand.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="includes\core\IController.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\factories\ACommandFactory.h">
+    <ClInclude Include="includes\cli\factories\ExitCommandFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\factories\AConfirmCommandFactory.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\core\factories\ExitCommandFactory.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\core\factories\CreatePresentationCommandFactory.h">
+    <ClInclude Include="includes\cli\factories\CreatePresentationCommandFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\cli\errors\UnknownCommandException.h">
@@ -149,19 +137,19 @@
     <ClInclude Include="includes\cli\errors\InvalidInputException.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\errors\InvalidArgumentException.h">
+    <ClInclude Include="includes\cli\errors\InvalidArgumentException.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\errors\InvalidArgumentValueException.h">
+    <ClInclude Include="includes\cli\errors\InvalidArgumentValueException.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\errors\MissingArgumentException.h">
+    <ClInclude Include="includes\cli\errors\MissingArgumentException.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\errors\MissingArgumentValueException.h">
+    <ClInclude Include="includes\cli\errors\MissingArgumentValueException.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\factories\AddSlideCommandFactory.h">
+    <ClInclude Include="includes\cli\factories\AddSlideCommandFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\model\utils\Color.h">
@@ -170,13 +158,19 @@
     <ClInclude Include="includes\core\commands\AddSlideCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\utils\Converter.h">
+    <ClInclude Include="includes\cli\utils\Converter.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\core\commands\RemoveSlideCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\factories\RemoveSlideCommandFactory.h">
+    <ClInclude Include="includes\cli\factories\RemoveSlideCommandFactory.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\core\commands\ICommand.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\factories\ICommandFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

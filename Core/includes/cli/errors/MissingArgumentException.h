@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-namespace ppt::core::err
+namespace ppt::cli::err
 {
   class MissingArgumentException : public std::runtime_error
   {

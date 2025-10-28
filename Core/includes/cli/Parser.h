@@ -2,7 +2,7 @@
 
 #include "model/AppContext.h"
 #include "cli/Tokenizer.h"
-#include "core/commands/ACommand.h"
+#include "core/commands/ICommand.h"
 #include "viewer/cli/CLIViewer.h"
 
 #include <memory>
@@ -32,7 +32,7 @@ namespace ppt::cli
 	{
 	public:
 		Parser(std::istream& istream);
-		std::unique_ptr<core::cmds::ACommand> parse();
+		std::unique_ptr<core::cmds::ICommand> parse();
 	private:
 		enum class State { Empty, Command, ArgName, ArgVal, Comma, Error, Success };
 	private:
