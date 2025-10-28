@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{10b58947-27fa-4979-9043-978a1b1de1f7}</ProjectGuid>
+    <RootNamespace>PowerPoint</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>PowerPoint-CLI</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)\$(ProjectName)\obj\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)\includes\</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="includes\cli\factories\ICommandFactory.h" />
+    <ClInclude Include="includes\cli\factories\RemovePresentationCommandFactory.h" />
+    <ClInclude Include="includes\core\commands\AddSlideCommand.h" />
+    <ClInclude Include="includes\core\commands\ICommand.h" />
+    <ClInclude Include="includes\core\commands\RemovePresentationCommand.h" />
+    <ClInclude Include="includes\core\commands\RemoveSlideCommand.h" />
+    <ClInclude Include="includes\cli\factories\AddSlideCommandFactory.h" />
+    <ClInclude Include="includes\cli\errors\InvalidArgumentException.h" />
+    <ClInclude Include="includes\cli\errors\MissingArgumentException.h" />
+    <ClInclude Include="includes\cli\errors\MissingArgumentValueException.h" />
+    <ClInclude Include="includes\cli\factories\RemoveSlideCommandFactory.h" />
+    <ClInclude Include="includes\cli\errors\InvalidInputException.h" />
+    <ClInclude Include="includes\cli\errors\InvalidArgumentValueException.h" />
+    <ClInclude Include="includes\cli\errors\UnknownCommandException.h" />
+    <ClInclude Include="includes\core\IController.h" />
+    <ClInclude Include="includes\cli\Token.h" />
+    <ClInclude Include="includes\cli\utils\Converter.h" />
+    <ClInclude Include="includes\model\AppContext.h" />
+    <ClInclude Include="includes\cli\CommandRegistry.h" />
+    <ClInclude Include="includes\cli\CLIController.h" />
+    <ClInclude Include="includes\cli\factories\CreatePresentationCommandFactory.h" />
+    <ClInclude Include="includes\cli\factories\ExitCommandFactory.h" />
+    <ClInclude Include="includes\model\errors\MissingPresentationException.h" />
+    <ClInclude Include="includes\model\PPModel.h" />
+    <ClInclude Include="includes\model\utils\BBox.h" />
+    <ClInclude Include="includes\model\utils\Color.h" />
+    <ClInclude Include="includes\model\utils\Coord.h" />
+    <ClInclude Include="includes\cli\Parser.h" />
+    <ClInclude Include="includes\model\Presentation.h" />
+    <ClInclude Include="includes\model\shapes\AShape.h" />
+    <ClInclude Include="includes\model\Slide.h" />
+    <ClInclude Include="includes\cli\Tokenizer.h" />
+    <ClInclude Include="includes\viewer\cli\CLIViewer.h" />
+    <ClInclude Include="includes\viewer\IViewer.h" />
+    <ClInclude Include="includes\core\commands\CreatePresentationCommand.h" />
+    <ClInclude Include="includes\core\commands\ExitCommand.h" />
+    <ClInclude Include="srcs\CLI\Commands\QuitCommand.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="srcs\cli\factories\RemovePresentationCommandFactory.cpp" />
+    <ClCompile Include="srcs\core\commands\AddSlideCommand.cpp" />
+    <ClCompile Include="srcs\core\commands\CreatePresentationCommand.cpp" />
+    <ClCompile Include="srcs\core\commands\RemovePresentationCommand.cpp" />
+    <ClCompile Include="srcs\core\commands\RemoveSlideCommand.cpp" />
+    <ClCompile Include="srcs\cli\factories\AddSlideCommandFactory.cpp" />
+    <ClCompile Include="srcs\cli\factories\RemoveSlideCommandFactory.cpp" />
+    <ClCompile Include="srcs\cli\Parser.cpp" />
+    <ClCompile Include="srcs\cli\Tokenizer.cpp" />
+    <ClCompile Include="srcs\cli\CommandRegistry.cpp" />
+    <ClCompile Include="srcs\cli\CLIController.cpp" />
+    <ClCompile Include="srcs\core\commands\ExitCommand.cpp" />
+    <ClCompile Include="srcs\cli\utils\Converter.cpp" />
+    <ClCompile Include="srcs\main.cpp" />
+    <ClCompile Include="srcs\cli\factories\CreatePresentationCommandFactory.cpp" />
+    <ClCompile Include="srcs\cli\factories\ExitCommandFactory.cpp" />
+    <ClCompile Include="srcs\model\PPModel.cpp" />
+    <ClCompile Include="srcs\model\Presentation.cpp" />
+    <ClCompile Include="srcs\model\utils\BBox.cpp" />
+    <ClCompile Include="srcs\viewer\CLIViewer.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
