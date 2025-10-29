@@ -1,15 +1,15 @@
 #pragma once
 
-#include <cstddef>
+#include <cstdint>
 
 namespace ppt::model::utils
 {
 	struct Color
 	{
-		std::size_t r;
-		std::size_t g;
-		std::size_t b;
+		std::uint8_t r;
+		std::uint8_t g;
+		std::uint8_t b;
 
-		Color(std::size_t r = 0, std::size_t g = 0, std::size_t b = 0) : r(r), g(g), b(b) {}
+		Color(std::uint8_t r = 0, std::uint8_t g = 0, std::uint8_t b = 0) : r(r), g(g), b(b) {}
 	};
 }

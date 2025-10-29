@@ -3,12 +3,12 @@
 #include "viewer/cli/CLIViewer.h"
 
 #include <iostream>
+using namespace ppt;
 
 int main()
 {
-	auto& model = ppt::model::PPModel::instance();
-	auto& viewer = ppt::viewer::cli::CLIViewer::instance(std::cin, std::cout);
-	auto& controller = ppt::cli::CLIController::instance(model, viewer);
+	auto& viewer = viewer::cli::CLIViewer::instance(std::cin, std::cout);
+	auto& controller = cli::CLIController::instance(viewer);
 
 	controller.run();
 
@@ -18,8 +18,8 @@ int main()
 // create-presentation -> creates new presentation
 //   [-n] : string -> presentation name
 
-// remove-presentation -> removes existing presentation
-//   [-f] : null -> force remove
+// edit-presentation -> edits existing presentation
+//   [-n] : string -> presentation name
 
 // add-slide -> creates new slide
 //   [-at] : pos integer -> insert index, by default appends from back
@@ -79,3 +79,6 @@ int main()
 
 // open -> opens the project
 //   -path : string -> path to the JSON file
+
+// show -> shows the presentation
+//   [-at] : pos int -> shows the slide

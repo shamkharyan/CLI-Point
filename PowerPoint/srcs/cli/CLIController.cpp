@@ -2,9 +2,11 @@
 #include "cli/CommandRegistry.h"
 #include "cli/factories/AddSlideCommandFactory.h"
 #include "cli/factories/CreatePresentationCommandFactory.h"
+#include "cli/factories/EditPresentationCommandFactory.h"
 #include "cli/factories/ExitCommandFactory.h"
 #include "cli/factories/RemoveSlideCommandFactory.h"
-#include "cli/factories/RemovePresentationCommandFactory.h"
+#include "cli/factories/UndoCommandFactory.h"
+#include "cli/factories/RedoCommandFactory.h"
 #include "cli/Parser.h"
 #include "model/PPModel.h"
 #include "viewer/cli/CLIViewer.h"
@@ -14,29 +16,25 @@
 using namespace ppt::cli;
 using namespace ppt::core;
 
-CLIController::CLIController(model::PPModel& model, viewer::cli::CLIViewer& viewer) : 
-	m_model(model),
-	m_viewer(viewer)
-{
-	registerMainCommands();
-}
+CLIController::CLIController(viewer::cli::CLIViewer& viewer) : m_viewer(viewer) { registerMainCommands(); }
 
-CLIController& CLIController::instance(model::PPModel& model, viewer::cli::CLIViewer& viewer)
+CLIController& CLIController::instance(viewer::cli::CLIViewer& viewer)
 {
-	static CLIController obj(model, viewer);
+	static CLIController obj(viewer);
 	return obj;
 }
 
 void CLIController::run()
 {
+	auto& context = model::PPModel::instance().getContext();
 	m_viewer.showText("PowerPoint CLI v0.1");
-	auto& context = m_model.getContext();
 
 	Parser parser(m_viewer.getIStream());
 
-	while (!context.exit)
+	while (!m_exit)
 	{
-		auto presentationName = (context.presentation) ? context.presentation->getName() : "";
+		auto presentation = context.getPresentation();
+		auto presentationName = (presentation) ? presentation->getName() : "";
 		m_viewer.showPrompt(presentationName);
 		try
 		{
@@ -52,14 +50,18 @@ void CLIController::run()
 	}
 }
 
+void CLIController::exit() { m_exit = true; }
+
 void CLIController::registerMainCommands()
 {
 	auto& registry = CommandRegistry::instance();
-	auto& context = m_model.getContext();
 
 	registry.registerFactory("create-presentation", std::make_shared<factories::CreatePresentationCommandFactory>(m_viewer));
-	registry.registerFactory("remove-presentation", std::make_shared<factories::RemovePresentationCommandFactory>(m_viewer));
-	registry.registerFactory("exit", std::make_shared<factories::ExitCommandFactory>(m_viewer));
+	registry.registerFactory("edit-presentation", std::make_shared<factories::EditPresentationCommandFactory>());
+	registry.registerFactory("exit", std::make_shared<factories::ExitCommandFactory>(*this, m_viewer));
 	registry.registerFactory("add-slide", std::make_shared<factories::AddSlideCommandFactory>());
+	registry.registerFactory("remove-slide", std::make_shared<factories::RemoveSlideCommandFactory>());
+	registry.registerFactory("undo", std::make_shared<factories::UndoCommandFactory>());
+	registry.registerFactory("redo", std::make_shared<factories::RedoCommandFactory>());
 	registry.registerFactory("remove-slide", std::make_shared<factories::RemoveSlideCommandFactory>());
 }

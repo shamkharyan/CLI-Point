@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/commands/ICommand.h"
+#include "cli/commands/ICommand.h"
 
 #include <memory>
 #include <string>
@@ -15,6 +15,6 @@ namespace ppt::cli::factories
     {
     public:
         virtual ~ICommandFactory() = default;
-        virtual std::unique_ptr<core::cmds::ICommand> createCommand(const Arguments& args) = 0;
+        virtual std::unique_ptr<cmds::ICommand> createCommand(const Arguments& args) = 0;
     };
 }

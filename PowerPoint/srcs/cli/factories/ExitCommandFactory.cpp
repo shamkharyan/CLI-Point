@@ -1,12 +1,12 @@
 #include "cli/errors/InvalidArgumentException.h"
 #include "cli/errors/InvalidArgumentValueException.h"
 #include "cli/factories/ExitCommandFactory.h"
-#include "core/commands/ExitCommand.h"
+#include "cli/commands/ExitCommand.h"
 
-using namespace ppt;
+using namespace ppt::cli;
 using namespace ppt::cli::factories;
 
-std::unique_ptr<core::cmds::ICommand> ExitCommandFactory::createCommand(const Arguments& args)
+std::unique_ptr<cmds::ICommand> ExitCommandFactory::createCommand(const Arguments& args)
 {
   bool force = false;
 
@@ -21,5 +21,5 @@ std::unique_ptr<core::cmds::ICommand> ExitCommandFactory::createCommand(const Ar
     else
       throw err::InvalidArgumentException(argName);
   }
-  return std::make_unique<core::cmds::ExitCommand>(m_viewer, force);
+  return std::make_unique<cmds::ExitCommand>(m_controller, m_viewer, force);
 }

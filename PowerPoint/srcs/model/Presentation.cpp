@@ -10,13 +10,22 @@ const std::string& Presentation::getName() const { return m_name; }
 
 void Presentation::setName(const std::string& name) { m_name = name; }
 
-void Presentation::addSlide(std::unique_ptr<Slide> slide, std::size_t pos)
+const Slide& Presentation::getSlide(std::size_t pos) const
+{
+	if (pos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+	auto it = m_slides.begin();
+	std::advance(it, pos);
+	return *it;
+}
+
+void Presentation::addSlide(const Slide& slide, std::size_t pos)
 {
 	if (pos > slidesCount())
 		throw std::out_of_range("Index out of bounds");
 	auto it = m_slides.begin();
 	std::advance(it, pos);
-	m_slides.insert(it, std::move(slide));
+	m_slides.insert(it, slide);
 }
 
 void Presentation::removeSlide(std::size_t pos)

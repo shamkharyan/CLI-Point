@@ -11,7 +11,7 @@ namespace ppt::cli::factories
   {
   public:
     CreatePresentationCommandFactory(viewer::IViewer& viewer) : m_viewer(viewer) {}
-    std::unique_ptr<core::cmds::ICommand> createCommand(const Arguments& args) override;
+    std::unique_ptr<cmds::ICommand> createCommand(const Arguments& args) override;
   private:
       viewer::IViewer& m_viewer;
   };

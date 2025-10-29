@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cli/Tokenizer.h"
-#include "core/commands/ICommand.h"
+#include "cli/commands/ICommand.h"
 #include "model/AppContext.h"
 #include "viewer/cli/CLIViewer.h"
 
@@ -9,7 +9,7 @@
 
 //                              DFA of Parser
 // -----------------------------------------------------------------------
-// | State/Input | Command |   EOL   | Argument | Value  |   ,   | Other |
+// | State/Token | Command |   EOL   | Argument | Value  |   ,   | Other |
 // -----------------------------------------------------------------------
 // |    Empty    | Command | Empty   | Error    | Error  | Error | Error | 
 // -----------------------------------------------------------------------
@@ -32,7 +32,7 @@ namespace ppt::cli
 	{
 	public:
 		Parser(std::istream& istream);
-		std::unique_ptr<core::cmds::ICommand> parse();
+		std::unique_ptr<cmds::ICommand> parse();
 	private:
 		enum class State { Empty, Command, ArgName, ArgVal, Comma, Error, Success };
 	private:

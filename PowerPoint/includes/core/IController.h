@@ -6,5 +6,6 @@ namespace ppt::core
   {
   public:
     virtual void run() = 0;
+    virtual void exit() = 0;
   };
 }

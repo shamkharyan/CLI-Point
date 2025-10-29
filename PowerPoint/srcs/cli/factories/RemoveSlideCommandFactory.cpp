@@ -3,10 +3,10 @@
 #include "cli/errors/MissingArgumentException.h"
 #include "cli/factories/RemoveSlideCommandFactory.h"
 #include "cli/utils/Converter.h"
-#include "core/commands/RemoveSlideCommand.h"
+#include "cli/commands/RemoveSlideCommand.h"
 
+using namespace ppt::cli;
 using namespace ppt::cli::factories;
-using namespace ppt::core;
 
 std::unique_ptr<cmds::ICommand> RemoveSlideCommandFactory::createCommand(const Arguments& args)
 {

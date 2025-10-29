@@ -10,6 +10,6 @@ namespace ppt::cli::factories
   {
   public:
       RemoveSlideCommandFactory() = default;
-      std::unique_ptr<core::cmds::ICommand> createCommand(const Arguments& args) override;
+      std::unique_ptr<cmds::ICommand> createCommand(const Arguments& args) override;
   };
 }

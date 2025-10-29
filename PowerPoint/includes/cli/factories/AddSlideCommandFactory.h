@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cli/factories/ICommandFactory.h"
-#include "core/commands/ICommand.h"
+#include "cli/commands/ICommand.h"
 
 #include <string>
 
@@ -11,6 +11,6 @@ namespace ppt::cli::factories
   {
   public:
       AddSlideCommandFactory() = default;
-      std::unique_ptr<core::cmds::ICommand> createCommand(const Arguments& args) override;
+      std::unique_ptr<cmds::ICommand> createCommand(const Arguments& args) override;
   };
 }

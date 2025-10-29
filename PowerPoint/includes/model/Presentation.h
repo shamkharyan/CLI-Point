@@ -13,7 +13,8 @@ namespace ppt::model
 	public:
 		Presentation(const std::string& name);
 
-		void addSlide(std::unique_ptr<Slide> slide, std::size_t pos);
+		const Slide& getSlide(std::size_t pos) const;
+		void addSlide(const Slide& slide, std::size_t pos);
 		void removeSlide(std::size_t pos);
 		void setName(const std::string& name);
 
@@ -21,6 +22,6 @@ namespace ppt::model
 		std::size_t slidesCount() const;
 	private:
 		std::string m_name;
-		std::list<std::unique_ptr<Slide>> m_slides;
+		std::list<Slide> m_slides;
 	};
 }

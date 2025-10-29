@@ -1,9 +1,9 @@
 #pragma once
 
-#include "model/shapes/AShape.h"
+#include "model/Shape.h"
 #include "model/utils/Color.h"
 
-#include <list>
+#include <vector>
 #include <memory>
 
 namespace ppt::model
@@ -13,7 +13,7 @@ namespace ppt::model
 	public:
 		Slide(utils::Color bgColor) : m_bgColor(bgColor) {}
 	private:
-		std::list<std::unique_ptr<shapes::AShape>> m_shapes;
+		std::vector<Shape> m_shapes;
 		utils::Color m_bgColor;
 	};
 }

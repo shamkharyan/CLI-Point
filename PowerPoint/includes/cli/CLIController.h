@@ -11,10 +11,11 @@ namespace ppt::cli
 	class CLIController : public core::IController
 	{
 	public:
-		static CLIController& instance(model::PPModel& model, viewer::cli::CLIViewer& viewer);
+		static CLIController& instance(viewer::cli::CLIViewer& viewer);
 		void run() override;
+		void exit() override;
 	private:
-		CLIController(model::PPModel& model, viewer::cli::CLIViewer& viewer);
+		CLIController(viewer::cli::CLIViewer& viewer);
 		CLIController(const CLIController&) = delete;
 		CLIController(CLIController&&) noexcept = delete;
 		CLIController& operator=(const CLIController&) = delete;
@@ -22,7 +23,7 @@ namespace ppt::cli
 
 		void registerMainCommands();
 	private:
-		model::PPModel & m_model;
 		viewer::cli::CLIViewer& m_viewer;
+		bool m_exit = false;
 	};
 }

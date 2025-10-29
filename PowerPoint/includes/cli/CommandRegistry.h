@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cli/factories/ICommandFactory.h"
-#include "core/commands/ICommand.h"
+#include "cli/commands/ICommand.h"
 #include "model/AppContext.h"
 #include "viewer/IViewer.h"
 

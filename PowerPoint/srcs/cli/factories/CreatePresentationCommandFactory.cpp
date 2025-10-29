@@ -2,12 +2,12 @@
 #include "cli/errors/InvalidArgumentValueException.h"
 #include "cli/errors/MissingArgumentValueException.h"
 #include "cli/factories/CreatePresentationCommandFactory.h"
-#include "core/commands/CreatePresentationCommand.h"
+#include "cli/commands/CreatePresentationCommand.h"
 
-using namespace ppt;
+using namespace ppt::cli;
 using namespace ppt::cli::factories;
 
-std::unique_ptr<core::cmds::ICommand> CreatePresentationCommandFactory::createCommand(const Arguments& args)
+std::unique_ptr<cmds::ICommand> CreatePresentationCommandFactory::createCommand(const Arguments& args)
 {
   std::string name = "Untitled";
 
@@ -24,6 +24,6 @@ std::unique_ptr<core::cmds::ICommand> CreatePresentationCommandFactory::createCo
     else
       throw err::InvalidArgumentException(argName);
   }
-  return std::make_unique<core::cmds::CreatePresentationCommand>(m_viewer, name);
+  return std::make_unique<cmds::CreatePresentationCommand>(m_viewer, name);
 }
 

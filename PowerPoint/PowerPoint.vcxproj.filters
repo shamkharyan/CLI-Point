@@ -18,10 +18,10 @@
     <ClCompile Include="srcs\main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\core\commands\ExitCommand.cpp">
+    <ClCompile Include="srcs\cli\commands\ExitCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\core\commands\CreatePresentationCommand.cpp">
+    <ClCompile Include="srcs\cli\commands\CreatePresentationCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="srcs\cli\Parser.cpp">
@@ -48,7 +48,7 @@
     <ClCompile Include="srcs\model\PPModel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\core\commands\AddSlideCommand.cpp">
+    <ClCompile Include="srcs\cli\commands\AddSlideCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="srcs\cli\factories\ExitCommandFactory.cpp">
@@ -63,16 +63,31 @@
     <ClCompile Include="srcs\cli\utils\Converter.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\core\commands\RemoveSlideCommand.cpp">
+    <ClCompile Include="srcs\cli\commands\RemoveSlideCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="srcs\cli\factories\RemoveSlideCommandFactory.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\cli\factories\RemovePresentationCommandFactory.cpp">
+    <ClCompile Include="srcs\core\actions\CreatePresentationAction.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\core\commands\RemovePresentationCommand.cpp">
+    <ClCompile Include="srcs\core\ActionManager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\core\actions\AddSlideAction.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\core\actions\RemoveSlideAction.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\core\actions\EditPresentationAction.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\cli\commands\EditPresentationCommand.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\cli\factories\EditPresentationCommandFactory.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -95,16 +110,16 @@
     <ClInclude Include="includes\cli\Tokenizer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\commands\CreatePresentationCommand.h">
+    <ClInclude Include="includes\cli\commands\CreatePresentationCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="srcs\CLI\Commands\QuitCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\commands\ExitCommand.h">
+    <ClInclude Include="includes\cli\commands\ExitCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\model\shapes\AShape.h">
+    <ClInclude Include="includes\model\Shape.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\model\utils\BBox.h">
@@ -161,31 +176,64 @@
     <ClInclude Include="includes\model\utils\Color.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\commands\AddSlideCommand.h">
+    <ClInclude Include="includes\cli\commands\AddSlideCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\cli\utils\Converter.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\commands\RemoveSlideCommand.h">
+    <ClInclude Include="includes\cli\commands\RemoveSlideCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\cli\factories\RemoveSlideCommandFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\commands\ICommand.h">
+    <ClInclude Include="includes\cli\commands\ICommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\cli\factories\ICommandFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\model\errors\MissingPresentationException.h">
+    <ClInclude Include="includes\core\errors\MissingPresentationException.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\cli\factories\RemovePresentationCommandFactory.h">
+    <ClInclude Include="includes\core\actions\IAction.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\core\commands\RemovePresentationCommand.h">
+    <ClInclude Include="includes\core\actions\AddSlideAction.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\core\actions\CreatePresentationAction.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\core\ActionManager.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\core\actions\RemoveSlideAction.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\commands\UndoCommand.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\commands\RedoCommand.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\factories\UndoCommandFactory.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\factories\RedoCommandFactory.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\model\utils\Properties.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\core\actions\EditPresentationAction.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\commands\EditPresentationCommand.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\factories\EditPresentationCommandFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,7 +7,6 @@
 
 #include <unordered_set>
 
-using namespace ppt::core;
 using namespace ppt::cli;
 
 Parser::Parser(std::istream& istream) : 
