@@ -7,8 +7,17 @@
 
 using namespace ppt::core;
 
-void act::AddSlideAction::doAction()
+act::AddSlideAction::AddSlideAction(std::optional<std::size_t> at, model::utils::Color bgColor) :
+	m_at(at),
+	m_bgColor(bgColor)
 {
+}
+
+bool act::AddSlideAction::doAction()
+{
+	if (m_completed)
+		return false;
+
 	auto& context = model::PPModel::instance().getContext();
 	auto presentation = context.getPresentation();
 
@@ -21,13 +30,22 @@ void act::AddSlideAction::doAction()
 		throw std::out_of_range("Index out of bounds");
 	if (!m_at)
 		m_at = count;
+
+	m_completed = true;
+	return true;
 }
 
-void act::AddSlideAction::undoAction()
+bool act::AddSlideAction::undoAction()
 {
+	if (!m_completed)
+		return false;
+
 	auto& context = model::PPModel::instance().getContext();
 	auto presentation = context.getPresentation();
 
 	assert(m_at.has_value());
 	presentation->removeSlide(m_at.value());
+
+	m_completed = false;
+	return true;
 }

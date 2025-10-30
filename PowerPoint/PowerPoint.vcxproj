@@ -43,13 +43,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -132,6 +132,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="includes\cli\commands\EditPresentationCommand.h" />
+    <ClInclude Include="includes\cli\commands\ListCommand.h" />
+    <ClInclude Include="includes\cli\commands\NextCommand.h" />
+    <ClInclude Include="includes\cli\commands\PrevCommand.h" />
     <ClInclude Include="includes\cli\commands\RedoCommand.h" />
     <ClInclude Include="includes\cli\commands\UndoCommand.h" />
     <ClInclude Include="includes\cli\factories\EditPresentationCommandFactory.h" />
@@ -143,6 +146,9 @@
     <ClInclude Include="includes\cli\errors\InvalidArgumentException.h" />
     <ClInclude Include="includes\cli\errors\MissingArgumentException.h" />
     <ClInclude Include="includes\cli\errors\MissingArgumentValueException.h" />
+    <ClInclude Include="includes\cli\factories\ListCommandFactory.h" />
+    <ClInclude Include="includes\cli\factories\NextCommandFactory.h" />
+    <ClInclude Include="includes\cli\factories\PrevCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\RedoCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\RemoveSlideCommandFactory.h" />
     <ClInclude Include="includes\cli\errors\InvalidInputException.h" />
@@ -150,14 +156,19 @@
     <ClInclude Include="includes\cli\errors\UnknownCommandException.h" />
     <ClInclude Include="includes\cli\factories\UndoCommandFactory.h" />
     <ClInclude Include="includes\core\ActionManager.h" />
+    <ClInclude Include="includes\core\actions\AddShapeAction.h" />
     <ClInclude Include="includes\core\actions\AddSlideAction.h" />
     <ClInclude Include="includes\core\actions\CreatePresentationAction.h" />
     <ClInclude Include="includes\core\actions\EditPresentationAction.h" />
-    <ClInclude Include="includes\core\actions\IAction.h" />
+    <ClInclude Include="includes\core\actions\AAction.h" />
+    <ClInclude Include="includes\core\actions\NextSlideAction.h" />
+    <ClInclude Include="includes\core\actions\PrevSlideAction.h" />
     <ClInclude Include="includes\core\actions\RemoveSlideAction.h" />
+    <ClInclude Include="includes\core\errors\EmptyPresentationException.h" />
     <ClInclude Include="includes\core\IController.h" />
     <ClInclude Include="includes\cli\Token.h" />
     <ClInclude Include="includes\cli\utils\Converter.h" />
+    <ClInclude Include="includes\viewer\cli\CLIVisualizer.h" />
     <ClInclude Include="includes\model\AppContext.h" />
     <ClInclude Include="includes\cli\CommandRegistry.h" />
     <ClInclude Include="includes\cli\CLIController.h" />
@@ -184,9 +195,17 @@
     <ClCompile Include="srcs\cli\commands\AddSlideCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\CreatePresentationCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\EditPresentationCommand.cpp" />
+    <ClCompile Include="srcs\cli\commands\ListCommand.cpp" />
+    <ClCompile Include="srcs\cli\commands\NextCommand.cpp" />
+    <ClCompile Include="srcs\cli\commands\PrevCommand.cpp" />
+    <ClCompile Include="srcs\cli\commands\RedoCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\RemoveSlideCommand.cpp" />
+    <ClCompile Include="srcs\cli\commands\UndoCommand.cpp" />
     <ClCompile Include="srcs\cli\factories\AddSlideCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\EditPresentationCommandFactory.cpp" />
+    <ClCompile Include="srcs\cli\factories\ListCommandFactory.cpp" />
+    <ClCompile Include="srcs\cli\factories\NextCommandFactory.cpp" />
+    <ClCompile Include="srcs\cli\factories\PrevCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\RemoveSlideCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\Parser.cpp" />
     <ClCompile Include="srcs\cli\Tokenizer.cpp" />
@@ -198,6 +217,8 @@
     <ClCompile Include="srcs\core\actions\AddSlideAction.cpp" />
     <ClCompile Include="srcs\core\actions\CreatePresentationAction.cpp" />
     <ClCompile Include="srcs\core\actions\EditPresentationAction.cpp" />
+    <ClCompile Include="srcs\core\actions\NextSlideAction.cpp" />
+    <ClCompile Include="srcs\core\actions\PrevSlideAction.cpp" />
     <ClCompile Include="srcs\core\actions\RemoveSlideAction.cpp" />
     <ClCompile Include="srcs\main.cpp" />
     <ClCompile Include="srcs\cli\factories\CreatePresentationCommandFactory.cpp" />
@@ -205,7 +226,8 @@
     <ClCompile Include="srcs\model\PPModel.cpp" />
     <ClCompile Include="srcs\model\Presentation.cpp" />
     <ClCompile Include="srcs\model\utils\BBox.cpp" />
-    <ClCompile Include="srcs\viewer\CLIViewer.cpp" />
+    <ClCompile Include="srcs\viewer\cli\CLIViewer.cpp" />
+    <ClCompile Include="srcs\viewer\cli\CLIVisualizer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

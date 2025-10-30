@@ -7,10 +7,10 @@
 
 namespace ppt::cli::factories
 {
-  class AddSlideCommandFactory : public ICommandFactory
-  {
-  public:
-      AddSlideCommandFactory() = default;
-      std::unique_ptr<cmds::ICommand> createCommand(const Arguments& args) override;
-  };
+	class AddSlideCommandFactory : public ICommandFactory
+	{
+	public:
+		AddSlideCommandFactory() = default;
+		std::unique_ptr<cmds::ICommand> createCommand(const Arguments& args) override;
+	};
 }

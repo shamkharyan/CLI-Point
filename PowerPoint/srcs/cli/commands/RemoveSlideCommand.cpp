@@ -12,6 +12,6 @@ void RemoveSlideCommand::execute()
 {
 	auto& manager = model::PPModel::instance().getContext().getActionManager();
 	auto action = std::make_unique<act::RemoveSlideAction>(m_at);
-	action->doAction();
-	manager.append(std::move(action));
+	if (action->doAction())
+		manager.append(std::move(action));
 }

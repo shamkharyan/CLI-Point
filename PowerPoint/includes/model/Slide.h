@@ -12,6 +12,9 @@ namespace ppt::model
 	{
 	public:
 		Slide(utils::Color bgColor) : m_bgColor(bgColor) {}
+
+		const std::vector<Shape> getShapes() const { return m_shapes; }
+		utils::Color getBackgroundColor() const { return m_bgColor; }
 	private:
 		std::vector<Shape> m_shapes;
 		utils::Color m_bgColor;

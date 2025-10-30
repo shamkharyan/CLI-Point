@@ -40,7 +40,7 @@ Token Tokenizer::getNextToken()
 		return getStringToken();
 
 	if (c == ',')
-		return {Token::Type::Comma, ","};
+		return { Token::Type::Comma, "," };
 
 	m_is.unget();
 	return getToken();
@@ -113,7 +113,7 @@ Token Tokenizer::getToken()
 Token Tokenizer::errorReturn() noexcept
 {
 	m_error = true;
-	return {Token::Type::Error, ""};
+	return { Token::Type::Error, "" };
 }
 
 Token Tokenizer::eolReturn() noexcept

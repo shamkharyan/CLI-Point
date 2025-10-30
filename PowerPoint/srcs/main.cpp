@@ -7,8 +7,8 @@ using namespace ppt;
 
 int main()
 {
-	auto& viewer = viewer::cli::CLIViewer::instance(std::cin, std::cout);
-	auto& controller = cli::CLIController::instance(viewer);
+	viewer::cli::CLIViewer viewer(std::cin, std::cout);
+	cli::CLIController controller(viewer);
 
 	controller.run();
 
@@ -26,15 +26,14 @@ int main()
 //   [-bg] : color       -> background color, by default is white
 
 // remove-slide -> removes existing slide
-//   -at : pos integer -> remove index
+//   [-at] : pos integer -> remove index, by default deletes from back
 
 // add-shape -> add new shape in the slide
-//   -at	: pos integer -> slide number
-//   -type  : shape       -> shape type (rectangle, circle, line, arrow)
-//   -c     : coord       -> top left corner of bounding box
-//   -w     : pos integer -> shape width
-//   -h     : pos integer -> shape height
-//   [-pos] : pos integer -> position in the slide
+//   [-at]  : pos integer -> slide number, by default last slide
+//   [-type]: shape       -> shape type (rectangle, circle, triangle), by default rectangle
+//   [-c]   : coord       -> top left corner of bounding box, by default [0,0]
+//   [-w]   : pos integer -> shape width, by default 100
+//   [-h]   : pos integer -> shape height, by default 100
 //   [-bg]  : color       -> background color of shape, by default is white
 //   [-oc]  : color       -> outline color of shape, by default is black
 //   [-ot]  : pos integer -> outline thickness of shape, be default is 1
@@ -45,7 +44,7 @@ int main()
 //   [-tl]  : string      -> inline text link
 
 // remove-shape -> remove shape from the slide
-//   -id : pos integer -> shape id
+//   [-at] : pos integer -> shape number, by default last shape in slide
 
 // edit-shape -> edit existing shape
 //   -id    : pos integer -> shape if
@@ -82,3 +81,10 @@ int main()
 
 // show -> shows the presentation
 //   [-at] : pos int -> shows the slide
+
+// next -> next slide
+
+// prev -> prev slide
+
+// goto -> specified slide
+//   -at : pos int -> position

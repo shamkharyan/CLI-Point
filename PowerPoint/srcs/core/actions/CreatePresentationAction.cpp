@@ -5,8 +5,17 @@
 using namespace ppt;
 using namespace ppt::core::act;
 
-void CreatePresentationAction::doAction()
+CreatePresentationAction::CreatePresentationAction(viewer::IViewer& viewer, const std::string& name) :
+	m_name(name),
+	m_viewer(viewer)
 {
+}
+
+bool CreatePresentationAction::doAction()
+{
+	if (m_completed)
+		return false;
+
 	auto& context = model::PPModel::instance().getContext();
 	auto presentation = context.getPresentation();
 	bool shouldRewrite = true;
@@ -22,15 +31,19 @@ void CreatePresentationAction::doAction()
 		m_oldPresentation = presentation;
 		context.setPresentation(std::make_shared<model::Presentation>(m_name));
 		m_completed = true;
+		return true;
 	}
+	return false;
 }
 
-void CreatePresentationAction::undoAction()
+bool CreatePresentationAction::undoAction()
 {
-	if (m_completed)
-	{
-		auto& context = model::PPModel::instance().getContext();
-		context.setPresentation(m_oldPresentation);
-		m_completed = false;
-	}
+	if (!m_completed)
+		return false;
+
+	auto& context = model::PPModel::instance().getContext();
+	context.setPresentation(m_oldPresentation);
+
+	m_completed = false;
+	return true;
 }

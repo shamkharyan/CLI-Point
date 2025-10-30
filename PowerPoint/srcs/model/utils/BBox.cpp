@@ -6,7 +6,8 @@ using namespace ppt::model::utils;
 BBox::BBox(Coord corner, Coord size) noexcept :
 	m_corner(corner),
 	m_size(size)
-{}
+{
+}
 
 BBox::BBox() noexcept : BBox({ 0.f,0.f }, { 0.f, 0.f }) {}
 

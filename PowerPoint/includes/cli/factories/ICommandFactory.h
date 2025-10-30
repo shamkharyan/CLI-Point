@@ -9,12 +9,12 @@
 
 namespace ppt::cli::factories
 {
-    using Arguments = std::unordered_map<std::string, std::vector<std::string>>;
+	using Arguments = std::unordered_map<std::string, std::vector<std::string>>;
 
-    class ICommandFactory
-    {
-    public:
-        virtual ~ICommandFactory() = default;
-        virtual std::unique_ptr<cmds::ICommand> createCommand(const Arguments& args) = 0;
-    };
+	class ICommandFactory
+	{
+	public:
+		virtual ~ICommandFactory() = default;
+		virtual std::unique_ptr<cmds::ICommand> createCommand(const Arguments& args) = 0;
+	};
 }

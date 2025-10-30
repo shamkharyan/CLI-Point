@@ -8,8 +8,16 @@
 using namespace ppt;
 using namespace ppt::core::act;
 
-void EditPresentationAction::doAction()
+EditPresentationAction::EditPresentationAction(const std::optional<std::string>& name) :
+	m_name(name)
 {
+}
+
+bool EditPresentationAction::doAction()
+{
+	if (m_completed)
+		return false;
+
 	auto& context = model::PPModel::instance().getContext();
 	auto presentation = context.getPresentation();
 
@@ -21,13 +29,22 @@ void EditPresentationAction::doAction()
 		m_oldName = presentation->getName();
 		presentation->setName(m_name.value());
 	}
+
+	m_completed = true;
+	return true;
 }
 
-void EditPresentationAction::undoAction()
+bool EditPresentationAction::undoAction()
 {
+	if (!m_completed)
+		return false;
+
 	auto& context = model::PPModel::instance().getContext();
 	auto presentation = context.getPresentation();
 
 	if (m_oldName)
 		presentation->setName(m_oldName.value());
+
+	m_completed = false;
+	return true;
 }

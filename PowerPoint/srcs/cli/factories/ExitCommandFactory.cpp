@@ -6,20 +6,26 @@
 using namespace ppt::cli;
 using namespace ppt::cli::factories;
 
+ExitCommandFactory::ExitCommandFactory(core::IController& controller, viewer::IViewer& viewer) :
+	m_controller(controller),
+	m_viewer(viewer)
+{
+}
+
 std::unique_ptr<cmds::ICommand> ExitCommandFactory::createCommand(const Arguments& args)
 {
-  bool force = false;
+	bool force = false;
 
-  for (const auto& [argName, argVals] : args)
-  {
-    if (argName == "-f")
-    {
-      if (!argVals.empty())
-        throw err::InvalidArgumentValueException(argVals[0]);
-      force = true;
-    }
-    else
-      throw err::InvalidArgumentException(argName);
-  }
-  return std::make_unique<cmds::ExitCommand>(m_controller, m_viewer, force);
+	for (const auto& [argName, argVals] : args)
+	{
+		if (argName == "-f")
+		{
+			if (!argVals.empty())
+				throw err::InvalidArgumentValueException(argVals[0]);
+			force = true;
+		}
+		else
+			throw err::InvalidArgumentException(argName);
+	}
+	return std::make_unique<cmds::ExitCommand>(m_controller, m_viewer, force);
 }

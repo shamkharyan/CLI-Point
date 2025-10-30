@@ -6,8 +6,13 @@
 
 using namespace ppt::core;
 
-void act::RemoveSlideAction::doAction()
+act::RemoveSlideAction::RemoveSlideAction(std::optional<std::size_t> at) : m_at(at) {}
+
+bool act::RemoveSlideAction::doAction()
 {
+	if (m_completed)
+		return false;
+
 	auto& context = model::PPModel::instance().getContext();
 	auto presentation = context.getPresentation();
 	if (!presentation)
@@ -24,14 +29,23 @@ void act::RemoveSlideAction::doAction()
 	}
 	else
 		throw std::out_of_range("Index out of range");
+
+	m_completed = true;
+	return true;
 }
 
-void act::RemoveSlideAction::undoAction()
+bool act::RemoveSlideAction::undoAction()
 {
+	if (!m_completed)
+		return false;
+
 	auto& context = model::PPModel::instance().getContext();
 	auto presentation = context.getPresentation();
 
 	assert(m_at.has_value());
 	assert(m_oldSlide.has_value());
 	presentation->addSlide(m_oldSlide.value(), m_at.value());
+
+	m_completed = false;
+	return true;
 }

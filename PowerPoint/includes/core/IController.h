@@ -2,10 +2,10 @@
 
 namespace ppt::core
 {
-  class IController
-  {
-  public:
-    virtual void run() = 0;
-    virtual void exit() = 0;
-  };
+	class IController
+	{
+	public:
+		virtual void run() = 0;
+		virtual void exit() = 0;
+	};
 }

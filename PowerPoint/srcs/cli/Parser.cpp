@@ -9,10 +9,11 @@
 
 using namespace ppt::cli;
 
-Parser::Parser(std::istream& istream) : 
+Parser::Parser(std::istream& istream) :
 	m_istream(istream),
 	m_tokenizer(istream)
-{ }
+{
+}
 
 std::unique_ptr<cmds::ICommand> Parser::parse()
 {
@@ -129,8 +130,8 @@ std::unique_ptr<cmds::ICommand> Parser::parse()
 bool Parser::isArgName(Token tok) const
 {
 	if (tok.type != Token::Type::Word ||
-			tok.value.empty() ||
-			tok.value[0] != '-')
+		tok.value.empty() ||
+		tok.value[0] != '-')
 		return false;
 
 	std::size_t n = tok.value.size();
@@ -145,7 +146,7 @@ bool Parser::isArgName(Token tok) const
 bool Parser::isArgVal(Token tok) const
 {
 	if (tok.type != Token::Type::Word &&
-			tok.type != Token::Type::String)
+		tok.type != Token::Type::String)
 		return false;
 
 	return !isArgName(tok);

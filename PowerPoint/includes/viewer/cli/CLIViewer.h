@@ -1,6 +1,7 @@
 #pragma once
 
 #include "viewer/IViewer.h"
+#include "viewer/cli/CLIVisualizer.h"
 
 #include <optional>
 #include <string>
@@ -10,25 +11,22 @@ namespace ppt::viewer::cli
 	class CLIViewer : public IViewer
 	{
 	public:
-		static CLIViewer& instance(std::istream& m_is, std::ostream& m_os);
+		CLIViewer(std::istream& is, std::ostream& os);
 		void showError(const std::string& msg) override;
 		void showWarning(const std::string& msg) override;
 		void showInfo(const std::string& msg) override;
 		std::optional<bool> askConfirmation(const std::string& msg) override;
 
-		void showPrompt(const std::string& msg = "(no data)");
+		void showPrompt(std::shared_ptr<model::Presentation> presentation);
 		void showText(const std::string& msg);
+		void showWelcome();
 		void resetStream();
 
+		CLIVisualizer& getVisualizer();
 		std::istream& getIStream();
 		std::ostream& getOStream();
 	private:
-		CLIViewer(std::istream& is, std::ostream& os);
-		CLIViewer(const CLIViewer&) = delete;
-		CLIViewer(CLIViewer&&) noexcept = delete;
-		CLIViewer& operator=(CLIViewer&&) noexcept = delete;
-		CLIViewer& operator=(const CLIViewer&) = delete;
-	private:
+		CLIVisualizer m_visualizer;
 		std::istream& m_is;
 		std::ostream& m_os;
 	};

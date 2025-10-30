@@ -10,8 +10,9 @@ using namespace ppt::cli::cmds;
 ExitCommand::ExitCommand(core::IController& controller, viewer::IViewer& viewer, bool force) :
 	m_controller(controller),
 	m_viewer(viewer),
-	m_force(force) 
-{}
+	m_force(force)
+{
+}
 
 void ExitCommand::execute()
 {

@@ -6,15 +6,13 @@
 
 namespace ppt::cli::factories
 {
-  class ExitCommandFactory : public ICommandFactory
-  {
-  public:
-    ExitCommandFactory(core::IController& controller, viewer::IViewer& viewer) : 
-      m_controller(controller),
-      m_viewer(viewer) {}
-    std::unique_ptr<cmds::ICommand> createCommand(const Arguments& args) override;
-  private:
-    core::IController& m_controller;
-    viewer::IViewer& m_viewer;
-  };
+	class ExitCommandFactory : public ICommandFactory
+	{
+	public:
+		ExitCommandFactory(core::IController& controller, viewer::IViewer& viewer);
+		std::unique_ptr<cmds::ICommand> createCommand(const Arguments& args) override;
+	private:
+		core::IController& m_controller;
+		viewer::IViewer& m_viewer;
+	};
 }

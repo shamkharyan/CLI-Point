@@ -1,7 +1,6 @@
 #pragma once
 
 #include "cli/commands/ICommand.h"
-#include "model/AppContext.h"
 #include "viewer/IViewer.h"
 #include "core/IController.h"
 

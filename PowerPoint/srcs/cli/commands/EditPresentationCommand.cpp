@@ -8,10 +8,12 @@
 using namespace ppt::core;
 using namespace ppt::cli::cmds;
 
+EditPresentationCommand::EditPresentationCommand(const std::optional<std::string>& name) : m_name(name) {}
+
 void EditPresentationCommand::execute()
 {
 	auto& manager = model::PPModel::instance().getContext().getActionManager();
 	auto action = std::make_unique<act::EditPresentationAction>(m_name);
-	action->doAction();
-	manager.append(std::move(action));
+	if (action->doAction())
+		manager.append(std::move(action));
 }

@@ -2,9 +2,9 @@
 
 #include "Slide.h"
 
-#include <list>
-#include <memory>
+#include <vector>
 #include <string>
+#include <optional>
 
 namespace ppt::model
 {
@@ -17,11 +17,17 @@ namespace ppt::model
 		void addSlide(const Slide& slide, std::size_t pos);
 		void removeSlide(std::size_t pos);
 		void setName(const std::string& name);
+		void nextSlide();
+		void prevSlide();
 
+		bool empty() const;
 		const std::string& getName() const;
 		std::size_t slidesCount() const;
+		const std::vector<Slide>& getSlides() const;
+		std::optional<std::size_t> getSelectedId() const;
 	private:
 		std::string m_name;
-		std::list<Slide> m_slides;
+		std::vector<Slide> m_slides;
+		std::optional<std::size_t> m_selected;
 	};
 }
