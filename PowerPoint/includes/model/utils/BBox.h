@@ -7,7 +7,7 @@ namespace ppt::model::utils
 	class BBox
 	{
 	public:
-		BBox() noexcept;
+		BBox() noexcept = default;
 		BBox(Coord corner, Coord size) noexcept;
 
 		Coord getCenter() const noexcept;

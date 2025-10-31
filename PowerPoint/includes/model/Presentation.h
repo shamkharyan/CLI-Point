@@ -14,11 +14,13 @@ namespace ppt::model
 		Presentation(const std::string& name);
 
 		const Slide& getSlide(std::size_t pos) const;
+		Slide& getSlide(std::size_t pos);
 		void addSlide(const Slide& slide, std::size_t pos);
 		void removeSlide(std::size_t pos);
 		void setName(const std::string& name);
 		void nextSlide();
 		void prevSlide();
+		void gotoSlide(std::size_t pos);
 
 		bool empty() const;
 		const std::string& getName() const;

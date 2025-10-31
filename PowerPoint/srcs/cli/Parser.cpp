@@ -130,14 +130,19 @@ std::unique_ptr<cmds::ICommand> Parser::parse()
 bool Parser::isArgName(Token tok) const
 {
 	if (tok.type != Token::Type::Word ||
-		tok.value.empty() ||
+		tok.value.size() < 2 ||
 		tok.value[0] != '-')
 		return false;
 
+	std::size_t i = (tok.value[1] == '-') ? 2 : 1;
 	std::size_t n = tok.value.size();
-	for (std::size_t i = 1; i < n; ++i)
+
+	if (i == n)
+		return false;
+
+	for (; i < n; ++i)
 	{
-		if (!std::isalpha(tok.value[i]))
+		if (!std::isalpha(tok.value[i]) && tok.value[i] != '-')
 			return false;
 	}
 	return true;

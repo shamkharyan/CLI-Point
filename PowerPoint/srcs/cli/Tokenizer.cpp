@@ -99,7 +99,7 @@ Token Tokenizer::getToken()
 				m_is.unget();
 			break;
 		}
-		if (!isalnum(c) && c != '_' && c != '-')
+		if (!isalnum(c) && c != '_' && c != '-' && c != '#')
 			return errorReturn();
 		token.push_back(c);
 	}

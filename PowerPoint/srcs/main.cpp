@@ -1,6 +1,7 @@
 #include "cli/CLIController.h"
 #include "model/PPModel.h"
 #include "viewer/cli/CLIViewer.h"
+#include "cli/utils/registerCommands.h"
 
 #include <iostream>
 using namespace ppt;
@@ -9,6 +10,7 @@ int main()
 {
 	viewer::cli::CLIViewer viewer(std::cin, std::cout);
 	cli::CLIController controller(viewer);
+	cli::registerCommands(viewer, controller);
 
 	controller.run();
 
@@ -16,7 +18,7 @@ int main()
 }
 
 // create-presentation -> creates new presentation
-//   [-n] : string -> presentation name
+//   [-n]   : string -> presentation name
 
 // edit-presentation -> edits existing presentation
 //   [-n] : string -> presentation name
@@ -25,8 +27,16 @@ int main()
 //   [-at] : pos integer -> insert index, by default appends from back
 //   [-bg] : color       -> background color, by default is white
 
+// edit-slide -> edits existing slide
+//   [-at] : pos integer -> existing slide index, by default selected
+//   [-bg] : color       -> new color
+
+// move-slide -> moves existing slide to new position
+//   [-at]  : pos integer -> existing slide index, by default selected slide
+//   [-to] : pos integer -> new position
+
 // remove-slide -> removes existing slide
-//   [-at] : pos integer -> remove index, by default deletes from back
+//   [-at] : pos integer -> remove index, by default deletes selected
 
 // add-shape -> add new shape in the slide
 //   [-at]  : pos integer -> slide number, by default last slide
@@ -82,9 +92,9 @@ int main()
 // show -> shows the presentation
 //   [-at] : pos int -> shows the slide
 
-// next -> next slide
+// next-slide -> next slide
 
-// prev -> prev slide
+// prev-slide -> prev slide
 
-// goto -> specified slide
+// goto-slide -> specified slide
 //   -at : pos int -> position

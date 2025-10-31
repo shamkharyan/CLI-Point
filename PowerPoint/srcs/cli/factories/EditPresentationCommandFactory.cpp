@@ -3,6 +3,7 @@
 #include "cli/errors/MissingArgumentValueException.h"
 #include "cli/factories/EditPresentationCommandFactory.h"
 #include "cli/commands/EditPresentationCommand.h"
+#include "cli/utils/ArgParser.h"
 
 #include <optional>
 
@@ -17,17 +18,12 @@ std::unique_ptr<cmds::ICommand> EditPresentationCommandFactory::createCommand(co
 
 	for (const auto& [argName, argVals] : args)
 	{
-		if (argName == "-n")
-		{
-			if (argVals.size() < 1)
-				throw err::MissingArgumentValueException(argName);
-			if (argVals.size() > 1)
-				throw err::InvalidArgumentValueException(argVals[1]);
-			name = argVals[0];
-		}
+		if (argName == "-n" || argName == "--name")
+			name = utils::ArgParser::parseString(argName, argVals);
 		else
 			throw err::InvalidArgumentException(argName);
 	}
+
 	return std::make_unique<cmds::EditPresentationCommand>(name);
 }
 

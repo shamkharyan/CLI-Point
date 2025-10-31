@@ -15,8 +15,6 @@ namespace ppt::cli
 		void run() override;
 		void exit() override;
 	private:
-		void registerCommands();
-	private:
 		viewer::cli::CLIViewer& m_viewer;
 		bool m_exit = false;
 	};

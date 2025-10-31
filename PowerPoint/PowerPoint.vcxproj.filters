@@ -96,13 +96,13 @@
     <ClCompile Include="srcs\cli\commands\ListCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\cli\commands\NextCommand.cpp">
+    <ClCompile Include="srcs\cli\commands\NextSlideCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="srcs\core\actions\NextSlideAction.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\cli\commands\PrevCommand.cpp">
+    <ClCompile Include="srcs\cli\commands\PrevSlideCommand.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="srcs\core\actions\PrevSlideAction.cpp">
@@ -117,10 +117,43 @@
     <ClCompile Include="srcs\cli\factories\ListCommandFactory.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\cli\factories\NextCommandFactory.cpp">
+    <ClCompile Include="srcs\cli\factories\NextSlideCommandFactory.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\cli\factories\PrevCommandFactory.cpp">
+    <ClCompile Include="srcs\cli\factories\PrevSlideCommandFactory.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\core\actions\GotoSlideAction.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\cli\commands\GotoSlideCommand.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\cli\factories\GotoSlideCommandFactory.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\cli\commands\EditSlideCommand.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\core\actions\EditSlideAction.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\cli\factories\EditSlideCommandFactory.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\core\actions\MoveSlideAction.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\registerCommands.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\cli\factories\MoveSlideCommandFactory.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\cli\commands\MoveSlideCommand.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="srcs\cli\utils\ArgParser.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -281,16 +314,16 @@
     <ClInclude Include="includes\core\actions\AddShapeAction.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\cli\commands\NextCommand.h">
+    <ClInclude Include="includes\cli\commands\NextSlideCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\cli\factories\NextCommandFactory.h">
+    <ClInclude Include="includes\cli\factories\NextSlideCommandFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\cli\factories\PrevCommandFactory.h">
+    <ClInclude Include="includes\cli\factories\PrevSlideCommandFactory.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="includes\cli\commands\PrevCommand.h">
+    <ClInclude Include="includes\cli\commands\PrevSlideCommand.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\core\actions\NextSlideAction.h">
@@ -300,6 +333,39 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="includes\core\errors\EmptyPresentationException.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\commands\GotoSlideCommand.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\core\actions\GotoSlideAction.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\factories\GotoSlideCommandFactory.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\commands\EditSlideCommand.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\core\actions\EditSlideAction.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\factories\EditSlideCommandFactory.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\commands\MoveSlideCommand.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\factories\MoveSlideCommandFactory.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\core\actions\MoveSlideAction.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\utils\registerCommands.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\cli\utils\ArgParser.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

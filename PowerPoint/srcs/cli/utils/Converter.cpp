@@ -30,18 +30,53 @@ std::optional<std::size_t> Converter::stringToSizeT(const std::string& str)
 
 std::optional<model::utils::Color> Converter::stringToColor(const std::string& str)
 {
-	static const std::unordered_map<std::string, model::utils::Color> colorMap = {
-		{"red",   {255, 0, 0}},
-		{"green", {0, 255, 0}},
-		{"blue",  {0, 0, 255}},
-		{"white", {255, 255, 255}},
-		{"black", {0, 0, 0}},
-		{"yellow", {255, 255, 0}}
+	if (auto color = nameStringToColor(str))
+		return color;
+
+	if (auto color = hexStringToColor(str))
+		return color;
+
+	return std::nullopt;
+}
+
+std::optional<model::utils::Color> Converter::nameStringToColor(const std::string& str)
+{
+	using Color = model::utils::Color;
+
+	static const std::unordered_map<std::string, Color> colorMap = {
+				{"red",    Color(255, 0, 0)},
+				{"green",  Color(0, 255, 0)},
+				{"blue",   Color(0, 0, 255)},
+				{"white",  Color(255, 255, 255)},
+				{"black",  Color(0, 0, 0)},
+				{"gray",   Color(128, 128, 128)},
+				{"yellow", Color(255, 255, 0)},
+				{"cyan",   Color(0, 255, 255)},
+				{"magenta",Color(255, 0, 255)}
 	};
 
 	auto it = colorMap.find(str);
 	if (it != colorMap.end())
 		return it->second;
+
+	return std::nullopt;
+}
+
+std::optional<model::utils::Color> Converter::hexStringToColor(const std::string& str)
+{
+	using Color = model::utils::Color;
+
+	if (str.size() == 7 && str[0] == '#')
+	{
+		try
+		{
+			int r = std::stoi(str.substr(1, 2), nullptr, 16);
+			int g = std::stoi(str.substr(3, 2), nullptr, 16);
+			int b = std::stoi(str.substr(5, 2), nullptr, 16);
+			return Color(r, g, b);
+		}
+		catch (...) { return std::nullopt; }
+	}
 
 	return std::nullopt;
 }

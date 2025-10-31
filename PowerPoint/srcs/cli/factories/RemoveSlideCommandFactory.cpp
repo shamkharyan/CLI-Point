@@ -1,8 +1,6 @@
 #include "cli/errors/InvalidArgumentException.h"
-#include "cli/errors/InvalidArgumentValueException.h"
-#include "cli/errors/MissingArgumentException.h"
 #include "cli/factories/RemoveSlideCommandFactory.h"
-#include "cli/utils/Converter.h"
+#include "cli/utils/ArgParser.h"
 #include "cli/commands/RemoveSlideCommand.h"
 
 using namespace ppt::cli;
@@ -14,17 +12,11 @@ std::unique_ptr<cmds::ICommand> RemoveSlideCommandFactory::createCommand(const A
 
 	for (const auto& [argName, argVals] : args)
 	{
-		if (argName == "-at")
-		{
-			if (argVals.size() != 1)
-				throw err::InvalidArgumentValueException("'-at' takes exactly one value");
-			if (auto ans = utils::Converter::stringToSizeT(argVals[0]))
-				at = ans.value();
-			else
-				throw err::InvalidArgumentValueException(argVals[0]);
-		}
+		if (argName == "-a" || argName == "--at")
+			at = utils::ArgParser::parseNumber(argName, argVals);
 		else
 			throw err::InvalidArgumentException(argName);
 	}
+
 	return std::make_unique<cmds::RemoveSlideCommand>(at);
 }

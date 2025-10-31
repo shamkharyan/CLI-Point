@@ -9,11 +9,9 @@ BBox::BBox(Coord corner, Coord size) noexcept :
 {
 }
 
-BBox::BBox() noexcept : BBox({ 0.f,0.f }, { 0.f, 0.f }) {}
-
 Coord BBox::getCenter() const noexcept
 {
-	return { m_corner.x + m_size.x / 2.f, m_corner.y + m_size.y / 2.f };
+	return { m_corner.x + m_size.x / 2, m_corner.y + m_size.y / 2 };
 }
 
 Coord BBox::getMin() const noexcept

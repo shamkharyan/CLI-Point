@@ -15,6 +15,9 @@ namespace ppt::cli::utils
 		static std::optional<model::utils::Color> stringToColor(const std::string& str);
 		static std::optional<model::utils::Color> vectorToColor(const std::vector<std::string>& vec);
 	private:
+		static std::optional<model::utils::Color> nameStringToColor(const std::string& str);
+		static std::optional<model::utils::Color> hexStringToColor(const std::string& str);
+
 		Converter() = delete;
 		Converter(const Converter&) = delete;
 		Converter(Converter&&) noexcept = delete;

@@ -17,6 +17,13 @@ const Slide& Presentation::getSlide(std::size_t pos) const
 	return m_slides[pos];
 }
 
+Slide& Presentation::getSlide(std::size_t pos)
+{
+	if (pos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+	return m_slides[pos];
+}
+
 void Presentation::addSlide(const Slide& slide, std::size_t pos)
 {
 	if (pos > slidesCount())
@@ -73,4 +80,12 @@ const std::vector<Slide>& Presentation::getSlides() const
 std::optional<std::size_t> Presentation::getSelectedId() const
 {
 	return m_selected;
+}
+
+void Presentation::gotoSlide(std::size_t pos)
+{
+	if (pos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+
+	m_selected = pos;
 }

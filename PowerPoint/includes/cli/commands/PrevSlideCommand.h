@@ -4,10 +4,10 @@
 
 namespace ppt::cli::cmds
 {
-	class NextCommand : public ICommand
+	class PrevSlideCommand : public ICommand
 	{
 	public:
-		NextCommand() = default;
+		PrevSlideCommand() = default;
 		void execute() override;
 	};
 }

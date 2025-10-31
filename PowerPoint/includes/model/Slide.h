@@ -15,6 +15,8 @@ namespace ppt::model
 
 		const std::vector<Shape> getShapes() const { return m_shapes; }
 		utils::Color getBackgroundColor() const { return m_bgColor; }
+
+		void setBackgroundColor(utils::Color bgColor) { m_bgColor = bgColor; }
 	private:
 		std::vector<Shape> m_shapes;
 		utils::Color m_bgColor;

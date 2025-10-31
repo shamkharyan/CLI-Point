@@ -1,12 +1,14 @@
 #include "cli/errors/InvalidArgumentException.h"
-#include "cli/factories/AddSlideCommandFactory.h"
+#include "cli/errors/InvalidArgumentValueException.h"
+#include "cli/errors/MissingArgumentValueException.h"
+#include "cli/factories/EditSlideCommandFactory.h"
 #include "cli/utils/ArgParser.h"
-#include "cli/commands/AddSlideCommand.h"
+#include "cli/commands/EditSlideCommand.h"
 
 using namespace ppt::cli;
 using namespace ppt::cli::factories;
 
-std::unique_ptr<cmds::ICommand> AddSlideCommandFactory::createCommand(const Arguments& args)
+std::unique_ptr<cmds::ICommand> EditSlideCommandFactory::createCommand(const Arguments& args)
 {
 	std::optional<model::utils::Color> bgColor;
 	std::optional<std::size_t> at;
@@ -21,5 +23,5 @@ std::unique_ptr<cmds::ICommand> AddSlideCommandFactory::createCommand(const Argu
 			throw err::InvalidArgumentException(argName);
 	}
 
-	return std::make_unique<cmds::AddSlideCommand>(at, bgColor);
+	return std::make_unique<cmds::EditSlideCommand>(at, bgColor);
 }

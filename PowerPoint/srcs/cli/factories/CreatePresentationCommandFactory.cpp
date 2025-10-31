@@ -3,6 +3,7 @@
 #include "cli/errors/MissingArgumentValueException.h"
 #include "cli/factories/CreatePresentationCommandFactory.h"
 #include "cli/commands/CreatePresentationCommand.h"
+#include "cli/utils/ArgParser.h"
 
 using namespace ppt::cli;
 using namespace ppt::cli::factories;
@@ -15,17 +16,12 @@ std::unique_ptr<cmds::ICommand> CreatePresentationCommandFactory::createCommand(
 
 	for (const auto& [argName, argVals] : args)
 	{
-		if (argName == "-n")
-		{
-			if (argVals.size() < 1)
-				throw err::MissingArgumentValueException(argName);
-			if (argVals.size() > 1)
-				throw err::InvalidArgumentValueException(argVals[1]);
-			name = argVals[0];
-		}
+		if (argName == "-n" || argName == "--name")
+			name = utils::ArgParser::parseString(argName, argVals);
 		else
 			throw err::InvalidArgumentException(argName);
 	}
+
 	return std::make_unique<cmds::CreatePresentationCommand>(m_viewer, name);
 }
 

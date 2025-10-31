@@ -43,7 +43,10 @@ bool EditPresentationAction::undoAction()
 	auto presentation = context.getPresentation();
 
 	if (m_oldName)
+	{
 		presentation->setName(m_oldName.value());
+		m_oldName = std::nullopt;
+	}
 
 	m_completed = false;
 	return true;

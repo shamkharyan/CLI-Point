@@ -6,5 +6,5 @@ using namespace ppt::cli::cmds;
 
 void RedoCommand::execute()
 {
-	model::PPModel::instance().getContext().getActionManager().undo();
+	model::PPModel::instance().getContext().getActionManager().redo();
 }

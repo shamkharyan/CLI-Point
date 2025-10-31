@@ -17,7 +17,7 @@ CreatePresentationCommand::CreatePresentationCommand(viewer::IViewer& viewer, co
 void CreatePresentationCommand::execute()
 {
 	auto& manager = model::PPModel::instance().getContext().getActionManager();
-	auto action = std::make_unique<act::CreatePresentationAction>(m_viewer, m_name.value_or("Untitled"));
+	auto action = std::make_unique<act::CreatePresentationAction>(m_viewer, m_name);
 	if (action->doAction())
 		manager.append(std::move(action));
 }

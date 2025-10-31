@@ -1,15 +1,20 @@
-#include "core/actions/RemoveSlideAction.h"
+#include "core/actions/EditSlideAction.h"
 #include "core/errors/MissingPresentationException.h"
 #include "core/errors/EmptyPresentationException.h"
 #include "model/PPModel.h"
+#include "model/Slide.h"
 
 #include <cassert>
 
 using namespace ppt::core;
 
-act::RemoveSlideAction::RemoveSlideAction(std::optional<std::size_t> at) : m_at(at) {}
+act::EditSlideAction::EditSlideAction(std::optional<std::size_t> at, std::optional <model::utils::Color> bgColor) :
+	m_at(at),
+	m_bgColor(bgColor)
+{
+}
 
-bool act::RemoveSlideAction::doAction()
+bool act::EditSlideAction::doAction()
 {
 	if (m_completed)
 		return false;
@@ -28,14 +33,18 @@ bool act::RemoveSlideAction::doAction()
 	else if (m_at.value() >= presentation->slidesCount())
 		throw std::out_of_range("Index out of bounds");
 
-	m_oldSlide = presentation->getSlide(m_at.value());
-	presentation->removeSlide(m_at.value());
+	if (m_bgColor)
+	{
+		auto& slide = presentation->getSlide(m_at.value());
+		m_OldBgColor = slide.getBackgroundColor();
+		slide.setBackgroundColor(m_bgColor.value());
+	}
 
 	m_completed = true;
 	return true;
 }
 
-bool act::RemoveSlideAction::undoAction()
+bool act::EditSlideAction::undoAction()
 {
 	if (!m_completed)
 		return false;
@@ -44,8 +53,12 @@ bool act::RemoveSlideAction::undoAction()
 	auto presentation = context.getPresentation();
 
 	assert(m_at.has_value());
-	assert(m_oldSlide.has_value());
-	presentation->addSlide(m_oldSlide.value(), m_at.value());
+	if (m_OldBgColor)
+	{
+		auto& slide = presentation->getSlide(m_at.value());
+		slide.setBackgroundColor(m_OldBgColor.value());
+		m_OldBgColor = std::nullopt;
+	}
 
 	m_completed = false;
 	return true;

@@ -7,7 +7,7 @@
 
 using namespace ppt::core;
 
-act::AddSlideAction::AddSlideAction(std::optional<std::size_t> at, model::utils::Color bgColor) :
+act::AddSlideAction::AddSlideAction(std::optional<std::size_t> at, std::optional<model::utils::Color> bgColor) :
 	m_at(at),
 	m_bgColor(bgColor)
 {
@@ -23,13 +23,17 @@ bool act::AddSlideAction::doAction()
 
 	if (!presentation)
 		throw err::MissingPresentationException();
-	std::size_t count = presentation->slidesCount();
-	if (m_at.value_or(count) <= count)
-		presentation->addSlide(model::Slide(m_bgColor), m_at.value_or(count));
-	else
-		throw std::out_of_range("Index out of bounds");
+
 	if (!m_at)
-		m_at = count;
+		m_at = presentation->slidesCount();
+
+	if (m_at > presentation->slidesCount())
+		throw std::out_of_range("Index out of range");
+
+	if (!m_bgColor)
+		m_bgColor = model::utils::Color{ 255,255,255 };
+
+	presentation->addSlide(model::Slide(m_bgColor.value()), m_at.value());
 
 	m_completed = true;
 	return true;

@@ -5,7 +5,7 @@
 using namespace ppt;
 using namespace ppt::core::act;
 
-CreatePresentationAction::CreatePresentationAction(viewer::IViewer& viewer, const std::string& name) :
+CreatePresentationAction::CreatePresentationAction(viewer::IViewer& viewer, const std::optional<std::string>& name) :
 	m_name(name),
 	m_viewer(viewer)
 {
@@ -26,14 +26,17 @@ bool CreatePresentationAction::doAction()
 		auto ans = m_viewer.askConfirmation("Presentation \"" + name + "\" exists. Rewrite?");
 		shouldRewrite = ans.value_or(false);
 	}
-	if (shouldRewrite)
-	{
-		m_oldPresentation = presentation;
-		context.setPresentation(std::make_shared<model::Presentation>(m_name));
-		m_completed = true;
-		return true;
-	}
-	return false;
+
+	if (!shouldRewrite)
+		return false;
+
+	if (!m_name)
+		m_name = "Untitled";
+
+	m_oldPresentation = presentation;
+	context.setPresentation(std::make_shared<model::Presentation>(m_name.value()));
+	m_completed = true;
+	return true;
 }
 
 bool CreatePresentationAction::undoAction()
@@ -43,6 +46,7 @@ bool CreatePresentationAction::undoAction()
 
 	auto& context = model::PPModel::instance().getContext();
 	context.setPresentation(m_oldPresentation);
+	m_oldPresentation = nullptr;
 
 	m_completed = false;
 	return true;

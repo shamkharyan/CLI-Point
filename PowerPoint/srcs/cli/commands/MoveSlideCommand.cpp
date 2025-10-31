@@ -1,8 +1,8 @@
-#include "cli/commands/AddSlideCommand.h"
+#include "cli/commands/MoveSlideCommand.h"
 #include "model/PPModel.h"
 #include "viewer/IViewer.h"
 #include "core/ActionManager.h"
-#include "core/actions/AddSlideAction.h"
+#include "core/actions/MoveSlideAction.h"
 
 #include <stdexcept>
 
@@ -10,16 +10,16 @@ using namespace ppt::core;
 using namespace ppt::cli::cmds;
 using namespace ppt::model;
 
-AddSlideCommand::AddSlideCommand(std::optional<std::size_t> at, std::optional<model::utils::Color> bgColor) :
+MoveSlideCommand::MoveSlideCommand(std::optional<std::size_t> at, std::size_t to) :
 	m_at(at),
-	m_bgColor(bgColor)
+	m_to(to)
 {
 }
 
-void AddSlideCommand::execute()
+void MoveSlideCommand::execute()
 {
 	auto& manager = PPModel::instance().getContext().getActionManager();
-	auto action = std::make_unique<act::AddSlideAction>(m_at, m_bgColor);
+	auto action = std::make_unique<act::MoveSlideAction>(m_at, m_to);
 	if (action->doAction())
 		manager.append(std::move(action));
 }

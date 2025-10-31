@@ -12,13 +12,13 @@ namespace ppt::core::act
 	class CreatePresentationAction : public AAction
 	{
 	public:
-		CreatePresentationAction(viewer::IViewer& viewer, const std::string& name);
+		CreatePresentationAction(viewer::IViewer& viewer, const std::optional<std::string>& name);
 
 		bool doAction() override;
 		bool undoAction() override;
 	private:
 		std::shared_ptr<model::Presentation> m_oldPresentation;
-		std::string m_name;
+		std::optional<std::string> m_name;
 		viewer::IViewer& m_viewer;
 		bool m_completed = false;
 	};
