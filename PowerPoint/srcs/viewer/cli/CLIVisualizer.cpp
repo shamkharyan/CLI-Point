@@ -25,41 +25,41 @@ void CLIVisualizer::visualizePresentation(const model::Presentation& presentatio
 
 void CLIVisualizer::visualizeSlide(const model::Slide& slide)
 {
-	const auto& shapes = slide.getShapes();
-	const auto bgColor = slide.getBackgroundColor();
+	//const auto& shapes = slide.getShapes();
+	//const auto bgColor = slide.getBackgroundColor();
 
-	m_os << "Background Color: ";
-	printColorln(slide.getBackgroundColor());
-	for (const auto& shape : shapes)
-	{
-		m_os << "Type: ";
-		switch (shape.getType())
-		{
-		case model::Shape::Type::Circle:
-			m_os << "Circle\n";
-			break;
-		case model::Shape::Type::Rect:
-			m_os << "Rectangle\n";
-			break;
-		case model::Shape::Type::Triangle:
-			m_os << "Triangle\n";
-			break;
-		default:
-			m_os << "Unknown\n";
-		}
-		visualizeBBox(shape.getBBox());
-		//visualizeProperties(shape.getProperties());
-	}
+	//m_os << "Background Color: ";
+	//printColorln(slide.getBackgroundColor());
+	//for (const auto& shape : shapes)
+	//{
+	//	m_os << "Type: ";
+	//	switch (shape.getType())
+	//	{
+	//	case model::utils::ShapeType::Circle:
+	//		m_os << "Circle\n";
+	//		break;
+	//	case model::utils::ShapeType::Rectangle:
+	//		m_os << "Rectangle\n";
+	//		break;
+	//	case model::utils::ShapeType::Triangle:
+	//		m_os << "Triangle\n";
+	//		break;
+	//	default:
+	//		m_os << "Unknown\n";
+	//	}
+	//	visualizeBBox(shape.getBBox());
+	//	//visualizeProperties(shape.getProperties());
+	//}
 }
 
-void CLIVisualizer::visualizeBBox(const model::utils::BBox& bbox)
-{
-	m_os << "Geometry:\n";
-	m_os << "Corner: ";
-	printCoordln(bbox.getMin());
-	m_os << "Width: " << bbox.getSize().x << '\n';
-	m_os << "Height: " << bbox.getSize().y << '\n';
-}
+//void CLIVisualizer::visualizeBBox(const model::utils::BBox& bbox)
+//{
+//	m_os << "Geometry:\n";
+//	m_os << "Corner: ";
+//	printCoordln(bbox.getMin());
+//	m_os << "Width: " << bbox.getSize().x << '\n';
+//	m_os << "Height: " << bbox.getSize().y << '\n';
+//}
 
 void CLIVisualizer::printColorln(const model::utils::Color color)
 {

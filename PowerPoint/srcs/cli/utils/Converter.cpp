@@ -97,3 +97,12 @@ std::optional<model::utils::Color> Converter::vectorToColor(const std::vector<st
 		return model::utils::Color(r.value(), g.value(), b.value());
 	return std::nullopt;
 }
+
+std::optional<model::utils::ShapeType> Converter::stringToShapeType(const std::string& str)
+{
+	if (str == "rectangle") return model::utils::ShapeType::Rectangle;
+	if (str == "circle") return model::utils::ShapeType::Circle;
+	if (str == "triangle") return model::utils::ShapeType::Triangle;
+
+	return std::nullopt;
+}

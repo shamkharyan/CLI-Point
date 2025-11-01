@@ -2,6 +2,7 @@
 
 #include "model/utils/Color.h"
 #include "model/utils/Coord.h"
+#include "model/utils/ShapeType.h"
 
 #include <optional>
 #include <string>
@@ -15,6 +16,7 @@ namespace ppt::cli::utils
 		static bool parseFlag(const std::string& argName, const std::vector<std::string>& argVal);
 		static model::utils::Color parseColor(const std::string& argName, const std::vector<std::string>& argVal);
 		static model::utils::Coord parseCoord(const std::string& argName, const std::vector<std::string>& argVal);
+		static model::utils::ShapeType parseShapeType(const std::string& argName, const std::vector<std::string>& argVal);
 		static std::size_t parseNumber(const std::string& argName, const std::vector<std::string>& argVal);
 		static std::string parseString(const std::string& argName, const std::vector<std::string>& argVal);
 	private:

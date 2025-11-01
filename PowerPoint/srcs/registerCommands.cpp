@@ -3,19 +3,20 @@
 #include "viewer/cli/CLIViewer.h"
 #include "cli/CLIController.h"
 
-#include "cli/factories/AddSlideCommandFactory.h"
-#include "cli/factories/EditSlideCommandFactory.h"
-#include "cli/factories/CreatePresentationCommandFactory.h"
-#include "cli/factories/EditPresentationCommandFactory.h"
-#include "cli/factories/ExitCommandFactory.h"
-#include "cli/factories/RemoveSlideCommandFactory.h"
-#include "cli/factories/UndoCommandFactory.h"
-#include "cli/factories/RedoCommandFactory.h"
-#include "cli/factories/ListCommandFactory.h"
-#include "cli/factories/NextSlideCommandFactory.h"
-#include "cli/factories/PrevSlideCommandFactory.h"
-#include "cli/factories/GotoSlideCommandFactory.h"
-#include "cli/factories/MoveSlideCommandFactory.h"
+#include "cli/factories/slide/AddSlideCommandFactory.h"
+#include "cli/factories/slide/SetSlideColorCommandFactory.h"
+#include "cli/factories/presentation/CreatePresentationCommandFactory.h"
+#include "cli/factories/presentation/RenamePresentationCommandFactory.h"
+#include "cli/factories/utility/ExitCommandFactory.h"
+#include "cli/factories/slide/RemoveSlideCommandFactory.h"
+#include "cli/factories/utility/UndoCommandFactory.h"
+#include "cli/factories/utility/RedoCommandFactory.h"
+#include "cli/factories/utility/ListCommandFactory.h"
+#include "cli/factories/slide/NextSlideCommandFactory.h"
+#include "cli/factories/slide/PrevSlideCommandFactory.h"
+#include "cli/factories/slide/GotoSlideCommandFactory.h"
+#include "cli/factories/slide/MoveSlideCommandFactory.h"
+#include "cli/factories/slide/DuplicateSlideCommandFactory.h"
 
 using namespace ppt;
 
@@ -24,10 +25,10 @@ void cli::registerCommands(ppt::viewer::cli::CLIViewer& viewer, CLIController& c
 	auto& registry = CommandRegistry::instance();
 
 	registry.registerFactory("create-presentation", std::make_shared<factories::CreatePresentationCommandFactory>(viewer));
-	registry.registerFactory("edit-presentation", std::make_shared<factories::EditPresentationCommandFactory>());
+	registry.registerFactory("rename-presentation", std::make_shared<factories::RenamePresentationCommandFactory>());
 	registry.registerFactory("exit", std::make_shared<factories::ExitCommandFactory>(controller, viewer));
 	registry.registerFactory("add-slide", std::make_shared<factories::AddSlideCommandFactory>());
-	registry.registerFactory("edit-slide", std::make_shared<factories::EditSlideCommandFactory>());
+	registry.registerFactory("set-slide-color", std::make_shared<factories::SetSlideColorCommandFactory>());
 	registry.registerFactory("remove-slide", std::make_shared<factories::RemoveSlideCommandFactory>());
 	registry.registerFactory("undo", std::make_shared<factories::UndoCommandFactory>());
 	registry.registerFactory("redo", std::make_shared<factories::RedoCommandFactory>());
@@ -36,5 +37,6 @@ void cli::registerCommands(ppt::viewer::cli::CLIViewer& viewer, CLIController& c
 	registry.registerFactory("prev-slide", std::make_shared<factories::PrevSlideCommandFactory>());
 	registry.registerFactory("goto-slide", std::make_shared<factories::GotoSlideCommandFactory>());
 	registry.registerFactory("move-slide", std::make_shared<factories::MoveSlideCommandFactory>());
+	registry.registerFactory("duplicate-slide", std::make_shared<factories::DuplicateSlideCommandFactory>());
 	registry.registerFactory("remove-slide", std::make_shared<factories::RemoveSlideCommandFactory>());
 }

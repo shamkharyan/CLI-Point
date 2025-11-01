@@ -17,6 +17,8 @@ namespace ppt::model
 		utils::Color getBackgroundColor() const { return m_bgColor; }
 
 		void setBackgroundColor(utils::Color bgColor) { m_bgColor = bgColor; }
+		void clear() { m_shapes.clear(); }
+		bool empty() const { return m_shapes.empty(); }
 	private:
 		std::vector<Shape> m_shapes;
 		utils::Color m_bgColor;

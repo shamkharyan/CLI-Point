@@ -57,6 +57,9 @@ std::string ArgParser::parseString(const std::string& name, const std::vector<st
 Color ArgParser::parseColor(const std::string& name, const std::vector<std::string>& values)
 {
 	std::optional<Color> color;
+
+	if (values.empty())
+		throw err::MissingArgumentValueException(name);
 	if (values.size() == 1)
 		color = Converter::stringToColor(values[0]);
 	else if (values.size() == 3)
@@ -73,4 +76,18 @@ Color ArgParser::parseColor(const std::string& name, const std::vector<std::stri
 	}
 
 	return color.value();
+}
+
+ShapeType ArgParser::parseShapeType(const std::string& name, const std::vector<std::string>& values)
+{
+	if (values.empty())
+		throw err::MissingArgumentValueException(name);
+	if (values.size() > 1)
+		throw err::InvalidArgumentValueException("'" + name + "' takes exactly one numeric value");
+
+	auto type = Converter::stringToShapeType(values[0]);
+	if (!type)
+		throw err::InvalidArgumentValueException("'" + name + "' expects shape type, got '" + values[0] + "'");
+
+	return type.value();
 }

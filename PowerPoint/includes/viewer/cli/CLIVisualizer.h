@@ -14,7 +14,7 @@ namespace ppt::viewer::cli
 		void visualizeSlide(const model::Slide& slide);
 	private:
 		void visualizeShape(const model::Shape& shape);
-		void visualizeBBox(const model::utils::BBox& bbox);
+		//void visualizeBBox(const model::utils::BBox& bbox);
 		void visualizeProperties(const model::utils::Properties& properties);
 		void printColorln(const model::utils::Color color);
 		void printCoordln(const model::utils::Coord coord);
