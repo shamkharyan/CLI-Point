@@ -18,6 +18,6 @@ namespace ppt::core::act
 		std::optional<std::size_t> m_to;
 		bool m_goto;
 
-		std::optional<std::size_t> m_oldPos;
+		std::optional<std::size_t> m_oldPos = std::nullopt;
 	};
 }

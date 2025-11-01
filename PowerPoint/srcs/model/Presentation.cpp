@@ -135,7 +135,7 @@ void Presentation::setSlideColor(utils::Color color, std::size_t pos)
 	if (pos >= slidesCount())
 		throw std::out_of_range("Index out of bounds");
 
-	m_slides[pos].setBackgroundColor(color);
+	m_slides[pos].setColor(color);
 	m_modified = true;
 }
 
@@ -144,9 +144,96 @@ utils::Color Presentation::getSlideColor(std::size_t pos) const
 	if (pos >= slidesCount())
 		throw std::out_of_range("Index out of bounds");
 	
-	return m_slides[pos].getBackgroundColor();
+	return m_slides[pos].getColor();
 }
 
 bool Presentation::isModified() const { return m_modified; }
 
 void Presentation::markSaved() { m_modified = false; }
+
+void Presentation::addShape(const Shape& shape, std::size_t slidePos)
+{
+	if (slidePos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+
+	m_slides[slidePos].appendShape(shape);
+	m_modified = true;
+}
+
+void Presentation::addShapeWithId(const Shape& shape, std::size_t slidePos)
+{
+	if (slidePos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+
+	m_slides[slidePos].appendShapeWithId(shape);
+	m_modified = true;
+}
+
+void Presentation::removeShape(std::size_t shapeId, std::size_t slidePos)
+{
+	if (slidePos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+
+	m_slides[slidePos].removeShapeById(shapeId);
+	m_modified = true;
+}
+
+void Presentation::replaceShape(const Shape& shape, std::size_t shapeId, std::size_t slidePos)
+{
+	if (slidePos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+
+	m_slides[slidePos].replaceShapeById(shape, shapeId);
+	m_modified = true;
+}
+
+Shape Presentation::getShape(std::size_t shapeId, std::size_t slidePos) const
+{
+	if (slidePos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+
+	return m_slides[slidePos].getShapeById(shapeId);
+}
+
+std::size_t Presentation::getNextShapeId(std::size_t slidePos) const
+{
+	if (slidePos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+
+	return m_slides[slidePos].getNextShapeId();
+}
+
+void Presentation::setShapePosition(std::size_t shapeId, utils::Coord position, std::size_t slidePos)
+{
+	if (slidePos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+
+	m_slides[slidePos].setShapePosition(shapeId, position);
+	m_modified = true;
+}
+
+void Presentation::setShapeSize(std::size_t shapeId, utils::Coord size, std::size_t slidePos)
+{
+	if (slidePos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+
+	m_slides[slidePos].setShapeSize(shapeId, size);
+	m_modified = true;
+}
+
+bool Presentation::isShapeExists(std::size_t shapeId, std::size_t slidePos) const
+{
+	if (slidePos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+
+	return m_slides[slidePos].isShapeExists(shapeId);
+}
+
+void Presentation::setShapeType(std::size_t shapeId, utils::ShapeType type, std::size_t slidePos)
+{
+	if (slidePos >= slidesCount())
+		throw std::out_of_range("Index out of bounds");
+
+	m_slides[slidePos].setShapeType(shapeId, type);
+	m_modified = true;
+}

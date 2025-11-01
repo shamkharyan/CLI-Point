@@ -17,6 +17,11 @@
 #include "cli/factories/slide/GotoSlideCommandFactory.h"
 #include "cli/factories/slide/MoveSlideCommandFactory.h"
 #include "cli/factories/slide/DuplicateSlideCommandFactory.h"
+#include "cli/factories/shape/AddShapeCommandFactory.h"
+#include "cli/factories/shape/MoveShapeCommandFactory.h"
+#include "cli/factories/shape/RemoveShapeCommandFactory.h"
+#include "cli/factories/shape/ReplaceShapeCommandFactory.h"
+#include "cli/factories/shape/ResizeShapeCommandFactory.h"
 
 using namespace ppt;
 
@@ -39,4 +44,9 @@ void cli::registerCommands(ppt::viewer::cli::CLIViewer& viewer, CLIController& c
 	registry.registerFactory("move-slide", std::make_shared<factories::MoveSlideCommandFactory>());
 	registry.registerFactory("duplicate-slide", std::make_shared<factories::DuplicateSlideCommandFactory>());
 	registry.registerFactory("remove-slide", std::make_shared<factories::RemoveSlideCommandFactory>());
+	registry.registerFactory("add-shape", std::make_shared<factories::AddShapeCommandFactory>());
+	registry.registerFactory("move-shape", std::make_shared<factories::MoveShapeCommandFactory>());
+	registry.registerFactory("remove-shape", std::make_shared<factories::RemoveShapeCommandFactory>());
+	registry.registerFactory("replace-shape", std::make_shared<factories::ReplaceShapeCommandFactory>());
+	registry.registerFactory("resize-shape", std::make_shared<factories::ResizeShapeCommandFactory>());
 }

@@ -17,7 +17,7 @@ namespace ppt::core::act
 	private:
 		std::optional<std::size_t> m_at;
 
-		std::optional<std::size_t> m_oldPos;
-		std::optional<model::Slide> m_oldSlide;
+		std::optional<std::size_t> m_oldPos = std::nullopt;
+		std::optional<model::Slide> m_oldSlide = std::nullopt;
 	};
 }

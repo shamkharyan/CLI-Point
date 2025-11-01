@@ -1,9 +1,8 @@
 #pragma once
 
-#include <istream>
-#include <string>
-
 #include "cli/Token.h"
+
+#include <istream>
 
 namespace ppt::cli
 {

@@ -11,5 +11,5 @@ void cmds::ListCommand::execute()
 	if (!presentation)
 		m_viewer.showText("(no presentation)");
 	else
-		m_viewer.getVisualizer().visualizePresentation(*presentation);
+		m_viewer.getVisualizer().visualizePresentationSimple(*presentation);
 }

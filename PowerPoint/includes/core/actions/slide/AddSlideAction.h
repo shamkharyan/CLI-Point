@@ -19,6 +19,6 @@ namespace ppt::core::act
 		std::optional<model::utils::Color> m_color;
 		bool m_goto;
 
-		std::optional<std::size_t> m_oldPos;
+		std::optional<std::size_t> m_oldPos = std::nullopt;
 	};
 }

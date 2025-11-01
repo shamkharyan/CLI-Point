@@ -9,19 +9,35 @@ using namespace ppt::viewer::cli;
 
 CLIVisualizer::CLIVisualizer(std::ostream& os) : m_os(os) {}
 
-void CLIVisualizer::visualizePresentation(const model::Presentation& presentation)
+void CLIVisualizer::visualizePresentationSimple(const model::Presentation& presentation)
 {
-	const auto& slides = presentation.getSlides();
-	std::size_t id = 0;
+	m_os << "# Slides (" << presentation.slidesCount() << " total):\n";
 
-	m_os << "Presentation \"" << presentation.getName() << "\"" << '\n';
-
-	for (const auto& slide : slides)
+	for (std::size_t i = 0; i < presentation.slidesCount(); ++i)
 	{
-		m_os << "Slide #" << id++ << '\n';
-		visualizeSlide(slide);
+		const auto& slide = presentation.getSlide(i);
+		bool active = (i == presentation.getSelectedId());
+
+		m_os << (active ? "* " : "  ")
+				<< "[" << i + 1 << "] "
+				<< slide.getColor().toString() << ", "
+				<< slide.shapesCount() << " shapes\n";
 	}
 }
+
+//void CLIVisualizer::visualizePresentation(const model::Presentation& presentation)
+//{
+//	const auto& slides = presentation.getSlides();
+//	std::size_t id = 0;
+//
+//	m_os << "Presentation \"" << presentation.getName() << "\"" << '\n';
+//
+//	for (const auto& slide : slides)
+//	{
+//		m_os << "Slide #" << id++ << '\n';
+//		visualizeSlide(slide);
+//	}
+//}
 
 void CLIVisualizer::visualizeSlide(const model::Slide& slide)
 {

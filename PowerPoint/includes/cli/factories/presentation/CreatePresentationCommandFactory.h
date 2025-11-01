@@ -3,8 +3,6 @@
 #include "cli/factories/ICommandFactory.h"
 #include "viewer/IViewer.h"
 
-#include <string>
-
 namespace ppt::cli::factories
 {
 	class CreatePresentationCommandFactory : public ICommandFactory

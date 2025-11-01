@@ -1,9 +1,6 @@
 #pragma once
 
-#include "cli/CommandRegistry.h"
 #include "core/IController.h"
-#include "model/AppContext.h"
-#include "model/PPModel.h"
 #include "viewer/cli/CLIViewer.h"
 
 namespace ppt::cli

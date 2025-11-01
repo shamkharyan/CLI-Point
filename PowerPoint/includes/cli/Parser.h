@@ -2,7 +2,6 @@
 
 #include "cli/Tokenizer.h"
 #include "cli/commands/ICommand.h"
-#include "model/AppContext.h"
 #include "viewer/cli/CLIViewer.h"
 
 #include <memory>

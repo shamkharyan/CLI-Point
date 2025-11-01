@@ -2,8 +2,6 @@
 
 #include "cli/factories/ICommandFactory.h"
 
-#include <string>
-
 namespace ppt::cli::factories
 {
 	class RenamePresentationCommandFactory : public ICommandFactory

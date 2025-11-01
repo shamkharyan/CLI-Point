@@ -4,6 +4,7 @@
 #include "viewer/IViewer.h"
 
 #include <string>
+#include <optional>
 
 namespace ppt::cli::cmds
 {

@@ -18,6 +18,6 @@ namespace ppt::core::act
 		std::optional<std::size_t> m_at;
 		model::utils::Color m_color;
 
-		std::optional<model::utils::Color> m_OldColor;
+		std::optional<model::utils::Color> m_OldColor = std::nullopt;
 	};
 }

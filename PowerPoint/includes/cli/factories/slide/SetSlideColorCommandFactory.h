@@ -3,8 +3,6 @@
 #include "cli/factories/ICommandFactory.h"
 #include "cli/commands/ICommand.h"
 
-#include <string>
-
 namespace ppt::cli::factories
 {
 	class SetSlideColorCommandFactory : public ICommandFactory

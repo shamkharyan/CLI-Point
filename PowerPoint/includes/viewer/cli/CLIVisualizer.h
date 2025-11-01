@@ -10,12 +10,13 @@ namespace ppt::viewer::cli
 	{
 	public:
 		CLIVisualizer(std::ostream& os);
-		void visualizePresentation(const model::Presentation& presentation);
+		void visualizePresentationSimple(const model::Presentation& presentation);
+		void visualizePresentationFull(const model::Presentation& presentation);
 		void visualizeSlide(const model::Slide& slide);
 	private:
 		void visualizeShape(const model::Shape& shape);
 		//void visualizeBBox(const model::utils::BBox& bbox);
-		void visualizeProperties(const model::utils::Properties& properties);
+		//void visualizeProperties(const model::utils::Properties& properties);
 		void printColorln(const model::utils::Color color);
 		void printCoordln(const model::utils::Coord coord);
 	private:
