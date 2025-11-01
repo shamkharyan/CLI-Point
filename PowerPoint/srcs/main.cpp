@@ -18,83 +18,78 @@ int main()
 }
 
 // create-presentation -> creates new presentation
-//   [-n]   : string -> presentation name
+//   [-n | --name]   : string -> presentation name, by default "Untitled"
 
-// edit-presentation -> edits existing presentation
-//   [-n] : string -> presentation name
+// rename-presentation -> renames existing presentation
+//   <-n | --name> : string -> presentation new name
 
 // add-slide -> creates new slide
-//   [-at] : pos integer -> insert index, by default appends from back
-//   [-bg] : color       -> background color, by default is white
+//   [-a | --at]    : unsigned -> insert index, by default appends from back
+//   [-c | --color] : color    -> background color, by default white
+//   [-g | --goto]  : bool     -> on active goes to the added slide
 
-// edit-slide -> edits existing slide
-//   [-at] : pos integer -> existing slide index, by default selected
-//   [-bg] : color       -> new color
+// clear-slide -> clears the slide
+//   [-a | --at] : unsigned -> slide index to clear
 
-// move-slide -> moves existing slide to new position
-//   [-at]  : pos integer -> existing slide index, by default selected slide
-//   [-to] : pos integer -> new position
+// duplicate-slide -> duplicates the existing slide
+//   [-a | --at]   : unsigned -> which slide to duplicate, by default active slide
+//   [-t | --to]   : unsigned -> where to duplicate slide, by default after active slide
+//   [-g | --goto] : bool     -> on active goes to the added slide
+
+// goto-slide -> changes the active slide
+//   <-a | --at> : unsigned -> slide to position to make active
+
+// duplicate-slide -> moves the existing slide to new position
+//   [-a | --at]   : unsigned -> which slide to move, by default active slide
+//   <-t | --to>   : unsigned -> where to move slide
+
+// next-slide -> makes active next slide
+
+// prev-slide -> makes active previous slide
 
 // remove-slide -> removes existing slide
-//   [-at] : pos integer -> remove index, by default deletes selected
+//   [-a | --at]   : unsigned -> which slide to remove, by default active slide
 
-// add-shape -> add new shape in the slide
-//   [-at]  : pos integer -> slide number, by default last slide
-//   [-type]: shape       -> shape type (rectangle, circle, triangle), by default rectangle
-//   [-c]   : coord       -> top left corner of bounding box, by default [0,0]
-//   [-w]   : pos integer -> shape width, by default 100
-//   [-h]   : pos integer -> shape height, by default 100
-//   [-bg]  : color       -> background color of shape, by default is white
-//   [-oc]  : color       -> outline color of shape, by default is black
-//   [-ot]  : pos integer -> outline thickness of shape, be default is 1
-//   [-t]   : string      -> text inside shape
-//   [-tc]  : color       -> inline text color
-//   [-tf]  : string      -> inline text font
-//   [-ts]  : string      -> inline text style
-//   [-tl]  : string      -> inline text link
+// set-slide-color -> change slide color
+//   [-a | --at]    : unsigned -> which slide to recolor, by default active slide
+//   <-c | --color> : color    -> new color
 
-// remove-shape -> remove shape from the slide
-//   [-at] : pos integer -> shape number, by default last shape in slide
+// add-shape -> creates new shape
+//   [-t | --type]         : shapeType -> shape type, by default rectangle
+//   [-p | --position]     : coord     -> left-up corner coords of shape, by default 0,0
+//   [-s | --size]         : coord     -> width and height of shape, by default 0,0
+//   [-a | --at]           : unsigned  -> where to create, by default active slide
+//   [-c | --color]        : color     -> color of the shape, by default black
+//   [--outline-color]     : color     -> outline color, by default red
+//   [--outline-thickness] : unsigned  -> outline thickness, by default 1
+//   [--text]              : string    -> text inside shape
 
-// edit-shape -> edit existing shape
-//   -id    : pos integer -> shape if
-//   [-type]: shape       -> shape type (rectangle, circle, line, arrow)
-//   [-c]   : coord       -> top left corner of bounding box
-//   [-w]   : pos integer -> shape width
-//   [-h]   : pos integer -> shape height
-//   [-pos] : pos integer -> position in the slide
-//   [-bg]  : color       -> background color of shape, by default is white
-//   [-oc]  : color       -> outline color of shape, by default is black
-//   [-ot]  : pos integer -> outline thickness of shape, be default is 1
-//   [-t]   : string      -> text inside shape
-//   [-tc]  : color       -> inline text color
-//   [-tf]  : string      -> inline text font
-//   [-ts]  : string      -> inline text style
-//   [-tl]  : string      -> inline text link
+// move-shape -> moves existing shape to the new position
+//   <-i | --id>       : unsigned -> id of the shape
+//   [-a | --at]       : unsigned -> index of the slide, by default active slide
+//   <-p | --position> : coord    -> new position of the shape
 
-// help -> print manual
+// remove-shape -> removes existing shape
+//   <-i | --id> : unsigned -> id of the shape
+//   [-a | --at]       : unsigned -> index of the slide, by default active slide
 
-// close -> closes current project
-//   [-f] : null -> force close
+// replace-shape -> changes existing shape type
+//   <-i | --id>   : unsigned  -> id of the shape
+//   [-a | --at]   : unsigned  -> index of the slide, by default active slide
+//   <-t | --type> : shapeType -> new shape type
+
+// resize-shape -> resizes existing shape
+//   <-i | --id>       : unsigned -> id of the shape
+//   [-a | --at]       : unsigned -> index of the slide, by default active slide
+//   <-p | --position> : coord    -> new size of the shape
 
 // exit -> closes the program
-//   [-f] : null -> force exit
+//   [-f | --force] : bool -> force exit
 
-// save -> saves the current project as JSON file
-//   [-path] : string -> save path
+// list -> lists presentation (in development, but works)
 
-// export -> exports the current project to images
-//   [-path] : string -> export path
+// undo/redo
 
-// open -> opens the project
-//   -path : string -> path to the JSON file
+// help -> print manual (not done)
 
-// show -> shows the presentation
-//   [-at] : pos int -> shows the slide
-
-// next-slide -> next slide
-
-// prev-slide -> prev slide
-
-// goto-slide -> specified slide
-//   -at : pos int -> position
+// A lot of command will be done in the future
