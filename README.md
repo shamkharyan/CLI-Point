@@ -33,9 +33,9 @@ A command-line interface (CLI) tool for creating, editing, and managing PowerPoi
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/shamkharyan/cli-powerpoint.git
+   git clone https://github.com/shamkharyan/cli-point.git
    ```
-2. Open the solution file `CLI-PowerPoint.sln` in Visual Studio
+2. Open the solution file `PowerPoint.sln` in Visual Studio
 3. Build the project (select **Debug** or **Release** configuration)
 4. Run the executable from Visual Studio or from the build folder:
 
