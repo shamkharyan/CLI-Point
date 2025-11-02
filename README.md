@@ -54,8 +54,8 @@ add-slide --color red
 add-slide -c 200, 200, 200
 
 # Add shapes
-add-shape -t rectangle -p 100, 100 -s 200,100 --color 255 0 0
-add-shape -t ellipse -p 50, 50 -s 100,100 --color 0 255 0
+add-shape -t rectangle -p 100, 100 -s 200,100 --color 255, 0, 0
+add-shape -t ellipse -p 50, 50 -s 100,100 --color 0, 255, 0
 
 # Move and resize shapes
 move-shape --id 0 --at 0 -p 150, 150
