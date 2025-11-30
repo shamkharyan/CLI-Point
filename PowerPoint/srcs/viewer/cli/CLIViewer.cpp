@@ -74,14 +74,12 @@ void CLIViewer::showText(const std::string& msg)
 	m_os << msg << '\n';
 }
 
-void CLIViewer::showPrompt(std::shared_ptr<model::Presentation> presentation)
+void CLIViewer::showPrompt(model::Presentation& presentation)
 {
-	if (!presentation)
-		m_os << " >> ";
-	else if (presentation->empty())
-		m_os << presentation->getName() << " >> ";
+	if (presentation.empty())
+		m_os << presentation.getName() << " >> ";
 	else
-		m_os << presentation->getName() << " #" << presentation->getSelectedId().value() << " >> ";
+		m_os << presentation.getName() << " #" << presentation.getSelectedId().value() << " >> ";
 }
 
 void CLIViewer::showWelcome()

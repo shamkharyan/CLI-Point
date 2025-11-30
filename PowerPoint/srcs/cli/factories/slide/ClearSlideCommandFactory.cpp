@@ -18,5 +18,5 @@ std::unique_ptr<cmds::ICommand> ClearSlideCommandFactory::createCommand(const Ar
 			throw err::InvalidArgumentException(argName);
 	}
 
-	return std::make_unique<cmds::ClearSlideCommand>(at);
+	return std::make_unique<cmds::ClearSlideCommand>(m_actionManager, m_presentation, at);
 }

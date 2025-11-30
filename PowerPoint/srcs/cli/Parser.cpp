@@ -1,6 +1,7 @@
 #include "cli/CommandRegistry.h"
 #include "cli/errors/InvalidInputException.h"
 #include "cli/errors/UnknownCommandException.h"
+#include "cli/errors/InvalidArgumentException.h"
 #include "cli/factories/ICommandFactory.h"
 #include "cli/Parser.h"
 #include "cli/Tokenizer.h"
@@ -9,7 +10,8 @@
 
 using namespace ppt::cli;
 
-Parser::Parser(std::istream& istream) :
+Parser::Parser(CommandRegistry& registry, std::istream& istream) :
+	m_registry(registry),
 	m_istream(istream),
 	m_tokenizer(istream)
 {
@@ -18,111 +20,43 @@ Parser::Parser(std::istream& istream) :
 std::unique_ptr<cmds::ICommand> Parser::parse()
 {
 	State st = State::Empty;
-	auto& registry = CommandRegistry::instance();
 	m_tokenizer.reset();
 
-	auto cmdName = m_tokenizer.getNextToken();
+	Token cmdName = m_tokenizer.getNextToken();
 	if (cmdName.type == Token::Type::EOL)
 		return nullptr;
 	if (cmdName.type != Token::Type::Word)
 		throw err::InvalidInputException("Invalid command syntax");
 
-	auto factory = registry.getFactory(cmdName.value);
+	auto factory = m_registry.getFactory(cmdName.value);
 	if (!factory)
 		throw err::UnknownCommandException(cmdName.value);
 
 	factories::Arguments args;
 	std::string currArgName;
-	std::string errMsg;
 	st = State::Command;
 
-	while (st != State::Success && st != State::Error)
+	while (st != State::Success)
 	{
 		Token tok = m_tokenizer.getNextToken();
-		if (st == State::Command)
+		switch (st)
 		{
-			if (isArgName(tok))
-			{
-				currArgName = tok.value;
-				args[currArgName] = {};
-				st = State::ArgName;
-			}
-			else if (tok.type == Token::Type::EOL)
-			{
-				st = State::Success;
-			}
-			else
-			{
-				st = State::Error;
-				errMsg = "Expecting argument or EOL after command";
-			}
-		}
-		else if (st == State::ArgName)
-		{
-			if (isArgName(tok))
-			{
-				currArgName = tok.value;
-				args[currArgName] = {};
-			}
-			else if (isArgVal(tok))
-			{
-				args[currArgName].push_back(tok.value);
-				st = State::ArgVal;
-			}
-			else if (tok.type == Token::Type::EOL)
-			{
-				st = State::Success;
-			}
-			else
-			{
-				st = State::Error;
-				errMsg = "Expecting argument, value or EOL after argument";
-			}
-		}
-		else if (st == State::ArgVal)
-		{
-			if (isArgName(tok))
-			{
-				currArgName = tok.value;
-				args[currArgName] = {};
-				st = State::ArgName;
-			}
-			else if (tok.type == Token::Type::Comma)
-			{
-				st = State::Comma;
-			}
-			else if (tok.type == Token::Type::EOL)
-			{
-				st = State::Success;
-			}
-			else
-			{
-				st = State::Error;
-				errMsg = "Expecting argument, comma or EOL after value";
-			}
-		}
-		else if (st == State::Comma)
-		{
-			if (isArgVal(tok))
-			{
-				args[currArgName].push_back(tok.value);
-				st = State::ArgVal;
-			}
-			else
-			{
-				st = State::Error;
-				errMsg = "Expecting value after comma";
-			}
-		}
-		else
-		{
-			st = State::Error;
-			errMsg = "Unknown Error";
+		case State::Command:
+			processCommandState(tok, st, args, currArgName, cmdName.value);
+			break;
+		case State::ArgName:
+			processArgNameState(tok, st, args, currArgName, cmdName.value);
+			break;
+		case State::ArgVal:
+			processArgValState(tok, st, args, currArgName, cmdName.value);
+			break;
+		case State::Comma:
+			processCommaState(tok, st, args, currArgName);
+			break;
+		default:
+			throw err::InvalidInputException("Unknown Error");
 		}
 	}
-
-	if (st == State::Error)
-		throw err::InvalidInputException(errMsg.c_str());
 
 	return factory->createCommand(args);
 }
@@ -155,4 +89,69 @@ bool Parser::isArgVal(Token tok) const
 		return false;
 
 	return !isArgName(tok);
+}
+
+void Parser::processCommandState(const Token& tok, State& st, factories::Arguments& args, std::string& currArgName, const std::string& cmdName)
+{
+	if (isArgName(tok))
+	{
+		if (!m_registry.getMeta(cmdName)->supportsArgument(tok.value))
+			throw err::InvalidArgumentException(cmdName);
+		currArgName = tok.value;
+		args[currArgName] = {};
+		st = State::ArgName;
+	}
+	else if (tok.type == Token::Type::EOL)
+		st = State::Success;
+	else
+		throw err::InvalidInputException("Expecting argument or EOL after command");
+}
+
+void Parser::processArgNameState(const Token& tok, State& st, factories::Arguments& args, std::string& currArgName, const std::string& cmdName)
+{
+	if (isArgName(tok))
+	{
+		if (!m_registry.getMeta(cmdName)->supportsArgument(tok.value))
+			throw err::InvalidArgumentException(cmdName);
+		currArgName = tok.value;
+		args[currArgName] = {};
+	}
+	else if (isArgVal(tok))
+	{
+		args[currArgName].push_back(tok.value);
+		st = State::ArgVal;
+	}
+	else if (tok.type == Token::Type::EOL)
+		st = State::Success;
+	else
+		throw err::InvalidInputException("Expecting argument, value or EOL after argument");
+}
+
+void Parser::processArgValState(const Token& tok, State& st, factories::Arguments& args, std::string& currArgName, const std::string& cmdName)
+{
+	if (isArgName(tok))
+	{
+		if (!m_registry.getMeta(cmdName)->supportsArgument(tok.value))
+			throw err::InvalidArgumentException(cmdName);
+		currArgName = tok.value;
+		args[currArgName] = {};
+		st = State::ArgName;
+	}
+	else if (tok.type == Token::Type::Comma)
+		st = State::Comma;
+	else if (tok.type == Token::Type::EOL)
+		st = State::Success;
+	else
+		throw err::InvalidInputException("Expecting argument, comma or EOL after value");
+}
+
+void Parser::processCommaState(const Token& tok, State& st, factories::Arguments& args, std::string& currArgName)
+{
+	if (isArgVal(tok))
+	{
+		args[currArgName].push_back(tok.value);
+		st = State::ArgVal;
+	}
+	else
+		throw err::InvalidInputException("Expecting value after comma");
 }

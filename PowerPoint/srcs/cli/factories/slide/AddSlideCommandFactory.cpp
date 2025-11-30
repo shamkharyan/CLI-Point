@@ -2,6 +2,10 @@
 #include "cli/factories/slide/AddSlideCommandFactory.h"
 #include "cli/utils/ArgParser.h"
 #include "cli/commands/slide/AddSlideCommand.h"
+#include "model/Presentation.h"
+#include "core/ActionManager.h"
+
+#include <memory>
 
 using namespace ppt::cli;
 using namespace ppt::cli::factories;
@@ -24,5 +28,5 @@ std::unique_ptr<cmds::ICommand> AddSlideCommandFactory::createCommand(const Argu
 			throw err::InvalidArgumentException(argName);
 	}
 
-	return std::make_unique<cmds::AddSlideCommand>(at, color, go);
+	return std::make_unique<cmds::AddSlideCommand>(m_actionManager, m_presentation, at, color, go);
 }

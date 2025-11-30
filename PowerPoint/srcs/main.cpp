@@ -3,25 +3,19 @@
 #include "viewer/cli/CLIViewer.h"
 #include "cli/utils/registerCommands.h"
 
+#include "CLIApplication.h"
+
 #include <iostream>
-using namespace ppt;
 
-int main()
+int main(int argc, char *argv[])
 {
-	viewer::cli::CLIViewer viewer(std::cin, std::cout);
-	cli::CLIController controller(viewer);
-	cli::registerCommands(viewer, controller);
+	std::ignore = argc;
+	std::ignore = argv;
 
-	controller.run();
+	auto& app = ppt::CLIApplication::instance();
 
-	return 0;
+	return app.execute();
 }
-
-// create-presentation -> creates new presentation
-//   [-n | --name]   : string -> presentation name, by default "Untitled"
-
-// rename-presentation -> renames existing presentation
-//   <-n | --name> : string -> presentation new name
 
 // add-slide -> creates new slide
 //   [-a | --at]    : unsigned -> insert index, by default appends from back

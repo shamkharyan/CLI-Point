@@ -1,6 +1,5 @@
 #include "cli/CLIController.h"
 #include "cli/Parser.h"
-#include "model/PPModel.h"
 #include "viewer/cli/CLIViewer.h"
 
 #include <iostream>
@@ -8,18 +7,23 @@
 using namespace ppt::cli;
 using namespace ppt::core;
 
-CLIController::CLIController(viewer::cli::CLIViewer& viewer) : m_viewer(viewer) { }
+CLIController::CLIController(
+	viewer::cli::CLIViewer& viewer,
+	CommandRegistry& registry,
+	model::Presentation& presentation) : 
+	m_viewer(viewer), 
+	m_registry(registry), 
+	m_presentation(presentation) { }
 
-void CLIController::run()
+int CLIController::run()
 {
-	auto& context = model::PPModel::instance().getContext();
 	m_viewer.showWelcome();
 
-	Parser parser(m_viewer.getIStream());
+	Parser parser(m_registry, m_viewer.getIStream());
 
 	while (!m_exit)
 	{
-		m_viewer.showPrompt(context.getPresentation());
+		m_viewer.showPrompt(m_presentation);
 		try
 		{
 			std::unique_ptr<cmds::ICommand> cmd = parser.parse();
@@ -32,6 +36,8 @@ void CLIController::run()
 			m_viewer.resetStream();
 		}
 	}
+
+	return 0;
 }
 
 void CLIController::exit() { m_exit = true; }

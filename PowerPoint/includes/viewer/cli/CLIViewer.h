@@ -17,7 +17,7 @@ namespace ppt::viewer::cli
 		void showInfo(const std::string& msg) override;
 		std::optional<bool> askConfirmation(const std::string& msg) override;
 
-		void showPrompt(std::shared_ptr<model::Presentation> presentation);
+		void showPrompt(model::Presentation& presentation);
 		void showText(const std::string& msg);
 		void showWelcome();
 		void resetStream();

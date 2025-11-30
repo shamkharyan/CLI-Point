@@ -30,15 +30,21 @@ namespace ppt::cli
 	class Parser
 	{
 	public:
-		Parser(std::istream& istream);
+		Parser(CommandRegistry& registry, std::istream& istream);
 		std::unique_ptr<cmds::ICommand> parse();
 	private:
-		enum class State { Empty, Command, ArgName, ArgVal, Comma, Error, Success };
+		enum class State { Empty, Command, ArgName, ArgVal, Comma, Success };
 	private:
 		bool isArgName(Token tok) const;
 		bool isArgVal(Token tok) const;
+
+		void processCommandState(const Token& tok, State& st, factories::Arguments& args, std::string& currArgName, const std::string& cmdName);
+		void processArgNameState(const Token& tok, State& st, factories::Arguments& args, std::string& currArgName, const std::string& cmdName);
+		void processArgValState(const Token& tok, State& st, factories::Arguments& args, std::string& currArgName, const std::string& cmdName);
+		void processCommaState(const Token& tok, State& st, factories::Arguments& args, std::string& currArgName);
 	private:
 		Tokenizer m_tokenizer;
+		CommandRegistry& m_registry;
 		std::istream& m_istream;
 	};
 }

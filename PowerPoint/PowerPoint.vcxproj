@@ -131,7 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="includes\cli\commands\presentation\RenamePresentationCommand.h" />
+    <ClInclude Include="includes\CLIApplication.h" />
     <ClInclude Include="includes\cli\commands\shape\AddShapeCommand.h" />
     <ClInclude Include="includes\cli\commands\shape\MoveShapeCommand.h" />
     <ClInclude Include="includes\cli\commands\shape\RemoveShapeCommand.h" />
@@ -152,7 +152,6 @@
     <ClInclude Include="includes\cli\commands\utility\RedoCommand.h" />
     <ClInclude Include="includes\cli\commands\utility\UndoCommand.h" />
     <ClInclude Include="includes\cli\factories\shape\AddShapeCommandFactory.h" />
-    <ClInclude Include="includes\cli\factories\presentation\RenamePresentationCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\shape\MoveShapeCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\shape\RemoveShapeCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\slide\ClearSlideCommandFactory.h" />
@@ -177,6 +176,9 @@
     <ClInclude Include="includes\cli\errors\InvalidArgumentValueException.h" />
     <ClInclude Include="includes\cli\errors\UnknownCommandException.h" />
     <ClInclude Include="includes\cli\factories\utility\UndoCommandFactory.h" />
+    <ClInclude Include="includes\cli\meta\AddSlideCommandMeta.h" />
+    <ClInclude Include="includes\cli\meta\CommandMeta.h" />
+    <ClInclude Include="includes\cli\meta\ExitCommandMeta.h" />
     <ClInclude Include="includes\cli\utils\ArgParser.h" />
     <ClInclude Include="includes\core\ActionManager.h" />
     <ClInclude Include="includes\core\actions\shape\AddShapeAction.h" />
@@ -204,14 +206,13 @@
     <ClInclude Include="includes\model\utils\Geometry.h" />
     <ClInclude Include="includes\model\utils\ShapeType.h" />
     <ClInclude Include="includes\model\utils\Text.h" />
+    <ClInclude Include="includes\utils\IObserver.h" />
+    <ClInclude Include="includes\utils\Observable.h" />
     <ClInclude Include="includes\viewer\cli\CLIVisualizer.h" />
-    <ClInclude Include="includes\model\AppContext.h" />
     <ClInclude Include="includes\cli\CommandRegistry.h" />
     <ClInclude Include="includes\cli\CLIController.h" />
-    <ClInclude Include="includes\cli\factories\presentation\CreatePresentationCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\utility\ExitCommandFactory.h" />
     <ClInclude Include="includes\core\errors\MissingPresentationException.h" />
-    <ClInclude Include="includes\model\PPModel.h" />
     <ClInclude Include="includes\model\utils\BBox.h" />
     <ClInclude Include="includes\model\utils\Color.h" />
     <ClInclude Include="includes\model\utils\Coord.h" />
@@ -223,7 +224,6 @@
     <ClInclude Include="includes\model\utils\Style.h" />
     <ClInclude Include="includes\viewer\cli\CLIViewer.h" />
     <ClInclude Include="includes\viewer\IViewer.h" />
-    <ClInclude Include="includes\cli\commands\presentation\CreatePresentationCommand.h" />
     <ClInclude Include="includes\cli\commands\utility\ExitCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\QuitCommand.h" />
     <ClInclude Include="includes\core\actions\slide\GotoSlideAction.h" />
@@ -231,14 +231,13 @@
   <ItemGroup>
     <ClCompile Include="includes\cli\factories\shape\ReplaceShapeCommandFactory.h" />
     <ClCompile Include="includes\cli\factories\shape\ResizeShapeCommandFactory.h" />
+    <ClCompile Include="srcs\CLIApplication.cpp" />
     <ClCompile Include="srcs\cli\commands\shape\AddShapeCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\shape\MoveShapeCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\shape\RemoveShapeCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\shape\ReplaceShapeCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\shape\ResizeShapeCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\slide\AddSlideCommand.cpp" />
-    <ClCompile Include="srcs\cli\commands\presentation\CreatePresentationCommand.cpp" />
-    <ClCompile Include="srcs\cli\commands\presentation\RenamePresentationCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\slide\ClearSlideCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\slide\DuplicateSlideCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\slide\SetSlideColorCommand.cpp" />
@@ -256,7 +255,6 @@
     <ClCompile Include="srcs\cli\factories\shape\ReplaceShapeCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\shape\ResizeShapeCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\slide\AddSlideCommandFactory.cpp" />
-    <ClCompile Include="srcs\cli\factories\presentation\EditPresentationCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\slide\ClearSlideCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\slide\DuplicateSlideCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\slide\SetSlideColorCommandFactory.cpp" />
@@ -270,7 +268,6 @@
     <ClCompile Include="srcs\cli\factories\utility\UndoCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\Parser.cpp" />
     <ClCompile Include="srcs\cli\Tokenizer.cpp" />
-    <ClCompile Include="srcs\cli\CommandRegistry.cpp" />
     <ClCompile Include="srcs\cli\CLIController.cpp" />
     <ClCompile Include="srcs\cli\commands\utility\ExitCommand.cpp" />
     <ClCompile Include="srcs\cli\utils\ArgParser.cpp" />
@@ -282,8 +279,6 @@
     <ClCompile Include="srcs\core\actions\shape\ReplaceShapeAction.cpp" />
     <ClCompile Include="srcs\core\actions\shape\ResizeShapeAction.cpp" />
     <ClCompile Include="srcs\core\actions\slide\AddSlideAction.cpp" />
-    <ClCompile Include="srcs\core\actions\presentation\CreatePresentationAction.cpp" />
-    <ClCompile Include="srcs\core\actions\presentation\EditPresentationAction.cpp" />
     <ClCompile Include="srcs\core\actions\slide\ClearSlideAction.cpp" />
     <ClCompile Include="srcs\core\actions\slide\DuplicateSlideAction.cpp" />
     <ClCompile Include="srcs\core\actions\slide\SetSlideColorAction.cpp" />
@@ -293,7 +288,6 @@
     <ClCompile Include="srcs\core\actions\slide\PrevSlideAction.cpp" />
     <ClCompile Include="srcs\core\actions\slide\RemoveSlideAction.cpp" />
     <ClCompile Include="srcs\main.cpp" />
-    <ClCompile Include="srcs\cli\factories\presentation\CreatePresentationCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\ExitCommandFactory.cpp" />
     <ClCompile Include="srcs\model\PPModel.cpp" />
     <ClCompile Include="srcs\model\Presentation.cpp" />
