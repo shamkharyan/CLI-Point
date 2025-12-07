@@ -4,51 +4,60 @@
 
 #include <vector>
 #include <string>
-#include <optional>
 
 namespace ppt::model
 {
 	class Presentation
 	{
 	public:
-		Presentation(const std::string& name);
+		using container = std::vector<Slide>;
+		using iterator = container::iterator;
+		using const_iterator = container::const_iterator;
 
-		// Presentation related methods
-		void setName(const std::string& name);
-		void setSelectedId(std::size_t pos);
-		void markSaved();
-		const std::string& getName() const;
-		std::optional<std::size_t> getSelectedId() const;
-		bool isModified() const;
+		Presentation() : Presentation("Untitled") {}
+		explicit Presentation(const std::string& name) : m_name(name) {}
 
-		// Slides related methods
-		void addSlide(const Slide& slide, std::size_t pos);
-		void removeSlide(std::size_t pos);
-		void replaceSlide(const Slide& slide, std::size_t pos);
-		void moveSlide(std::size_t from, std::size_t to);
-		void clearSlide(std::size_t pos);
-		void setSlideColor(utils::Color color, std::size_t pos);
-		std::size_t slidesCount() const;
-		bool empty() const;
-		const Slide& getSlide(std::size_t pos) const;
-		const std::vector<Slide>& getSlides() const;
-		utils::Color getSlideColor(std::size_t pos) const;
-		
-		// Shape related methods
-		void addShape(const Shape& shape, std::size_t slidePos);
-		void addShapeWithId(const Shape& shape, std::size_t slidePos);
-		void removeShape(std::size_t shapeId, std::size_t slidePos);
-		void replaceShape(const Shape& shape, std::size_t shapeId, std::size_t slidePos);
-		void setShapePosition(std::size_t shapeId, utils::Coord position, std::size_t slidePos);
-		void setShapeSize(std::size_t shapeId, utils::Coord size, std::size_t slidePos);
-		void setShapeType(std::size_t shapeId, utils::ShapeType type, std::size_t slidePos);
-		Shape getShape(std::size_t shapeId, std::size_t pos) const;
-		std::size_t getNextShapeId(std::size_t slidePos) const;
-		bool isShapeExists(std::size_t shapeId, std::size_t slidePos) const;
+		void setName(const std::string& name) noexcept { m_name = name; }
+		const std::string& getName() const noexcept { return m_name; }
+
+		std::size_t slidesCount() const noexcept { return m_slides.size(); }
+		bool empty() const noexcept { return m_slides.empty(); }
+
+		iterator begin() noexcept { return m_slides.begin(); }
+		iterator end() noexcept { return m_slides.end(); }
+
+		const_iterator begin() const noexcept { return m_slides.begin(); }
+		const_iterator end() const noexcept { return m_slides.end(); }
+
+		const_iterator cbegin() const noexcept { return m_slides.cbegin(); }
+		const_iterator cend() const noexcept { return m_slides.cend(); }
+
+		Slide& operator[](std::size_t pos) { return m_slides[pos]; }
+		const Slide& operator[](std::size_t pos) const { return m_slides[pos]; }
+
+		Slide& getSlide(std::size_t pos)
+		{
+			checkIndex(pos);
+			return m_slides[pos];
+		}
+
+		const Slide& getSlide(std::size_t pos) const
+		{
+			checkIndex(pos);
+			return m_slides[pos];
+		}
+
+		void appendSlide(const Slide& slide) { m_slides.push_back(slide); }
+		void insertSlide(const_iterator pos, const Slide& slide) { m_slides.insert(pos, slide); }
+		void eraseSlide(const_iterator pos) { m_slides.erase(pos); }
+	private:
+		void checkIndex(std::size_t index) const
+		{
+			if (index >= slidesCount())
+				throw std::out_of_range("Slide index out of range");
+		}
 	private:
 		std::string m_name;
 		std::vector<Slide> m_slides;
-		std::optional<std::size_t> m_selected;
-		bool m_modified = false;
 	};
 }
