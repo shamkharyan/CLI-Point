@@ -9,16 +9,16 @@
 
 namespace ppt::core::act
 {
-  class AddShapeAction : public AAction
-  {
-  public:
-      AddShapeAction(const utils::AddShapeParams& params);
+	class AddShapeAction : public AAction
+	{
+	public:
+		AddShapeAction(const utils::AddShapeParams& params);
 
-    bool doAction() override;
-    bool undoAction() override;
-  private:
-      utils::AddShapeParams m_params;
+		bool doAction() override;
+		bool undoAction() override;
+	private:
+		utils::AddShapeParams m_params;
 
-      std::optional<std::size_t> m_shapeId = std::nullopt;
-  };
+		std::optional<std::size_t> m_shapeId = std::nullopt;
+	};
 }

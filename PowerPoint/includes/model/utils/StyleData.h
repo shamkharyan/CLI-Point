@@ -18,6 +18,9 @@ namespace ppt::model::utils
 	{
 		FillType fillType;
 
+		Color outlineColor;
+		float outlineWidth;
+
 		// Only for SolidColor fill type
 		Color fillColor;
 
@@ -32,9 +35,6 @@ namespace ppt::model::utils
 
 		// Only for ImageTexture
 		std::string imagePath; 
-
-		Color outlineColor;
-		float outlineWidth;
 
 		StyleData()
 			: fillType(FillType::SolidColor), fillColor(255, 255, 255), outlineColor(0, 0, 0), outlineWidth(1.0f)

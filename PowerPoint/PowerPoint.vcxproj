@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Downloads\json.hpp" />
     <ClInclude Include="includes\CLIApplication.h" />
     <ClInclude Include="includes\cli\commands\shape\AddShapeCommand.h" />
     <ClInclude Include="includes\cli\commands\shape\MoveShapeCommand.h" />
@@ -201,8 +202,15 @@
     <ClInclude Include="includes\cli\Token.h" />
     <ClInclude Include="includes\cli\utils\Converter.h" />
     <ClInclude Include="includes\cli\utils\registerCommands.h" />
+    <ClInclude Include="includes\libs\json.hpp" />
     <ClInclude Include="includes\model\utils\GeometryData.h" />
     <ClInclude Include="includes\model\utils\TextData.h" />
+    <ClInclude Include="includes\serialization\IDeserializer.h" />
+    <ClInclude Include="includes\serialization\ISerializer.h" />
+    <ClInclude Include="includes\serialization\IValidator.h" />
+    <ClInclude Include="includes\serialization\JSONDeserializer.h" />
+    <ClInclude Include="includes\serialization\JSONSerializer.h" />
+    <ClInclude Include="includes\serialization\JSONValidator.h" />
     <ClInclude Include="includes\utils\IObserver.h" />
     <ClInclude Include="includes\utils\Observable.h" />
     <ClInclude Include="includes\viewer\cli\CLIVisualizer.h" />
@@ -282,6 +290,8 @@
     <ClCompile Include="srcs\core\actions\slide\NextSlideAction.cpp" />
     <ClCompile Include="srcs\core\actions\slide\PrevSlideAction.cpp" />
     <ClCompile Include="srcs\core\actions\slide\RemoveSlideAction.cpp" />
+    <ClCompile Include="srcs\serialization\JSONDeserializer.cpp" />
+    <ClCompile Include="srcs\serialization\JSONSerializer.cpp" />
     <ClCompile Include="srcs\main.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\ExitCommandFactory.cpp" />
     <ClCompile Include="srcs\model\PPModel.cpp" />
@@ -289,6 +299,7 @@
     <ClCompile Include="srcs\model\Slide.cpp" />
     <ClCompile Include="srcs\model\utils\BBox.cpp" />
     <ClCompile Include="srcs\registerCommands.cpp" />
+    <ClCompile Include="srcs\serialization\JSONValidator.cpp" />
     <ClCompile Include="srcs\viewer\cli\CLIViewer.cpp" />
     <ClCompile Include="srcs\viewer\cli\CLIVisualizer.cpp" />
   </ItemGroup>
