@@ -11,6 +11,7 @@ using namespace ppt::model;
 
 void AddSlideCommand::execute()
 {
+	auto slide = std::make_shared<Slide>();
 	auto action = std::make_unique<act::AddSlideAction>(m_at, m_color, m_goto);
 	if (action->doAction())
 		m_actionManager.append(std::move(action));

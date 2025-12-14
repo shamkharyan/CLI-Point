@@ -1,24 +1,34 @@
 #pragma once
 
-#include "core/actions/AAction.h"
-#include "model/utils/Color.h"
-
-#include <optional>
+#include "core/actions/IAction.h"
+#include "core/actions/slide/RemoveSlideAction.h"
+#include "model/Slide.h"
+#include "model/Presentation.h"
 
 namespace ppt::core::act
 {
-	class AddSlideAction : public AAction
+	class AddSlideAction : public IAction
 	{
 	public:
-		AddSlideAction(std::optional<std::size_t> at, std::optional<model::utils::Color> color, bool go);
+		AddSlideAction(
+			model::Presentation& presentation, 
+			std::shared_ptr<model::Slide> pSlide,
+			std::size_t index) : 
+			m_presentation(presentation), 
+			m_pSlide(std::move(pSlide)),
+			m_index(index) {}
 
-		bool doAction() override;
-		bool undoAction() override;
+		std::unique_ptr<IAction> doAction() override
+		{
+			auto it = m_presentation.begin() + m_index;
+			m_presentation.insertSlide(it, m_pSlide);
+
+			return std::make_unique<RemoveSlideAction>(m_presentation, m_index);
+		}
+
 	private:
-		std::optional<std::size_t> m_at;
-		std::optional<model::utils::Color> m_color;
-		bool m_goto;
-
-		std::optional<std::size_t> m_oldPos = std::nullopt;
+		model::Presentation& m_presentation;
+		std::shared_ptr<model::Slide> m_pSlide;
+		std::size_t m_index;
 	};
 }

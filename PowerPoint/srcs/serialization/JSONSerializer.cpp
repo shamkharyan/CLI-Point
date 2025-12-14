@@ -100,7 +100,7 @@ void JSONSerializer::serializePresentation(json& jPresentation, const model::Pre
 	for (const auto& slide : presentation)
 	{
 		json jSlide;
-		serializeSlide(jSlide, slide);
+		serializeSlide(jSlide, *slide);
 		jPresentation["slides"].push_back(jSlide);
 	}
 }

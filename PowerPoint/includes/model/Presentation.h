@@ -1,63 +1,53 @@
 #pragma once
 
-#include "Slide.h"
-
 #include <vector>
 #include <string>
+#include <memory>
 
 namespace ppt::model
 {
+	class Slide;
+
 	class Presentation
 	{
 	public:
-		using container = std::vector<Slide>;
+		using container = std::vector<std::shared_ptr<Slide>>;
 		using iterator = container::iterator;
 		using const_iterator = container::const_iterator;
 
-		Presentation() : Presentation("Untitled") {}
-		explicit Presentation(const std::string& name) : m_name(name) {}
+		Presentation();
+		explicit Presentation(const std::string& name);
 
-		void setName(const std::string& name) noexcept { m_name = name; }
-		const std::string& getName() const noexcept { return m_name; }
+		void setName(const std::string& name) noexcept;
+		const std::string& getName() const noexcept;
 
-		std::size_t slidesCount() const noexcept { return m_slides.size(); }
-		bool empty() const noexcept { return m_slides.empty(); }
+		std::size_t slidesCount() const noexcept;
+		bool empty() const noexcept;
 
-		iterator begin() noexcept { return m_slides.begin(); }
-		iterator end() noexcept { return m_slides.end(); }
+		iterator begin() noexcept;
+		iterator end() noexcept;
 
-		const_iterator begin() const noexcept { return m_slides.begin(); }
-		const_iterator end() const noexcept { return m_slides.end(); }
+		const_iterator begin() const noexcept;
+		const_iterator end() const noexcept;
+		const_iterator cbegin() const noexcept;
+		const_iterator cend() const noexcept;
 
-		const_iterator cbegin() const noexcept { return m_slides.cbegin(); }
-		const_iterator cend() const noexcept { return m_slides.cend(); }
+		std::shared_ptr<Slide>& operator[](std::size_t pos);
+		const std::shared_ptr<Slide>& operator[](std::size_t pos) const;
 
-		Slide& operator[](std::size_t pos) { return m_slides[pos]; }
-		const Slide& operator[](std::size_t pos) const { return m_slides[pos]; }
+		std::shared_ptr<Slide>& getSlide(std::size_t pos);
+		const std::shared_ptr<Slide>& getSlide(std::size_t pos) const;
 
-		Slide& getSlide(std::size_t pos)
-		{
-			checkIndex(pos);
-			return m_slides[pos];
-		}
+		void appendSlide(std::shared_ptr<Slide> slide);
+		void insertSlide(iterator pos, std::shared_ptr<Slide> slide);
+		void eraseSlide(iterator pos);
+		std::shared_ptr<Slide> removeSlide(iterator pos);
 
-		const Slide& getSlide(std::size_t pos) const
-		{
-			checkIndex(pos);
-			return m_slides[pos];
-		}
-
-		void appendSlide(const Slide& slide) { m_slides.push_back(slide); }
-		void insertSlide(const_iterator pos, const Slide& slide) { m_slides.insert(pos, slide); }
-		void eraseSlide(const_iterator pos) { m_slides.erase(pos); }
 	private:
-		void checkIndex(std::size_t index) const
-		{
-			if (index >= slidesCount())
-				throw std::out_of_range("Slide index out of range");
-		}
+		void checkIndex(std::size_t index) const;
+
 	private:
 		std::string m_name;
-		std::vector<Slide> m_slides;
+		container m_slides;
 	};
 }

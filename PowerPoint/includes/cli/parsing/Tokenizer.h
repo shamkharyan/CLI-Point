@@ -1,11 +1,16 @@
 #pragma once
 
-#include "cli/Token.h"
-
 #include <istream>
 
 namespace ppt::cli
 {
+	struct Token
+	{
+		enum class Type { String, Word, Comma, EOL, Error };
+		Type type;
+		std::string value;
+	};
+
 	class Tokenizer
 	{
 	public:

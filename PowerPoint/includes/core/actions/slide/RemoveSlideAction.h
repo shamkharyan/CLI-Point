@@ -1,23 +1,32 @@
 #pragma once
 
-#include "core/actions/AAction.h"
+#include "core/actions/IAction.h"
 #include "model/Slide.h"
 
 #include <optional>
 
 namespace ppt::core::act
 {
-	class RemoveSlideAction : public AAction
+	class RemoveSlideAction : public IAction
 	{
 	public:
-		RemoveSlideAction(std::optional<std::size_t> at);
+		RemoveSlideAction(
+			model::Presentation& presentation,
+			std::size_t index) :
+			m_presentation(presentation),
+			m_index(index)
+		{
+		}
 
-		bool doAction() override;
-		bool undoAction() override;
+		std::unique_ptr<IAction> doAction() override
+		{
+			auto it = m_presentation.begin() + m_index;
+			auto pSlide = m_presentation.removeSlide(it);
+			return std::make_unique<AddSlideAction>(m_presentation, pSlide, m_index);
+		}
+
 	private:
-		std::optional<std::size_t> m_at;
-
-		std::optional<std::size_t> m_oldPos = std::nullopt;
-		std::optional<model::Slide> m_oldSlide = std::nullopt;
+		model::Presentation& m_presentation;
+		std::size_t m_index;
 	};
 }

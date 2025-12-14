@@ -47,8 +47,8 @@ std::unique_ptr<cmds::ICommand> Parser::parse()
 		case State::ArgName:
 			processArgNameState(tok, st, args, currArgName, cmdName.value);
 			break;
-		case State::ArgVal:
-			processArgValState(tok, st, args, currArgName, cmdName.value);
+		case State::ArgValue:
+			processArgValueState(tok, st, args, currArgName, cmdName.value);
 			break;
 		case State::Comma:
 			processCommaState(tok, st, args, currArgName);
@@ -82,7 +82,7 @@ bool Parser::isArgName(Token tok) const
 	return true;
 }
 
-bool Parser::isArgVal(Token tok) const
+bool Parser::isArgValue(Token tok) const
 {
 	if (tok.type != Token::Type::Word &&
 		tok.type != Token::Type::String)
@@ -116,10 +116,10 @@ void Parser::processArgNameState(const Token& tok, State& st, factories::Argumen
 		currArgName = tok.value;
 		args[currArgName] = {};
 	}
-	else if (isArgVal(tok))
+	else if (isArgValue(tok))
 	{
 		args[currArgName].push_back(tok.value);
-		st = State::ArgVal;
+		st = State::ArgValue;
 	}
 	else if (tok.type == Token::Type::EOL)
 		st = State::Success;
@@ -127,7 +127,7 @@ void Parser::processArgNameState(const Token& tok, State& st, factories::Argumen
 		throw err::InvalidInputException("Expecting argument, value or EOL after argument");
 }
 
-void Parser::processArgValState(const Token& tok, State& st, factories::Arguments& args, std::string& currArgName, const std::string& cmdName)
+void Parser::processArgValueState(const Token& tok, State& st, factories::Arguments& args, std::string& currArgName, const std::string& cmdName)
 {
 	if (isArgName(tok))
 	{
@@ -147,10 +147,10 @@ void Parser::processArgValState(const Token& tok, State& st, factories::Argument
 
 void Parser::processCommaState(const Token& tok, State& st, factories::Arguments& args, std::string& currArgName)
 {
-	if (isArgVal(tok))
+	if (isArgValue(tok))
 	{
 		args[currArgName].push_back(tok.value);
-		st = State::ArgVal;
+		st = State::ArgValue;
 	}
 	else
 		throw err::InvalidInputException("Expecting value after comma");

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "cli/factories/ICommandFactory.h"
+#include "cli/meta/ArgumentMeta.h"
 
 #include <string>
 #include <memory>
@@ -12,37 +13,40 @@ namespace ppt::cli::meta
 	class CommandMeta
 	{
 	public:
-		struct ArgInfo
-		{
-			std::string desc;
-			bool required;
-			std::string defaultValue;
-		};
+		using container = std::vector<ArgMeta>;
+		using alias_container = std::unordered_map<std::string, const ArgMeta*>;
+		using iterator = container::iterator;
+		using const_iterator = container::const_iterator;
 
 	public:
-		virtual ~CommandMeta() = default;
-		const std::string& getName() const { return m_name; }
-		const std::string& getDescription() const { return m_description; }
-		std::shared_ptr<factories::ICommandFactory> getFactory() const { return m_factory; }
-		bool supportsArgument(const std::string& arg) const { return m_arguments.count(arg) > 0; }
-		const std::unordered_map<std::string, ArgInfo>& getArgumentsInfo() const { return m_arguments; }
-
-	protected:
 		CommandMeta(
 			const std::string& name,
 			const std::string& description,
-			std::shared_ptr<factories::ICommandFactory> factory,
-			const std::unordered_map<std::string, ArgInfo>& arguments) :
-			m_name(name),
-			m_description(description),
-			m_factory(factory),
-			m_arguments(arguments)
-		{
-		}
-	protected:
+			const std::shared_ptr<factories::ICommandFactory>& factory
+		);
+
+		const std::string& getName() const noexcept { return m_name; }
+		const std::string& getDescription() const noexcept { return m_description; }
+		std::shared_ptr<factories::ICommandFactory> getFactory() const noexcept { return m_factory; }
+
+		const ArgumentMeta* getArgumentMeta(const std::string& argName) const noexcept;
+		void registerArgumentMeta(ArgumentMeta argMeta);
+
+		iterator begin() noexcept { return m_argMetas.begin(); }
+		iterator end() noexcept { return m_argMetas.end(); }
+
+		const_iterator begin() const noexcept { return m_argMetas.begin(); }
+		const_iterator end() const noexcept { return m_argMetas.end(); }
+
+		const_iterator cbegin() const noexcept { return m_argMetas.cbegin(); }
+		const_iterator cend() const noexcept { return m_argMetas.cend(); }
+
+	private:
 		std::string m_name;
 		std::string m_description;
 		std::shared_ptr<factories::ICommandFactory> m_factory;
-		std::unordered_map<std::string, ArgInfo> m_arguments;
+		container m_argMetas;
+
+		alias_container m_aliasIndexes;
 	};
 }

@@ -1,239 +1,95 @@
 #include "model/Presentation.h"
+#include "model/Slide.h"
 
 #include <stdexcept>
-#include <cassert>
 
-using namespace ppt::model;
-
-Presentation::Presentation(const std::string& name) : m_name(name) {}
-
-const std::string& Presentation::getName() const { return m_name; }
-
-void Presentation::setName(const std::string& name)
+namespace ppt::model
 {
-	m_name = name;
-	m_modified = true;
-}
-
-const Slide& Presentation::getSlide(std::size_t pos) const
-{
-	if (pos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-	return m_slides[pos];
-}
-
-void Presentation::addSlide(const Slide& slide, std::size_t pos)
-{
-	if (pos > slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	m_slides.insert(m_slides.begin() + pos, slide);
-
-	if (!m_selected.has_value())
-		m_selected = 0;
-	else if (pos <= m_selected.value())
-		++m_selected.value();
-
-	m_modified = true;
-}
-
-void Presentation::removeSlide(std::size_t pos)
-{
-	if (pos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	m_slides.erase(m_slides.begin() + pos);
-
-	if (m_slides.empty()) 
-		m_selected = std::nullopt;
-	else if (m_selected.has_value()) 
-	{
-		if (pos < m_selected.value())
-			--m_selected.value();
-		else if (pos == m_selected.value())
-			m_selected = std::min(pos, slidesCount() - 1);
+	Presentation::Presentation()
+		: Presentation("Untitled") {
 	}
 
-	m_modified = true;
-}
+	Presentation::Presentation(const std::string& name)
+		: m_name(name) 
+	{
+	}
 
-void Presentation::moveSlide(std::size_t from, std::size_t to)
-{
-	if (from >= slidesCount() || to >= slidesCount())
-		throw std::out_of_range("Slide index out of range");
+	void Presentation::setName(const std::string& name) noexcept
+	{
+		m_name = name;
+	}
 
-	if (from == to)
-		return;
+	const std::string& Presentation::getName() const noexcept
+	{
+		return m_name;
+	}
 
-	auto slide = std::move(m_slides[from]);
-	m_slides.erase(m_slides.begin() + from);
-	m_slides.insert(m_slides.begin() + to, std::move(slide));
+	std::size_t Presentation::slidesCount() const noexcept
+	{
+		return m_slides.size();
+	}
 
-	assert(m_selected.has_value());
-	if (m_selected == from)
-		m_selected = to;
-	else if (from < m_selected && m_selected <= to)
-		--m_selected.value();
-	else if (to <= m_selected && m_selected < from)
-		++m_selected.value();
+	bool Presentation::empty() const noexcept
+	{
+		return m_slides.empty();
+	}
 
-	m_modified = true;
-}
+	Presentation::iterator Presentation::begin() noexcept { return m_slides.begin(); }
+	Presentation::iterator Presentation::end() noexcept { return m_slides.end(); }
 
+	Presentation::const_iterator Presentation::begin() const noexcept { return m_slides.begin(); }
+	Presentation::const_iterator Presentation::end() const noexcept { return m_slides.end(); }
 
-bool Presentation::empty() const
-{
-	return m_slides.empty();
-}
+	Presentation::const_iterator Presentation::cbegin() const noexcept { return m_slides.cbegin(); }
+	Presentation::const_iterator Presentation::cend() const noexcept { return m_slides.cend(); }
 
-std::size_t Presentation::slidesCount() const
-{
-	return m_slides.size();
-}
+	std::shared_ptr<Slide>& Presentation::operator[](std::size_t pos)
+	{
+		return m_slides[pos];
+	}
 
-std::optional<std::size_t> Presentation::getSelectedId() const
-{
-	return m_selected;
-}
+	const std::shared_ptr<Slide>& Presentation::operator[](std::size_t pos) const
+	{
+		return m_slides[pos];
+	}
 
-void Presentation::setSelectedId(std::size_t pos)
-{
-	if (pos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
+	std::shared_ptr<Slide>& Presentation::getSlide(std::size_t pos)
+	{
+		checkIndex(pos);
+		return m_slides[pos];
+	}
 
-	m_selected = pos;
-}
+	const std::shared_ptr<Slide>& Presentation::getSlide(std::size_t pos) const
+	{
+		checkIndex(pos);
+		return m_slides[pos];
+	}
 
-const std::vector<Slide>& Presentation::getSlides() const
-{
-	return m_slides;
-}
+	void Presentation::appendSlide(std::shared_ptr<Slide> slide)
+	{
+		m_slides.push_back(std::move(slide));
+	}
 
-void Presentation::replaceSlide(const Slide& slide, std::size_t pos)
-{
-	if (pos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
+	void Presentation::insertSlide(iterator pos, std::shared_ptr<Slide> slide)
+	{
+		m_slides.insert(pos, std::move(slide));
+	}
 
-	m_slides[pos] = slide;
-	m_modified = true;
-}
+	void Presentation::eraseSlide(iterator pos)
+	{
+		m_slides.erase(pos);
+	}
 
-void Presentation::clearSlide(std::size_t pos)
-{
-	if (pos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
+	std::shared_ptr<Slide> Presentation::removeSlide(iterator pos)
+	{
+		auto slide = std::move(*pos);
+		m_slides.erase(pos);
+		return slide;
+	}
 
-	if (m_slides[pos].empty())
-		return;
-
-	m_slides[pos].clear();
-	m_modified = true;
-}
-
-void Presentation::setSlideColor(utils::Color color, std::size_t pos)
-{
-	if (pos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	m_slides[pos].setColor(color);
-	m_modified = true;
-}
-
-utils::Color Presentation::getSlideColor(std::size_t pos) const
-{
-	if (pos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-	
-	return m_slides[pos].getColor();
-}
-
-bool Presentation::isModified() const { return m_modified; }
-
-void Presentation::markSaved() { m_modified = false; }
-
-void Presentation::addShape(const Shape& shape, std::size_t slidePos)
-{
-	if (slidePos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	m_slides[slidePos].appendShape(shape);
-	m_modified = true;
-}
-
-void Presentation::addShapeWithId(const Shape& shape, std::size_t slidePos)
-{
-	if (slidePos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	m_slides[slidePos].appendShapeWithId(shape);
-	m_modified = true;
-}
-
-void Presentation::removeShape(std::size_t shapeId, std::size_t slidePos)
-{
-	if (slidePos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	m_slides[slidePos].removeShapeById(shapeId);
-	m_modified = true;
-}
-
-void Presentation::replaceShape(const Shape& shape, std::size_t shapeId, std::size_t slidePos)
-{
-	if (slidePos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	m_slides[slidePos].replaceShapeById(shape, shapeId);
-	m_modified = true;
-}
-
-Shape Presentation::getShape(std::size_t shapeId, std::size_t slidePos) const
-{
-	if (slidePos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	return m_slides[slidePos].getShapeById(shapeId);
-}
-
-std::size_t Presentation::getNextShapeId(std::size_t slidePos) const
-{
-	if (slidePos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	return m_slides[slidePos].getNextShapeId();
-}
-
-void Presentation::setShapePosition(std::size_t shapeId, utils::Coord position, std::size_t slidePos)
-{
-	if (slidePos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	m_slides[slidePos].setShapePosition(shapeId, position);
-	m_modified = true;
-}
-
-void Presentation::setShapeSize(std::size_t shapeId, utils::Coord size, std::size_t slidePos)
-{
-	if (slidePos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	m_slides[slidePos].setShapeSize(shapeId, size);
-	m_modified = true;
-}
-
-bool Presentation::isShapeExists(std::size_t shapeId, std::size_t slidePos) const
-{
-	if (slidePos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	return m_slides[slidePos].isShapeExists(shapeId);
-}
-
-void Presentation::setShapeType(std::size_t shapeId, utils::ShapeType type, std::size_t slidePos)
-{
-	if (slidePos >= slidesCount())
-		throw std::out_of_range("Index out of bounds");
-
-	m_slides[slidePos].setShapeType(shapeId, type);
-	m_modified = true;
+	void Presentation::checkIndex(std::size_t index) const
+	{
+		if (index >= m_slides.size())
+			throw std::out_of_range("Slide index out of range");
+	}
 }

@@ -15,7 +15,7 @@ namespace ppt::cli
 	private:
 		viewer::cli::CLIViewer& m_viewer;
 		CommandRegistry& m_registry;
-		model::Presentation m_presentation;
+		model::Presentation& m_presentation;
 		bool m_exit = false;
 	};
 }

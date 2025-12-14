@@ -11,31 +11,24 @@ namespace ppt::cli
 	class CommandRegistry
 	{
 	public:
-		std::shared_ptr<factories::ICommandFactory> getFactory(const std::string& name) const
-		{
-			if (auto meta = getMeta(name))
-				return meta->getFactory();
-		}
+		using container = std::unordered_map<std::string, meta::CommandMeta>;
+		using iterator = container::iterator;
+		using const_iterator = container::const_iterator;
 
-		std::shared_ptr<meta::CommandMeta> getMeta(const std::string& name) const
-		{
-			auto it = m_commands.find(name);
-			if (it == m_commands.end())
-				return nullptr;
-			return it->second;
-		}
+	public:
+		const meta::CommandMeta* getCommandMeta(const std::string& name) const noexcept;
+		void registerCommandMeta(meta::CommandMeta cmdMeta);
 
-		void registerMeta(const std::string& name, std::shared_ptr<meta::CommandMeta> command)
-		{
-			m_commands[name] = std::move(command);
-		}
+		iterator begin() noexcept { return m_commands.begin(); }
+		iterator end() noexcept { return m_commands.end(); }
 
-		void unregisterMeta(const std::string& name)
-		{
-			m_commands.erase(name);
-		}
+		const_iterator begin() const noexcept { return m_commands.begin(); }
+		const_iterator end() const noexcept { return m_commands.end(); }
+
+		const_iterator cbegin() const noexcept { return m_commands.cbegin(); }
+		const_iterator cend() const noexcept { return m_commands.cend(); }
 
 	private:
-		std::unordered_map<std::string, std::shared_ptr<meta::CommandMeta>> m_commands;
+		container m_commands;
 	};
 }
