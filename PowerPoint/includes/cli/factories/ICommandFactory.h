@@ -1,6 +1,7 @@
 #pragma once
 
 #include "cli/commands/ICommand.h"
+#include "cli/parsing/ValidatedRawCommand.h"
 
 #include <memory>
 #include <string>
@@ -9,12 +10,10 @@
 
 namespace ppt::cli::factories
 {
-	using Arguments = std::unordered_map<std::string, std::vector<std::string>>;
-
 	class ICommandFactory
 	{
 	public:
 		virtual ~ICommandFactory() = default;
-		virtual std::unique_ptr<cmds::ICommand> createCommand(const Arguments& args) = 0;
+		virtual std::unique_ptr<cmds::ICommand> createCommand(const ValidatedRawCommand& args) = 0;
 	};
 }

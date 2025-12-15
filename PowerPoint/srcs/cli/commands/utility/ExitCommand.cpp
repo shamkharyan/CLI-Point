@@ -1,10 +1,8 @@
 #include "cli/commands/utility/ExitCommand.h"
-#include "model/PPModel.h"
 #include "viewer/IViewer.h"
 
 #include <stdexcept>
 
-using namespace ppt::model;
 using namespace ppt::cli::cmds;
 
 ExitCommand::ExitCommand(core::IController& controller, viewer::IViewer& viewer, bool force) :
@@ -16,7 +14,6 @@ ExitCommand::ExitCommand(core::IController& controller, viewer::IViewer& viewer,
 
 void ExitCommand::execute()
 {
-	auto& context = PPModel::instance().getContext();
 	bool shouldExit = true;
 
 	if (!m_force)

@@ -6,7 +6,7 @@
 
 namespace ppt::cli
 {
-	class ColorRGBAFactory : public IArgValueFactory
+	class BoolFactory : public IArgValueFactory
 	{
 	public:
 		virtual bool canParse(const std::vector<std::string>& argValue) const override;

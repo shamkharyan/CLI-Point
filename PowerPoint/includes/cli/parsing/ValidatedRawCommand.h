@@ -5,8 +5,11 @@
 #include <string>
 #include <unordered_map>
 
-struct ValidatedRawCommand
+namespace ppt::cli
 {
-	std::string name;
-	std::unordered_map<std::string, ArgValue> arguments;
-};
+	struct ValidatedRawCommand
+	{
+		std::string name;
+		std::unordered_map<std::string, ArgValue> arguments;
+	};
+}

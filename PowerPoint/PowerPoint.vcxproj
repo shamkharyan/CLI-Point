@@ -137,10 +137,6 @@
     <ClInclude Include="includes\cli\commands\shape\RemoveShapeCommand.h" />
     <ClInclude Include="includes\cli\commands\shape\ReplaceShapeCommand.h" />
     <ClInclude Include="includes\cli\commands\shape\ResizeShapeCommand.h" />
-    <ClInclude Include="includes\cli\commands\shape\SetShapeBorderColorCommand.h" />
-    <ClInclude Include="includes\cli\commands\shape\SetShapeBorderThickness.h" />
-    <ClInclude Include="includes\cli\commands\shape\SetShapeColorCommand.h" />
-    <ClInclude Include="includes\cli\commands\shape\SetShapeText.h" />
     <ClInclude Include="includes\cli\commands\slide\ClearSlideCommand.h" />
     <ClInclude Include="includes\cli\commands\slide\DuplicateSlideCommand.h" />
     <ClInclude Include="includes\cli\commands\slide\SetSlideColorCommand.h" />
@@ -176,11 +172,10 @@
     <ClInclude Include="includes\cli\errors\InvalidArgumentValueException.h" />
     <ClInclude Include="includes\cli\errors\UnknownCommandException.h" />
     <ClInclude Include="includes\cli\factories\utility\UndoCommandFactory.h" />
-    <ClInclude Include="includes\cli\meta\ArgValueTypeChecker.h" />
     <ClInclude Include="includes\cli\meta\CommandMeta.h" />
-    <ClInclude Include="includes\cli\meta\ExitCommandMeta.h" />
     <ClInclude Include="includes\cli\meta\ArgumentMeta.h" />
     <ClInclude Include="includes\cli\parsing\ArgValue.h" />
+    <ClInclude Include="includes\cli\parsing\BoolFactory.h" />
     <ClInclude Include="includes\cli\parsing\ColorNameFactory.h" />
     <ClInclude Include="includes\cli\parsing\ColorRGBAFactory.h" />
     <ClInclude Include="includes\cli\parsing\ColorRGBFactory.h" />
@@ -240,7 +235,7 @@
     <ClInclude Include="includes\cli\commands\utility\ExitCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\QuitCommand.h" />
     <ClInclude Include="includes\core\actions\slide\GotoSlideAction.h" />
-    <ClInclude Include="srcs\cli\meta\CommandMeta.cpp" />
+    <ClCompile Include="srcs\cli\meta\CommandMeta.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="includes\cli\factories\shape\ReplaceShapeCommandFactory.h" />
@@ -282,8 +277,12 @@
     <ClCompile Include="srcs\cli\factories\utility\RedoCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\UndoCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\meta\ArgumentMeta.cpp" />
-    <ClCompile Include="srcs\cli\Parser.cpp" />
+    <ClCompile Include="srcs\cli\parsing\BoolFactory.cpp" />
+    <ClCompile Include="srcs\cli\parsing\ColorRGBAFactory.cpp" />
+    <ClCompile Include="srcs\cli\parsing\ColorRGBFactory.cpp" />
     <ClCompile Include="srcs\cli\parsing\CommandParser.cpp" />
+    <ClCompile Include="srcs\cli\parsing\FloatFactory.cpp" />
+    <ClCompile Include="srcs\cli\parsing\IntFactory.cpp" />
     <ClCompile Include="srcs\cli\parsing\SemanticAnalyzer.cpp" />
     <ClCompile Include="srcs\cli\parsing\SyntaxParser.cpp" />
     <ClCompile Include="srcs\cli\parsing\Tokenizer.cpp" />
@@ -312,8 +311,6 @@
     <ClCompile Include="srcs\serialization\JSONSerializer.cpp" />
     <ClCompile Include="srcs\main.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\ExitCommandFactory.cpp" />
-    <ClCompile Include="srcs\model\utils\BBox.cpp" />
-    <ClCompile Include="srcs\registerCommands.cpp" />
     <ClCompile Include="srcs\serialization\JSONValidator.cpp" />
     <ClCompile Include="srcs\viewer\cli\CLIViewer.cpp" />
     <ClCompile Include="srcs\viewer\cli\CLIVisualizer.cpp" />

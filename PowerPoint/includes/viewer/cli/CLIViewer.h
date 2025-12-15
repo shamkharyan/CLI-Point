@@ -2,6 +2,7 @@
 
 #include "viewer/IViewer.h"
 #include "viewer/cli/CLIVisualizer.h"
+#include "model/Presentation.h"
 
 #include <optional>
 #include <string>
@@ -17,16 +18,16 @@ namespace ppt::viewer::cli
 		void showInfo(const std::string& msg) override;
 		std::optional<bool> askConfirmation(const std::string& msg) override;
 
-		void showPrompt(model::Presentation& presentation);
+		void showPrompt(ppt::model::Presentation& presentation);
 		void showText(const std::string& msg);
 		void showWelcome();
 		void resetStream();
 
-		CLIVisualizer& getVisualizer();
+		//CLIVisualizer& getVisualizer();
 		std::istream& getIStream();
 		std::ostream& getOStream();
 	private:
-		CLIVisualizer m_visualizer;
+		//CLIVisualizer m_visualizer;
 		std::istream& m_is;
 		std::ostream& m_os;
 	};

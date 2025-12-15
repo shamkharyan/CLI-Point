@@ -1,8 +1,5 @@
-#include "cli/errors/InvalidArgumentException.h"
-#include "cli/errors/InvalidArgumentValueException.h"
 #include "cli/factories/utility/ExitCommandFactory.h"
 #include "cli/commands/utility/ExitCommand.h"
-#include "cli/utils/ArgParser.h"
 
 using namespace ppt::cli;
 using namespace ppt::cli::factories;
@@ -13,17 +10,9 @@ ExitCommandFactory::ExitCommandFactory(core::IController& controller, viewer::IV
 {
 }
 
-std::unique_ptr<cmds::ICommand> ExitCommandFactory::createCommand(const Arguments& args)
+std::unique_ptr<cmds::ICommand> ExitCommandFactory::createCommand(const ValidatedRawCommand& rcmd)
 {
-	bool force = false;
-
-	for (const auto& [argName, argVals] : args)
-	{
-		if (argName == "-f" || argName == "--force")
-			force = utils::ArgParser::parseFlag(argName, argVals);
-		else
-			throw err::InvalidArgumentException(argName);
-	}
+	bool force = std::get<bool>(rcmd.arguments.at("force"));
 
 	return std::make_unique<cmds::ExitCommand>(m_controller, m_viewer, force);
 }

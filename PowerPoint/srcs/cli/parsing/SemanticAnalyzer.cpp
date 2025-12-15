@@ -27,5 +27,25 @@ ValidatedRawCommand SemanticAnalyzer::analyze(const RawCommand& rcmd)
 		validatedCmd.arguments[argMeta->getCanonicalName()] = argMeta->parseValue(argValue);
 	}
 
+	for (const auto& argMeta : *cmdMeta)
+	{
+		const auto& canonical = argMeta.getCanonicalName();
+		const bool isPresent =
+			validatedCmd.arguments.find(canonical) != validatedCmd.arguments.end();
+
+		if (!isPresent)
+		{
+			if (argMeta.isRequired())
+			{
+				throw SemanticException(
+					"Required argument '" + argMeta.getNameAliases()[0] +
+					"' is missing for command '" + rcmd.name + "'");
+			}
+
+			if (auto optionalDefault = argMeta.getDefaultValue())
+				validatedCmd.arguments[canonical] = *optionalDefault;
+		}
+	}
+
 	return validatedCmd;
 }

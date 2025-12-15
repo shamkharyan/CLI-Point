@@ -3,6 +3,7 @@
 #include "viewer/cli/CLIViewer.h"
 #include "cli/CLIController.h"
 #include "cli/CommandRegistry.h"
+#include "core/ActionManager.h"
 
 namespace ppt
 {

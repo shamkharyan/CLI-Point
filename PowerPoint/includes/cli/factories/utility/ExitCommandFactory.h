@@ -11,7 +11,7 @@ namespace ppt::cli::factories
 	{
 	public:
 		ExitCommandFactory(core::IController& controller, viewer::IViewer& viewer);
-		std::unique_ptr<cmds::ICommand> createCommand(const Arguments& args) override;
+		std::unique_ptr<cmds::ICommand> createCommand(const ValidatedRawCommand& args) override;
 	private:
 		core::IController& m_controller;
 		viewer::IViewer& m_viewer;

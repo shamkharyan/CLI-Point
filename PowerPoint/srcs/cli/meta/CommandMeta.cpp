@@ -1,11 +1,7 @@
-#pragma once
-
 #include "cli/meta/CommandMeta.h"
 #include "cli/meta/ArgumentMeta.h"
 
-
 using namespace ppt::cli::meta;
-using namespace ppt::cli::factories;
 
 CommandMeta::CommandMeta(
 	const std::string& name,
@@ -17,7 +13,7 @@ CommandMeta::CommandMeta(
 {
 }
 
-const ArgumentMeta* CommandMeta::getArgumentMeta(const std::string& argName) const noexcept
+const ArgumentMeta* CommandMeta::getArgumentMeta(const std::string& argName) const
 {
 	auto it = m_aliasIndexes.find(argName);
 	return it != m_aliasIndexes.end() ? it->second : nullptr;
@@ -26,5 +22,7 @@ const ArgumentMeta* CommandMeta::getArgumentMeta(const std::string& argName) con
 void CommandMeta::registerArgumentMeta(ArgumentMeta argMeta)
 {
 	m_argMetas.push_back(std::move(argMeta));
-	m_aliasIndexes[m_argMetas.back().getCanonicalName()] = &m_argMetas.back();
+
+	for (const auto& alias : m_argMetas.back().getNameAliases())
+		m_aliasIndexes[alias] = &m_argMetas.back();
 }

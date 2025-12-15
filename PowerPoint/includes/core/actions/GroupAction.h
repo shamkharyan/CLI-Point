@@ -12,14 +12,14 @@ namespace ppt::core::act
     public:
         GroupAction() = default;
 
-        void addAction(std::shared_ptr<IAction> action)
+        void addAction(std::unique_ptr<IAction> action)
         {
             m_actions.push_back(std::move(action));
         }
 
-        std::shared_ptr<IAction> doAction() override
+        std::unique_ptr<IAction> doAction() override
         {
-            std::vector<std::shared_ptr<IAction>> undoActions;
+            std::vector<std::unique_ptr<IAction>> undoActions;
             undoActions.reserve(m_actions.size());
 
             for (auto& action : m_actions)
@@ -28,16 +28,16 @@ namespace ppt::core::act
                 undoActions.push_back(std::move(undo));
             }
 
-            auto undoGroup = std::make_shared<GroupAction>();
+            auto undoGroup = std::make_unique<GroupAction>();
 
             for (auto it = undoActions.rbegin(); it != undoActions.rend(); ++it)
-                undoGroup->addAction(*it);
+                undoGroup->addAction(std::move(*it));
 
             return undoGroup;
         }
 
     private:
-        std::vector<std::shared_ptr<IAction>> m_actions;
+        std::vector<std::unique_ptr<IAction>> m_actions;
     };
 
 }

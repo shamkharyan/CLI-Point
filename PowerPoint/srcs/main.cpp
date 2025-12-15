@@ -1,8 +1,3 @@
-#include "cli/CLIController.h"
-#include "model/PPModel.h"
-#include "viewer/cli/CLIViewer.h"
-#include "cli/utils/registerCommands.h"
-
 #include "CLIApplication.h"
 
 #include <iostream>

@@ -7,6 +7,8 @@ void ActionManager::doAction(std::unique_ptr<act::IAction> action)
 	auto undoAction = action->doAction();
 	m_undo.push_back(std::move(undoAction));
 	m_redo.clear();
+
+	m_isEdited = true;
 }
 
 void ActionManager::undo()
@@ -16,6 +18,8 @@ void ActionManager::undo()
 		auto redoAction = m_undo.back()->doAction();
 		m_redo.push_back(std::move(redoAction));
 		m_undo.pop_back();
+
+		m_isEdited = true;
 	}
 }
 
@@ -26,5 +30,7 @@ void ActionManager::redo()
 		auto undoAction = m_redo.back()->doAction();
 		m_undo.push_back(std::move(undoAction));
 		m_redo.pop_back();
+
+		m_isEdited = true;
 	}
 }

@@ -23,9 +23,9 @@ std::unique_ptr<cmds::ICommand> CommandParser::parseCommand()
 	if (rawCommand.name.empty())
 		return nullptr;
 
-	m_semanticAnalyzer.analyze(rawCommand);
+	auto validatedRawCommand = m_semanticAnalyzer.analyze(rawCommand);
 
-	auto factory = m_commandRegistry.getFactory(rawCommand.name);
+	auto factory = m_commandRegistry.getCommandMeta(validatedRawCommand.name)->getFactory();
 
-	return factory->createCommand(rawCommand);
+	return factory->createCommand(validatedRawCommand);
 }

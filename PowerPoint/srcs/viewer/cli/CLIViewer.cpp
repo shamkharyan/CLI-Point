@@ -9,8 +9,8 @@ using namespace ppt::viewer::cli;
 
 CLIViewer::CLIViewer(std::istream& is, std::ostream& os) :
 	m_is(is),
-	m_os(os),
-	m_visualizer(os)
+	m_os(os)
+	//m_visualizer(os)
 {
 }
 
@@ -34,7 +34,8 @@ std::optional<bool> CLIViewer::askConfirmation(const std::string& msg)
 	char ans;
 
 	showText(msg + " (y/n)");
-	showPrompt(nullptr);
+	showText(">> ");
+	//showPrompt(nullptr);
 	m_is.get(ans);
 	resetStream();
 	switch (std::tolower(ans))
@@ -47,10 +48,10 @@ std::optional<bool> CLIViewer::askConfirmation(const std::string& msg)
 	return std::nullopt;
 }
 
-CLIVisualizer& CLIViewer::getVisualizer()
-{
-	return m_visualizer;
-}
+//CLIVisualizer& CLIViewer::getVisualizer()
+//{
+//	return m_visualizer;
+//}
 
 std::istream& CLIViewer::getIStream()
 {
@@ -76,10 +77,11 @@ void CLIViewer::showText(const std::string& msg)
 
 void CLIViewer::showPrompt(model::Presentation& presentation)
 {
-	if (presentation.empty())
+	/*if (presentation.empty())
 		m_os << presentation.getName() << " >> ";
 	else
-		m_os << presentation.getName() << " #" << presentation.getSelectedId().value() << " >> ";
+		m_os << presentation.getName() << " #" << presentation.getSelectedId().value() << " >> ";*/
+	m_os << presentation.getName() << " >> ";
 }
 
 void CLIViewer::showWelcome()

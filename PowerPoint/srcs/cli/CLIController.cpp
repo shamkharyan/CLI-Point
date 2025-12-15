@@ -1,5 +1,5 @@
 #include "cli/CLIController.h"
-#include "cli/Parser.h"
+#include "cli/parsing/CommandParser.h"
 #include "viewer/cli/CLIViewer.h"
 
 #include <iostream>
@@ -19,14 +19,14 @@ int CLIController::run()
 {
 	m_viewer.showWelcome();
 
-	Parser parser(m_registry, m_viewer.getIStream());
+	CommandParser parser(m_registry, m_viewer.getIStream());
 
 	while (!m_exit)
 	{
 		m_viewer.showPrompt(m_presentation);
 		try
 		{
-			std::unique_ptr<cmds::ICommand> cmd = parser.parse();
+			std::unique_ptr<cmds::ICommand> cmd = parser.parseCommand();
 			if (cmd)
 				cmd->execute();
 		}

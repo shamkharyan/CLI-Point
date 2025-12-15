@@ -1,6 +1,7 @@
 #pragma once
 
 #include <variant>
+#include <string>
 
 #include "model/utils/Color.h"
 
@@ -11,6 +12,6 @@ namespace ppt::cli
 		int,
 		float,
 		bool,
-		ppt::model::utils::Color,
+		ppt::model::utils::Color
 	>;
 }
