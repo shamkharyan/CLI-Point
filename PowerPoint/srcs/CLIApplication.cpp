@@ -6,11 +6,12 @@
 #include "cli/meta/CommandMeta.h"
 #include "cli/meta/ArgumentMeta.h"
 
-#include "cli/parsing/BoolFactory.h"
-#include "cli/parsing/SizeTFactory.h"
-#include "cli/parsing/ColorNameFactory.h"
-#include "cli/parsing/ColorRGBFactory.h"
-#include "cli/parsing/ColorRGBAFactory.h"
+#include "cli/parsing/factories/BoolFactory.h"
+#include "cli/parsing/factories/SizeTFactory.h"
+#include "cli/parsing/factories/ColorNameFactory.h"
+#include "cli/parsing/factories/ColorRGBFactory.h"
+#include "cli/parsing/factories/ColorRGBAFactory.h"
+#include "cli/parsing/factories/StringFactory.h"
 
 #include "cli/factories/utility/ExitCommandFactory.h"
 #include "cli/factories/slide/AddSlideCommandFactory.h"
@@ -20,6 +21,7 @@
 #include "cli/factories/slide/MoveSlideCommandFactory.h"
 #include "cli/factories/utility/UndoCommandFactory.h"
 #include "cli/factories/utility/RedoCommandFactory.h"
+#include "cli/factories/utility/HelpCommandFactory.h"
 
 #include <iostream>
 
@@ -275,5 +277,29 @@ void CLIApplication::registerCommands()
 		);
 
 		m_registry.registerCommandMeta(std::move(redoMeta));
+	}
+
+	// help command
+	{
+		meta::CommandMeta helpMeta(
+			"help",
+			"Shows help information for commands",
+			std::make_shared<factories::HelpCommandFactory>(m_registry, m_viewer)
+		);
+
+		meta::ArgumentMeta commandArgMeta(
+			"command",
+			"Name of the command to show help for",
+			ArgValue(std::string{})
+		);
+
+		commandArgMeta.registerNameAlias("-c");
+		commandArgMeta.registerNameAlias("--command");
+
+		commandArgMeta.registerArgValueFactory(std::make_shared<cli::StringFactory>());
+
+		helpMeta.registerArgumentMeta(std::move(commandArgMeta));
+
+		m_registry.registerCommandMeta(std::move(helpMeta));
 	}
 }

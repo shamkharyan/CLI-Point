@@ -1,8 +1,8 @@
 #pragma once
 
 #include "core/IViewer.h"
-//#include "viewer/cli/CLIVisualizer.h"
 #include "model/Presentation.h"
+#include "cli/meta/CommandRegistry.h"
 
 #include <optional>
 #include <string>
@@ -23,13 +23,22 @@ namespace ppt::cli
 		void showWelcome();
 		void resetStream();
 
+		void showHelp(const CommandRegistry& registry);
+		void showCommandHelp(const meta::CommandMeta& cmdMeta);
+
 		//CLIVisualizer& getVisualizer();
 		std::istream& getIStream();
 		std::ostream& getOStream();
+	private:
+		void showCommandUsage(const meta::CommandMeta& cmdMeta);
+		void showCommandDescription(const meta::CommandMeta& cmdMeta);
+		void showArgumentsHelp(const meta::CommandMeta& cmdMeta);
 	private:
 		//CLIVisualizer m_visualizer;
 		model::Presentation& m_presentation;
 		std::istream& m_is;
 		std::ostream& m_os;
+
+		static constexpr std::size_t s_columnWidth = 20;
 	};
 }

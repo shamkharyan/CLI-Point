@@ -1,11 +1,11 @@
-#include "cli/parsing/FloatFactory.h"
+#include "cli/parsing/factories/FloatFactory.h"
 
 #include <stdexcept>
 #include <string>
 
 using namespace ppt::cli;
 
-bool FloatFactory::canParse(const std::vector<std::string>& argValue) const
+bool FloatFactory::canCreate(const std::vector<std::string>& argValue) const
 {
 	if (argValue.size() != 1)
 		return false;
@@ -22,16 +22,16 @@ bool FloatFactory::canParse(const std::vector<std::string>& argValue) const
 	}
 }
 
-ArgValue FloatFactory::parse(const std::vector<std::string>& argValue) const
+ArgValue FloatFactory::create(const std::vector<std::string>& argValue) const
 {
-	if (!canParse(argValue))
+	if (!canCreate(argValue))
 		throw std::invalid_argument("Invalid float value");
 
 	float value = std::stof(argValue[0]);
 	return value;
 }
 
-std::string FloatFactory::description() const
+std::string FloatFactory::typeName() const
 {
-	return "Floating point value (e.g. 1.0, -0.25, 3.14)";
+	return argValueTypeName(float{});
 }

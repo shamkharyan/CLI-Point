@@ -1,5 +1,5 @@
 #include "cli/meta/ArgumentMeta.h"
-#include "cli/parsing/ArgValue.h"
+#include "cli/parsing/factories/ArgValue.h"
 
 #include <stdexcept>
 
@@ -13,7 +13,7 @@ ArgumentMeta::ArgumentMeta(
 	m_canonicalName(canonicalName),
 	m_description(description),
 	m_isRequired(isRequired),
-	m_defaultValue(std::nullopt)
+	m_defaultValue(std::monostate{})
 {
 }
 

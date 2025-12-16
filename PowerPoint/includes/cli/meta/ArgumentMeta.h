@@ -1,7 +1,7 @@
 #pragma once
 
-#include "cli/parsing/IArgValueFactory.h"
-#include "cli/parsing/ArgValue.h"
+#include "cli/parsing/factories/IArgValueFactory.h"
+#include "cli/parsing/factories/ArgValue.h"
 
 #include <string>
 #include <vector>
@@ -33,7 +33,8 @@ namespace ppt::cli::meta
 		const std::string& getCanonicalName() const noexcept { return m_canonicalName; }
 		const std::string& getDescription() const noexcept { return m_description; }
 		const std::vector<std::string>& getNameAliases() const noexcept { return m_nameAliases; }
-		std::optional<ArgValue> getDefaultValue() const noexcept { return m_defaultValue; }
+		ArgValue getDefaultValue() const noexcept { return m_defaultValue; }
+		bool hasDefaultValue() const noexcept { return !std::holds_alternative<std::monostate>(m_defaultValue); }
 		bool isRequired() const noexcept { return m_isRequired; }
 
 		iterator begin() noexcept { return m_argValueFactories.begin(); }
@@ -54,6 +55,6 @@ namespace ppt::cli::meta
 		std::vector<std::string> m_nameAliases;
 		container m_argValueFactories;
 		bool m_isRequired;
-		std::optional<ArgValue> m_defaultValue;
+		ArgValue m_defaultValue;
 	};
 }

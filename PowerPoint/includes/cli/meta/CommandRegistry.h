@@ -2,7 +2,7 @@
 
 #include "cli/meta/CommandMeta.h"
 
-#include <memory>
+#include <vector>
 #include <string>
 #include <unordered_map>
 
@@ -11,7 +11,8 @@ namespace ppt::cli
 	class CommandRegistry
 	{
 	public:
-		using container = std::unordered_map<std::string, meta::CommandMeta>;
+		using container = std::vector<meta::CommandMeta>;
+		using alias_container = std::unordered_map<std::string, std::size_t>;
 		using iterator = container::iterator;
 		using const_iterator = container::const_iterator;
 
@@ -30,5 +31,7 @@ namespace ppt::cli
 
 	private:
 		container m_commands;
+
+		alias_container m_aliasIndexes;
 	};
 }

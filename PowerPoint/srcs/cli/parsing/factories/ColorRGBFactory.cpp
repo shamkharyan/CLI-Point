@@ -1,4 +1,4 @@
-#include "cli/parsing/ColorRGBFactory.h"
+#include "cli/parsing/factories/ColorRGBFactory.h"
 
 #include <stdexcept>
 #include <string>
@@ -34,7 +34,7 @@ namespace
 	}
 }
 
-bool ColorRGBFactory::canParse(const std::vector<std::string>& argValue) const
+bool ColorRGBFactory::canCreate(const std::vector<std::string>& argValue) const
 {
 	if (argValue.size() != 3)
 		return false;
@@ -52,9 +52,9 @@ bool ColorRGBFactory::canParse(const std::vector<std::string>& argValue) const
 	return true;
 }
 
-ArgValue ColorRGBFactory::parse(const std::vector<std::string>& argValue) const
+ArgValue ColorRGBFactory::create(const std::vector<std::string>& argValue) const
 {
-	if (!canParse(argValue))
+	if (!canCreate(argValue))
 		throw std::invalid_argument("Invalid RGB color format");
 
 	model::utils::Color color;
@@ -67,7 +67,7 @@ ArgValue ColorRGBFactory::parse(const std::vector<std::string>& argValue) const
 	return ArgValue(color);
 }
 
-std::string ColorRGBFactory::description() const
+std::string ColorRGBFactory::typeName() const
 {
-	return "RGB color value: <R> <G> <B>, where each channel is in range [0..255]";
+	return argValueTypeName(model::utils::Color{});
 }

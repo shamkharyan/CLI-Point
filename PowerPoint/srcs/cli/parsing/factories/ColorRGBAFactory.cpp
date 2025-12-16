@@ -1,4 +1,4 @@
-#include "cli/parsing/ColorRGBAFactory.h"
+#include "cli/parsing/factories/ColorRGBAFactory.h"
 
 #include <stdexcept>
 #include <string>
@@ -34,7 +34,7 @@ namespace
 	}
 }
 
-bool ColorRGBAFactory::canParse(const std::vector<std::string>& argValue) const
+bool ColorRGBAFactory::canCreate(const std::vector<std::string>& argValue) const
 {
 	if (argValue.size() != 4)
 		return false;
@@ -52,9 +52,9 @@ bool ColorRGBAFactory::canParse(const std::vector<std::string>& argValue) const
 	return true;
 }
 
-ArgValue ColorRGBAFactory::parse(const std::vector<std::string>& argValue) const
+ArgValue ColorRGBAFactory::create(const std::vector<std::string>& argValue) const
 {
-	if (!canParse(argValue))
+	if (!canCreate(argValue))
 		throw std::invalid_argument("Invalid RGBA color format");
 
 	model::utils::Color color;
@@ -67,7 +67,7 @@ ArgValue ColorRGBAFactory::parse(const std::vector<std::string>& argValue) const
 	return color;
 }
 
-std::string ColorRGBAFactory::description() const
+std::string ColorRGBAFactory::typeName() const
 {
-	return "RGBA color value: <R> <G> <B> <A>, each channel in range [0..255]";
+	return argValueTypeName(model::utils::Color{});
 }
