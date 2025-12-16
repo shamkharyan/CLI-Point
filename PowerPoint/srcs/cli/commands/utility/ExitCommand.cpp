@@ -1,11 +1,9 @@
 #include "cli/commands/utility/ExitCommand.h"
-#include "viewer/IViewer.h"
-
-#include <stdexcept>
+#include "cli/CLIViewer.h"
 
 using namespace ppt::cli::cmds;
 
-ExitCommand::ExitCommand(core::IController& controller, viewer::IViewer& viewer, bool force) :
+ExitCommand::ExitCommand(CLIController& controller, CLIViewer& viewer, bool force) :
 	m_controller(controller),
 	m_viewer(viewer),
 	m_force(force)

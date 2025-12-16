@@ -7,10 +7,10 @@
 
 namespace ppt::cli::factories
 {
-	class AddSlideCommandFactory : public ICommandFactory
+	class EditSlideCommandFactory : public ICommandFactory
 	{
 	public:
-		AddSlideCommandFactory(core::ActionManager& actionManager, model::Presentation& presentation);
+		EditSlideCommandFactory(core::ActionManager& actionManager,	model::Presentation& presentation);
 		std::unique_ptr<cmds::ICommand> createCommand(const ParsedRawCommand& args) override;
 	private:
 		core::ActionManager& m_actionManager;

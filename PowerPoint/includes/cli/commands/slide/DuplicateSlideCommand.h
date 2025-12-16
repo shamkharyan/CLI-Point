@@ -1,21 +1,30 @@
-//#pragma once
-//
-//#include "cli/commands/ICommand.h"
-//
-//#include <optional>
-//#include <string>
-//
-//namespace ppt::cli::cmds
-//{
-//	class DuplicateSlideCommand : public ICommand
-//	{
-//	public:
-//		DuplicateSlideCommand(std::optional<std::size_t> at, std::optional<std::size_t> to, bool go);
-//		void execute() override;
-//
-//	private:
-//		std::optional<std::size_t> m_at;
-//		std::optional<std::size_t> m_to;
-//		bool m_goto;
-//	};
-//}
+#pragma once
+
+#include "cli/commands/ICommand.h"
+#include "model/utils/Color.h"
+#include "model/Presentation.h"
+#include "core/ActionManager.h"
+
+#include <optional>
+#include <string>
+
+namespace ppt::cli::cmds
+{
+	class DuplicateSlideCommand : public ICommand
+	{
+	public:
+		DuplicateSlideCommand(
+			core::ActionManager& actionManager,
+			model::Presentation& presentation,
+			std::size_t at,
+			std::size_t to);
+
+		void execute() override;
+	private:
+		core::ActionManager& m_actionManager;
+		model::Presentation& m_presentation;
+
+		std::size_t m_at;
+		std::size_t m_to;
+	};
+}

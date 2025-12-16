@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cli/commands/ICommand.h"
-#include "cli/parsing/ValidatedRawCommand.h"
+#include "cli/parsing/ParsedRawCommand.h"
 
 #include <memory>
 #include <string>
@@ -14,6 +14,6 @@ namespace ppt::cli::factories
 	{
 	public:
 		virtual ~ICommandFactory() = default;
-		virtual std::unique_ptr<cmds::ICommand> createCommand(const ValidatedRawCommand& args) = 0;
+		virtual std::unique_ptr<cmds::ICommand> createCommand(const ParsedRawCommand& args) = 0;
 	};
 }

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "viewer/cli/CLIViewer.h"
+#include "cli/CLIViewer.h"
 #include "cli/CLIController.h"
-#include "cli/CommandRegistry.h"
+#include "cli/meta/CommandRegistry.h"
 #include "core/ActionManager.h"
 
 namespace ppt
@@ -23,7 +23,7 @@ namespace ppt
 	private:
 		model::Presentation m_presentation;
 		core::ActionManager m_actionManager;
-		viewer::cli::CLIViewer m_viewer;
+		cli::CLIViewer m_viewer;
 		cli::CommandRegistry m_registry;
 		cli::CLIController m_controller;
 	};

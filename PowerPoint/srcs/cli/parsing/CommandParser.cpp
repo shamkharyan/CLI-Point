@@ -1,7 +1,7 @@
 #include "cli/parsing/CommandParser.h"
 
-#include "cli/CommandRegistry.h"
-#include "cli/parsing/SemanticAnalizer.h"
+#include "cli/meta/CommandRegistry.h"
+#include "cli/parsing/SemanticParser.h"
 #include "cli/parsing/SyntaxParser.h"
 #include "cli/parsing/RawCommand.h"
 
@@ -13,7 +13,7 @@ CommandParser::CommandParser(
 	m_commandRegistry(registry),
 	m_istream(istream),
 	m_syntaxParser(istream),
-	m_semanticAnalyzer(registry)
+	m_semanticParser(registry)
 {
 }
 
@@ -23,9 +23,9 @@ std::unique_ptr<cmds::ICommand> CommandParser::parseCommand()
 	if (rawCommand.name.empty())
 		return nullptr;
 
-	auto validatedRawCommand = m_semanticAnalyzer.analyze(rawCommand);
+	auto parsedRawCommand = m_semanticParser.parseRawCommand(rawCommand);
 
-	auto factory = m_commandRegistry.getCommandMeta(validatedRawCommand.name)->getFactory();
+	auto factory = m_commandRegistry.getCommandMeta(parsedRawCommand.name)->getFactory();
 
-	return factory->createCommand(validatedRawCommand);
+	return factory->createCommand(parsedRawCommand);
 }

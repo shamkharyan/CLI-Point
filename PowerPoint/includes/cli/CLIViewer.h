@@ -1,24 +1,24 @@
 #pragma once
 
-#include "viewer/IViewer.h"
-#include "viewer/cli/CLIVisualizer.h"
+#include "core/IViewer.h"
+//#include "viewer/cli/CLIVisualizer.h"
 #include "model/Presentation.h"
 
 #include <optional>
 #include <string>
 
-namespace ppt::viewer::cli
+namespace ppt::cli
 {
-	class CLIViewer : public IViewer
+	class CLIViewer : public core::IViewer
 	{
 	public:
-		CLIViewer(std::istream& is, std::ostream& os);
+		CLIViewer(model::Presentation& presentation, std::istream& is, std::ostream& os);
 		void showError(const std::string& msg) override;
 		void showWarning(const std::string& msg) override;
 		void showInfo(const std::string& msg) override;
 		std::optional<bool> askConfirmation(const std::string& msg) override;
 
-		void showPrompt(ppt::model::Presentation& presentation);
+		void showPrompt();
 		void showText(const std::string& msg);
 		void showWelcome();
 		void resetStream();
@@ -28,6 +28,7 @@ namespace ppt::viewer::cli
 		std::ostream& getOStream();
 	private:
 		//CLIVisualizer m_visualizer;
+		model::Presentation& m_presentation;
 		std::istream& m_is;
 		std::ostream& m_os;
 	};

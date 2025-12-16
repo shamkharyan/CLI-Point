@@ -4,7 +4,7 @@
 
 namespace ppt::cli
 {
-	class IntFactory : public IArgValueFactory
+	class SizeTFactory : public IArgValueFactory
 	{
 	public:
 		virtual bool canParse(const std::vector<std::string>& argValue) const override;

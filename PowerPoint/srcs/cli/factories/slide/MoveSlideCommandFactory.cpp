@@ -1,31 +1,23 @@
-//#include "cli/errors/InvalidArgumentException.h"
-//#include "cli/errors/InvalidArgumentValueException.h"
-//#include "cli/errors/MissingArgumentValueException.h"
-//#include "cli/errors/MissingArgumentException.h"
-//#include "cli/factories/slide/MoveSlideCommandFactory.h"
-//#include "cli/utils/ArgParser.h"
-//#include "cli/commands/slide/MoveSlideCommand.h"
-//
-//using namespace ppt::cli;
-//using namespace ppt::cli::factories;
-//
-//std::unique_ptr<cmds::ICommand> MoveSlideCommandFactory::createCommand(const Arguments& args)
-//{
-//	std::optional<std::size_t> at;
-//	std::optional<std::size_t> to;
-//
-//	for (const auto& [argName, argVals] : args)
-//	{
-//		if (argName == "-a" || "--at")
-//			at = utils::ArgParser::parseNumber(argName, argVals);
-//		else if (argName == "-t" || "--to")
-//			to = utils::ArgParser::parseNumber(argName, argVals);
-//		else
-//			throw err::InvalidArgumentException(argName);
-//	}
-//
-//	if (!to)
-//		throw err::MissingArgumentException("-t or --to");
-//
-//	return std::make_unique<cmds::MoveSlideCommand>(at, to.value());
-//}
+#include "cli/factories/slide/MoveSlideCommandFactory.h"
+#include "cli/commands/slide/MoveSlideCommand.h"
+#include "model/Presentation.h"
+#include "core/ActionManager.h"
+
+#include <memory>
+
+using namespace ppt::cli;
+using namespace ppt::cli::factories;
+
+MoveSlideCommandFactory::MoveSlideCommandFactory(core::ActionManager& actionManager, model::Presentation& presentation) :
+	m_actionManager(actionManager),
+	m_presentation(presentation)
+{
+}
+
+std::unique_ptr<cmds::ICommand> MoveSlideCommandFactory::createCommand(const ParsedRawCommand& rcmd)
+{
+	auto at = std::get<std::size_t>(rcmd.arguments.at("at"));
+	auto to = std::get<std::size_t>(rcmd.arguments.at("to"));
+
+	return std::make_unique<cmds::MoveSlideCommand>(m_actionManager, m_presentation, at, to);
+}

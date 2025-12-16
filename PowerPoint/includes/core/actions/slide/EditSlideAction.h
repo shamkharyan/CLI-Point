@@ -3,16 +3,19 @@
 #include "core/actions/IAction.h"
 #include "model/Slide.h"
 #include "model/Presentation.h"
+#include "model/utils/Color.h"
 
 namespace ppt::core::act
 {
-	class AddSlideAction : public IAction
+	class EditSlideAction : public IAction
 	{
 	public:
-		AddSlideAction(
+		EditSlideAction(
 			model::Presentation& presentation,
 			std::shared_ptr<model::Slide> pSlide,
-			std::size_t index);
+			std::size_t index,
+			model::utils::Color newColor
+		);
 
 		std::unique_ptr<IAction> doAction() override;
 
@@ -20,5 +23,6 @@ namespace ppt::core::act
 		model::Presentation& m_presentation;
 		std::shared_ptr<model::Slide> m_pSlide;
 		std::size_t m_index;
+		model::utils::Color m_newColor;
 	};
 }

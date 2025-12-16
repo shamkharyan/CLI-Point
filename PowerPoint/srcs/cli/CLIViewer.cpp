@@ -1,13 +1,14 @@
-#include "viewer/cli/CLIViewer.h"
+#include "cli/CLIViewer.h"
 #include "model/Presentation.h"
 
 #include <iostream>
 #include <optional>
 #include <string>
 
-using namespace ppt::viewer::cli;
+using namespace ppt::cli;
 
-CLIViewer::CLIViewer(std::istream& is, std::ostream& os) :
+CLIViewer::CLIViewer(model::Presentation& presentation, std::istream& is, std::ostream& os) :
+	m_presentation(presentation),
 	m_is(is),
 	m_os(os)
 	//m_visualizer(os)
@@ -34,8 +35,7 @@ std::optional<bool> CLIViewer::askConfirmation(const std::string& msg)
 	char ans;
 
 	showText(msg + " (y/n)");
-	showText(">> ");
-	//showPrompt(nullptr);
+	showPrompt();
 	m_is.get(ans);
 	resetStream();
 	switch (std::tolower(ans))
@@ -75,18 +75,13 @@ void CLIViewer::showText(const std::string& msg)
 	m_os << msg << '\n';
 }
 
-void CLIViewer::showPrompt(model::Presentation& presentation)
+void CLIViewer::showPrompt()
 {
-	/*if (presentation.empty())
-		m_os << presentation.getName() << " >> ";
-	else
-		m_os << presentation.getName() << " #" << presentation.getSelectedId().value() << " >> ";*/
-	m_os << presentation.getName() << " >> ";
+	m_os << m_presentation.getName() << " >> ";
 }
 
 void CLIViewer::showWelcome()
 {
-
 	m_os << R"(  /$$$$$$  /$$       /$$$$$$       /$$$$$$$   /$$$$$$  /$$$$$$ /$$   /$$ /$$$$$$$$)" << '\n';
 	m_os << R"( /$$__  $$| $$      |_  $$_/      | $$__  $$ /$$__  $$|_  $$_/| $$$ | $$|__  $$__/)" << '\n';
 	m_os << R"(| $$  \__/| $$        | $$        | $$  \ $$| $$  \ $$  | $$  | $$$$| $$   | $$   )" << '\n';

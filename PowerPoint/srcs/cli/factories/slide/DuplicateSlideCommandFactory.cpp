@@ -1,31 +1,28 @@
-//#include "cli/errors/InvalidArgumentException.h"
-//#include "cli/errors/InvalidArgumentValueException.h"
-//#include "cli/errors/MissingArgumentValueException.h"
-//#include "cli/errors/MissingArgumentException.h"
-//#include "cli/factories/slide/DuplicateSlideCommandFactory.h"
-//#include "cli/utils/ArgParser.h"
-//#include "cli/commands/slide/DuplicateSlideCommand.h"
-//
-//using namespace ppt::cli;
-//using namespace ppt::cli::factories;
-//
-//std::unique_ptr<cmds::ICommand> DuplicateSlideCommandFactory::createCommand(const Arguments& args)
-//{
-//	std::optional<std::size_t> at;
-//	std::optional<std::size_t> to;
-//	bool go = false;
-//
-//	for (const auto& [argName, argVals] : args)
-//	{
-//		if (argName == "-a" || argName == "--at")
-//			at = utils::ArgParser::parseNumber(argName, argVals);
-//		else if (argName == "-t" || argName == "--to")
-//			to = utils::ArgParser::parseNumber(argName, argVals);
-//		else if (argName == "-g" || argName == "--goto")
-//			go = utils::ArgParser::parseFlag(argName, argVals);
-//		else
-//			throw err::InvalidArgumentException(argName);
-//	}
-//
-//	return std::make_unique<cmds::DuplicateSlideCommand>(at, to, go);
-//}
+#include "cli/factories/slide/DuplicateSlideCommandFactory.h"
+#include "cli/commands/slide/DuplicateSlideCommand.h"
+#include "model/Presentation.h"
+#include "core/ActionManager.h"
+
+#include <memory>
+
+using namespace ppt::cli;
+using namespace ppt::cli::factories;
+
+DuplicateSlideCommandFactory::DuplicateSlideCommandFactory(core::ActionManager& actionManager, model::Presentation& presentation) :
+	m_actionManager(actionManager),
+	m_presentation(presentation)
+{
+}
+
+std::unique_ptr<cmds::ICommand> DuplicateSlideCommandFactory::createCommand(const ParsedRawCommand& rcmd)
+{
+	auto at = std::get<std::size_t>(rcmd.arguments.at("at"));
+	std::size_t to;
+
+	if (rcmd.arguments.find("to") == rcmd.arguments.end())
+		to = at + 1;
+	else
+		to = std::get<std::size_t>(rcmd.arguments.at("to"));
+
+	return std::make_unique<cmds::DuplicateSlideCommand>(m_actionManager, m_presentation, at, to);
+}

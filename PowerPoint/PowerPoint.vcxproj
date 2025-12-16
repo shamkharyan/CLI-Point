@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="includes\CLIApplication.h" />
+    <ClInclude Include="includes\cli\commands\ExecutionError.h" />
     <ClInclude Include="includes\cli\commands\shape\AddShapeCommand.h" />
     <ClInclude Include="includes\cli\commands\shape\MoveShapeCommand.h" />
     <ClInclude Include="includes\cli\commands\shape\RemoveShapeCommand.h" />
@@ -139,12 +140,9 @@
     <ClInclude Include="includes\cli\commands\shape\ResizeShapeCommand.h" />
     <ClInclude Include="includes\cli\commands\slide\ClearSlideCommand.h" />
     <ClInclude Include="includes\cli\commands\slide\DuplicateSlideCommand.h" />
-    <ClInclude Include="includes\cli\commands\slide\SetSlideColorCommand.h" />
-    <ClInclude Include="includes\cli\commands\slide\GotoSlideCommand.h" />
+    <ClInclude Include="includes\cli\commands\slide\EditSlideCommand.h" />
     <ClInclude Include="includes\cli\commands\utility\ListCommand.h" />
     <ClInclude Include="includes\cli\commands\slide\MoveSlideCommand.h" />
-    <ClInclude Include="includes\cli\commands\slide\NextSlideCommand.h" />
-    <ClInclude Include="includes\cli\commands\slide\PrevSlideCommand.h" />
     <ClInclude Include="includes\cli\commands\utility\RedoCommand.h" />
     <ClInclude Include="includes\cli\commands\utility\UndoCommand.h" />
     <ClInclude Include="includes\cli\factories\shape\AddShapeCommandFactory.h" />
@@ -152,8 +150,7 @@
     <ClInclude Include="includes\cli\factories\shape\RemoveShapeCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\slide\ClearSlideCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\slide\DuplicateSlideCommandFactory.h" />
-    <ClInclude Include="includes\cli\factories\slide\SetSlideColorCommandFactory.h" />
-    <ClInclude Include="includes\cli\factories\slide\GotoSlideCommandFactory.h" />
+    <ClInclude Include="includes\cli\factories\slide\EditSlideCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\ICommandFactory.h" />
     <ClInclude Include="includes\cli\commands\slide\AddSlideCommand.h" />
     <ClInclude Include="includes\cli\commands\ICommand.h" />
@@ -164,8 +161,6 @@
     <ClInclude Include="includes\cli\errors\MissingArgumentValueException.h" />
     <ClInclude Include="includes\cli\factories\utility\ListCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\slide\MoveSlideCommandFactory.h" />
-    <ClInclude Include="includes\cli\factories\slide\NextSlideCommandFactory.h" />
-    <ClInclude Include="includes\cli\factories\slide\PrevSlideCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\utility\RedoCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\slide\RemoveSlideCommandFactory.h" />
     <ClInclude Include="includes\cli\errors\InvalidInputException.h" />
@@ -184,11 +179,11 @@
     <ClInclude Include="includes\cli\parsing\errors\SyntaxException.h" />
     <ClInclude Include="includes\cli\parsing\FloatFactory.h" />
     <ClInclude Include="includes\cli\parsing\IArgValueFactory.h" />
-    <ClInclude Include="includes\cli\parsing\IntFactory.h" />
+    <ClInclude Include="includes\cli\parsing\SizeTFactory.h" />
     <ClInclude Include="includes\cli\parsing\RawCommand.h" />
-    <ClInclude Include="includes\cli\parsing\SemanticAnalizer.h" />
+    <ClInclude Include="includes\cli\parsing\SemanticParser.h" />
     <ClInclude Include="includes\cli\parsing\SyntaxParser.h" />
-    <ClInclude Include="includes\cli\parsing\ValidatedRawCommand.h" />
+    <ClInclude Include="includes\cli\parsing\ParsedRawCommand.h" />
     <ClInclude Include="includes\core\ActionManager.h" />
     <ClInclude Include="includes\core\actions\GroupAction.h" />
     <ClInclude Include="includes\core\actions\IAction.h" />
@@ -199,15 +194,11 @@
     <ClInclude Include="includes\core\actions\shape\ResizeShapeAction.h" />
     <ClInclude Include="includes\core\actions\slide\AddSlideAction.h" />
     <ClInclude Include="includes\core\actions\slide\ClearSlideAction.h" />
-    <ClInclude Include="includes\core\actions\slide\SetSlideColorAction.h" />
-    <ClInclude Include="includes\core\actions\slide\MoveSlideAction.h" />
-    <ClInclude Include="includes\core\actions\slide\NextSlideAction.h" />
-    <ClInclude Include="includes\core\actions\slide\PrevSlideAction.h" />
+    <ClInclude Include="includes\core\actions\slide\EditSlideAction.h" />
     <ClInclude Include="includes\core\actions\slide\RemoveSlideAction.h" />
     <ClInclude Include="includes\core\actions\utils\AddShapeParams.h" />
     <ClInclude Include="includes\core\errors\EmptyPresentationException.h" />
     <ClInclude Include="includes\core\IController.h" />
-    <ClInclude Include="includes\cli\utils\Converter.h" />
     <ClInclude Include="includes\libs\json.hpp" />
     <ClInclude Include="includes\model\utils\GeometryData.h" />
     <ClInclude Include="includes\model\utils\TextData.h" />
@@ -219,8 +210,7 @@
     <ClInclude Include="includes\serialization\JSONValidator.h" />
     <ClInclude Include="includes\utils\IObserver.h" />
     <ClInclude Include="includes\utils\Observable.h" />
-    <ClInclude Include="includes\viewer\cli\CLIVisualizer.h" />
-    <ClInclude Include="includes\cli\CommandRegistry.h" />
+    <ClInclude Include="includes\cli\meta\CommandRegistry.h" />
     <ClInclude Include="includes\cli\CLIController.h" />
     <ClInclude Include="includes\cli\factories\utility\ExitCommandFactory.h" />
     <ClInclude Include="includes\core\errors\MissingPresentationException.h" />
@@ -230,11 +220,10 @@
     <ClInclude Include="includes\model\Slide.h" />
     <ClInclude Include="includes\cli\parsing\Tokenizer.h" />
     <ClInclude Include="includes\model\utils\StyleData.h" />
-    <ClInclude Include="includes\viewer\cli\CLIViewer.h" />
-    <ClInclude Include="includes\viewer\IViewer.h" />
+    <ClInclude Include="includes\cli\CLIViewer.h" />
+    <ClInclude Include="includes\core\IViewer.h" />
     <ClInclude Include="includes\cli\commands\utility\ExitCommand.h" />
     <ClInclude Include="srcs\CLI\Commands\QuitCommand.h" />
-    <ClInclude Include="includes\core\actions\slide\GotoSlideAction.h" />
     <ClCompile Include="srcs\cli\meta\CommandMeta.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -250,12 +239,9 @@
     <ClCompile Include="srcs\cli\commands\slide\AddSlideCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\slide\ClearSlideCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\slide\DuplicateSlideCommand.cpp" />
-    <ClCompile Include="srcs\cli\commands\slide\SetSlideColorCommand.cpp" />
-    <ClCompile Include="srcs\cli\commands\slide\GotoSlideCommand.cpp" />
+    <ClCompile Include="srcs\cli\commands\slide\EditSlideCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\utility\ListCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\slide\MoveSlideCommand.cpp" />
-    <ClCompile Include="srcs\cli\commands\slide\NextSlideCommand.cpp" />
-    <ClCompile Include="srcs\cli\commands\slide\PrevSlideCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\utility\RedoCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\slide\RemoveSlideCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\utility\UndoCommand.cpp" />
@@ -267,12 +253,9 @@
     <ClCompile Include="srcs\cli\factories\slide\AddSlideCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\slide\ClearSlideCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\slide\DuplicateSlideCommandFactory.cpp" />
-    <ClCompile Include="srcs\cli\factories\slide\SetSlideColorCommandFactory.cpp" />
-    <ClCompile Include="srcs\cli\factories\slide\GotoSlideCommandFactory.cpp" />
+    <ClCompile Include="srcs\cli\factories\slide\EditSlideCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\ListCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\slide\MoveSlideCommandFactory.cpp" />
-    <ClCompile Include="srcs\cli\factories\slide\NextSlideCommandFactory.cpp" />
-    <ClCompile Include="srcs\cli\factories\slide\PrevSlideCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\slide\RemoveSlideCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\RedoCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\UndoCommandFactory.cpp" />
@@ -282,8 +265,8 @@
     <ClCompile Include="srcs\cli\parsing\ColorRGBFactory.cpp" />
     <ClCompile Include="srcs\cli\parsing\CommandParser.cpp" />
     <ClCompile Include="srcs\cli\parsing\FloatFactory.cpp" />
-    <ClCompile Include="srcs\cli\parsing\IntFactory.cpp" />
-    <ClCompile Include="srcs\cli\parsing\SemanticAnalyzer.cpp" />
+    <ClCompile Include="srcs\cli\parsing\SizeTFactory.cpp" />
+    <ClCompile Include="srcs\cli\parsing\SemanticParser.cpp" />
     <ClCompile Include="srcs\cli\parsing\SyntaxParser.cpp" />
     <ClCompile Include="srcs\cli\parsing\Tokenizer.cpp" />
     <ClCompile Include="srcs\cli\CLIController.cpp" />
@@ -291,6 +274,7 @@
     <ClCompile Include="srcs\cli\utils\ArgParser.cpp" />
     <ClCompile Include="srcs\cli\utils\Converter.cpp" />
     <ClCompile Include="srcs\core\ActionManager.cpp" />
+    <ClCompile Include="srcs\core\actions\GroupAction.cpp" />
     <ClCompile Include="srcs\core\actions\shape\AddShapeAction.cpp" />
     <ClCompile Include="srcs\core\actions\shape\MoveShapeAction.cpp" />
     <ClCompile Include="srcs\core\actions\shape\RemoveShapeAction.cpp" />
@@ -298,12 +282,7 @@
     <ClCompile Include="srcs\core\actions\shape\ResizeShapeAction.cpp" />
     <ClCompile Include="srcs\core\actions\slide\AddSlideAction.cpp" />
     <ClCompile Include="srcs\core\actions\slide\ClearSlideAction.cpp" />
-    <ClCompile Include="srcs\core\actions\slide\DuplicateSlideAction.cpp" />
-    <ClCompile Include="srcs\core\actions\slide\SetSlideColorAction.cpp" />
-    <ClCompile Include="srcs\core\actions\slide\GotoSlideAction.cpp" />
-    <ClCompile Include="srcs\core\actions\slide\MoveSlideAction.cpp" />
-    <ClCompile Include="srcs\core\actions\slide\NextSlideAction.cpp" />
-    <ClCompile Include="srcs\core\actions\slide\PrevSlideAction.cpp" />
+    <ClCompile Include="srcs\core\actions\slide\EditSlideAction.cpp" />
     <ClCompile Include="srcs\core\actions\slide\RemoveSlideAction.cpp" />
     <ClCompile Include="srcs\model\Presentation.cpp" />
     <ClCompile Include="srcs\model\Slide.cpp" />
@@ -312,8 +291,7 @@
     <ClCompile Include="srcs\main.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\ExitCommandFactory.cpp" />
     <ClCompile Include="srcs\serialization\JSONValidator.cpp" />
-    <ClCompile Include="srcs\viewer\cli\CLIViewer.cpp" />
-    <ClCompile Include="srcs\viewer\cli\CLIVisualizer.cpp" />
+    <ClCompile Include="srcs\cli\CLIViewer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

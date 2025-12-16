@@ -13,7 +13,7 @@ bool FloatFactory::canParse(const std::vector<std::string>& argValue) const
 	try
 	{
 		size_t idx = 0;
-		std::stof(argValue[0], &idx);
+		std::ignore = std::stof(argValue[0], &idx);
 		return idx == argValue[0].size();
 	}
 	catch (...)

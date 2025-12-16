@@ -1,19 +1,19 @@
 #pragma once
 
 #include "cli/commands/ICommand.h"
-#include "viewer/IViewer.h"
-#include "core/IController.h"
+#include "cli/CLIViewer.h"
+#include "cli/CLIController.h"
 
 namespace ppt::cli::cmds
 {
 	class ExitCommand : public ICommand
 	{
 	public:
-		ExitCommand(core::IController& controller, viewer::IViewer& viewer, bool force);
+		ExitCommand(CLIController& controller, CLIViewer& viewer, bool force);
 		void execute() override;
 	private:
-		viewer::IViewer& m_viewer;
-		core::IController& m_controller;
+		CLIViewer& m_viewer;
+		CLIController& m_controller;
 		bool m_force;
 	};
 }

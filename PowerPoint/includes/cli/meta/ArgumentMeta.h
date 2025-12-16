@@ -13,7 +13,7 @@ namespace ppt::cli::meta
 	class ArgumentMeta
 	{
 	public:
-		using container = std::vector<std::unique_ptr<IArgValueFactory>>;
+		using container = std::vector<std::shared_ptr<IArgValueFactory>>;
 		using iterator = container::iterator;
 		using const_iterator = container::const_iterator;
 
@@ -21,8 +21,13 @@ namespace ppt::cli::meta
 		ArgumentMeta(
 			const std::string canonicalName,
 			const std::string& description,
-			bool isRequired,
-			std::optional<ArgValue> defaultValue
+			bool isRequired
+		);
+
+		ArgumentMeta(
+			const std::string canonicalName,
+			const std::string& description,
+			ArgValue defaultValue
 		);
 
 		const std::string& getCanonicalName() const noexcept { return m_canonicalName; }
@@ -41,10 +46,7 @@ namespace ppt::cli::meta
 		const_iterator cend() const noexcept { return m_argValueFactories.cend(); }
 
 		void registerNameAlias(const std::string& alias);
-		void registerArgValueFactory(std::unique_ptr<IArgValueFactory> factory);
-
-		bool isValidValue(const std::vector<std::string>& values) const;
-		ArgValue parseValue(const std::vector<std::string>& values) const;
+		void registerArgValueFactory(std::shared_ptr<IArgValueFactory> factory);
 
 	private:
 		std::string m_canonicalName;

@@ -16,13 +16,15 @@ CommandMeta::CommandMeta(
 const ArgumentMeta* CommandMeta::getArgumentMeta(const std::string& argName) const
 {
 	auto it = m_aliasIndexes.find(argName);
-	return it != m_aliasIndexes.end() ? it->second : nullptr;
+	if (it == m_aliasIndexes.end())
+		return nullptr;
+	return &m_argMetas[it->second];
 }
 
 void CommandMeta::registerArgumentMeta(ArgumentMeta argMeta)
 {
-	m_argMetas.push_back(std::move(argMeta));
+	for (const auto& alias : argMeta.getNameAliases())
+		m_aliasIndexes[alias] = m_argMetas.size();
 
-	for (const auto& alias : m_argMetas.back().getNameAliases())
-		m_aliasIndexes[alias] = &m_argMetas.back();
+	m_argMetas.push_back(std::move(argMeta));
 }

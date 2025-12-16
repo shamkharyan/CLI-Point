@@ -1,6 +1,6 @@
 #include "cli/CLIController.h"
 #include "cli/parsing/CommandParser.h"
-#include "viewer/cli/CLIViewer.h"
+#include "cli/CLIViewer.h"
 
 #include <iostream>
 
@@ -8,7 +8,7 @@ using namespace ppt::cli;
 using namespace ppt::core;
 
 CLIController::CLIController(
-	viewer::cli::CLIViewer& viewer,
+	CLIViewer& viewer,
 	CommandRegistry& registry,
 	model::Presentation& presentation) : 
 	m_viewer(viewer), 
@@ -23,7 +23,7 @@ int CLIController::run()
 
 	while (!m_exit)
 	{
-		m_viewer.showPrompt(m_presentation);
+		m_viewer.showPrompt();
 		try
 		{
 			std::unique_ptr<cmds::ICommand> cmd = parser.parseCommand();

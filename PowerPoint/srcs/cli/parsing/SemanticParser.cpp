@@ -1,37 +1,47 @@
-#include "cli/parsing/SemanticAnalizer.h"
+#include "cli/parsing/SemanticParser.h"
 #include "cli/parsing/errors/SemanticException.h"
 
 using namespace ppt::cli;
 
-SemanticAnalyzer::SemanticAnalyzer(const CommandRegistry& registry) :
+SemanticParser::SemanticParser(const CommandRegistry& registry) :
 	commandRegistry(registry)
 {
 }
 
-ValidatedRawCommand SemanticAnalyzer::analyze(const RawCommand& rcmd)
+ParsedRawCommand SemanticParser::parseRawCommand(const RawCommand& rcmd)
 {
 	auto cmdMeta = commandRegistry.getCommandMeta(rcmd.name);
 	if (!cmdMeta)
 		throw SemanticException("Unknown command: " + rcmd.name);
 
-	ValidatedRawCommand validatedCmd;
-	validatedCmd.name = rcmd.name;
+	ParsedRawCommand parsedCmd;
+	parsedCmd.name = rcmd.name;
 
 	for (const auto& [argName, argValue] : rcmd.arguments)
 	{
-		auto argMeta = cmdMeta->getArgumentMeta(argName);
+		const auto argMeta = cmdMeta->getArgumentMeta(argName);
 		if (!argMeta)
 			throw SemanticException("Unknown argument '" + argName + "' for command '" + rcmd.name + "'");
-		if (!argMeta->isValidValue(argValue))
+
+		bool isParsed = false;
+		for (const auto& valueFactory : *argMeta)
+		{
+			if (valueFactory->canParse(argValue))
+			{
+				parsedCmd.arguments[argMeta->getCanonicalName()] = valueFactory->parse(argValue);
+				isParsed = true;
+				break;
+			}
+		}
+		if (!isParsed)
 			throw SemanticException("Invalid value for argument '" + argName + "' in command '" + rcmd.name + "'");
-		validatedCmd.arguments[argMeta->getCanonicalName()] = argMeta->parseValue(argValue);
 	}
 
 	for (const auto& argMeta : *cmdMeta)
 	{
 		const auto& canonical = argMeta.getCanonicalName();
 		const bool isPresent =
-			validatedCmd.arguments.find(canonical) != validatedCmd.arguments.end();
+			parsedCmd.arguments.find(canonical) != parsedCmd.arguments.end();
 
 		if (!isPresent)
 		{
@@ -43,9 +53,9 @@ ValidatedRawCommand SemanticAnalyzer::analyze(const RawCommand& rcmd)
 			}
 
 			if (auto optionalDefault = argMeta.getDefaultValue())
-				validatedCmd.arguments[canonical] = *optionalDefault;
+				parsedCmd.arguments[canonical] = *optionalDefault;
 		}
 	}
 
-	return validatedCmd;
+	return parsedCmd;
 }

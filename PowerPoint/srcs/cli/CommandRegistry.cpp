@@ -1,4 +1,4 @@
-#include "cli/CommandRegistry.h"
+#include "cli/meta/CommandRegistry.h"
 
 using namespace ppt::cli;
 

@@ -14,7 +14,7 @@ namespace ppt::cli::meta
 	{
 	public:
 		using container = std::vector<ArgumentMeta>;
-		using alias_container = std::unordered_map<std::string, const ArgumentMeta*>;
+		using alias_container = std::unordered_map<std::string, std::size_t>;
 		using iterator = container::iterator;
 		using const_iterator = container::const_iterator;
 

@@ -3,7 +3,7 @@
 #include <optional>
 #include <string>
 
-namespace ppt::viewer
+namespace ppt::core
 {
 	class IViewer
 	{

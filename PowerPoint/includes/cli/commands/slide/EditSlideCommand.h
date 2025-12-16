@@ -5,26 +5,26 @@
 #include "model/Presentation.h"
 #include "core/ActionManager.h"
 
-#include <optional>
-#include <string>
 
 namespace ppt::cli::cmds
 {
-	class MoveSlideCommand : public ICommand
+	class EditSlideCommand : public ICommand
 	{
 	public:
-		MoveSlideCommand(
+		EditSlideCommand(
 			core::ActionManager& actionManager,
-			model::Presentation& presentation,
-			std::size_t at,
-			std::size_t to);
+			model::Presentation& presentation, 
+			std::size_t at, 
+			model::utils::Color color
+		);
 
 		void execute() override;
+
 	private:
 		core::ActionManager& m_actionManager;
 		model::Presentation& m_presentation;
 
 		std::size_t m_at;
-		std::size_t m_to;
+		model::utils::Color m_color;
 	};
 }

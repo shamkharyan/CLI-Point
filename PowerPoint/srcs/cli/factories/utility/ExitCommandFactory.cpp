@@ -4,13 +4,13 @@
 using namespace ppt::cli;
 using namespace ppt::cli::factories;
 
-ExitCommandFactory::ExitCommandFactory(core::IController& controller, viewer::IViewer& viewer) :
+ExitCommandFactory::ExitCommandFactory(CLIController& controller, CLIViewer& viewer) :
 	m_controller(controller),
 	m_viewer(viewer)
 {
 }
 
-std::unique_ptr<cmds::ICommand> ExitCommandFactory::createCommand(const ValidatedRawCommand& rcmd)
+std::unique_ptr<cmds::ICommand> ExitCommandFactory::createCommand(const ParsedRawCommand& rcmd)
 {
 	bool force = std::get<bool>(rcmd.arguments.at("force"));
 

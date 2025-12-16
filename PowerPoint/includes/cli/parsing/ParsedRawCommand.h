@@ -7,7 +7,7 @@
 
 namespace ppt::cli
 {
-	struct ValidatedRawCommand
+	struct ParsedRawCommand
 	{
 		std::string name;
 		std::unordered_map<std::string, ArgValue> arguments;

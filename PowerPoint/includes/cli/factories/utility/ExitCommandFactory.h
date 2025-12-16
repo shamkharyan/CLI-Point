@@ -2,18 +2,18 @@
 
 #include "cli/factories/ICommandFactory.h"
 #include "cli/commands/ICommand.h"
-#include "viewer/IViewer.h"
-#include "core/IController.h"
+#include "cli/CLIViewer.h"
+#include "cli/CLIController.h"
 
 namespace ppt::cli::factories
 {
 	class ExitCommandFactory : public ICommandFactory
 	{
 	public:
-		ExitCommandFactory(core::IController& controller, viewer::IViewer& viewer);
-		std::unique_ptr<cmds::ICommand> createCommand(const ValidatedRawCommand& args) override;
+		ExitCommandFactory(CLIController& controller, CLIViewer& viewer);
+		std::unique_ptr<cmds::ICommand> createCommand(const ParsedRawCommand& args) override;
 	private:
-		core::IController& m_controller;
-		viewer::IViewer& m_viewer;
+		CLIController& m_controller;
+		CLIViewer& m_viewer;
 	};
 }

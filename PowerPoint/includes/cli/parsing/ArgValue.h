@@ -9,7 +9,7 @@ namespace ppt::cli
 {
 	using ArgValue = std::variant<
 		std::string,
-		int,
+		std::size_t,
 		float,
 		bool,
 		ppt::model::utils::Color

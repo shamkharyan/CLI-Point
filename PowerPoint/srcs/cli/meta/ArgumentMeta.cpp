@@ -9,34 +9,23 @@ using namespace ppt::cli;
 ArgumentMeta::ArgumentMeta(
 	const std::string canonicalName,
 	const std::string& description,
-	bool isRequired,
-	std::optional<ArgValue> defaultValue) :
+	bool isRequired) :
 	m_canonicalName(canonicalName),
 	m_description(description),
 	m_isRequired(isRequired),
-	m_defaultValue(defaultValue)
+	m_defaultValue(std::nullopt)
 {
 }
 
-bool ArgumentMeta::isValidValue(const std::vector<std::string>& values) const
+ArgumentMeta::ArgumentMeta(
+	const std::string canonicalName,
+	const std::string& description,
+	ArgValue defaultValue) :
+	m_canonicalName(canonicalName),
+	m_description(description),
+	m_isRequired(false),
+	m_defaultValue(std::move(defaultValue))
 {
-	for (const auto& factory : m_argValueFactories)
-	{
-		if (factory->canParse(values))
-			return true;
-	}
-	return false;
-}
-
-ArgValue ArgumentMeta::parseValue(const std::vector<std::string>& values) const
-{
-	for (const auto& factory : m_argValueFactories)
-	{
-		if (factory->canParse(values))
-			return factory->parse(values);
-	}
-
-	throw std::runtime_error("No suitable factory found to parse argument value");
 }
 
 void ArgumentMeta::registerNameAlias(const std::string& alias) 
@@ -44,7 +33,7 @@ void ArgumentMeta::registerNameAlias(const std::string& alias)
 	m_nameAliases.push_back(alias); 
 }
 
-void ArgumentMeta::registerArgValueFactory(std::unique_ptr<IArgValueFactory> factory) 
+void ArgumentMeta::registerArgValueFactory(std::shared_ptr<IArgValueFactory> factory) 
 { 
 	m_argValueFactories.push_back(std::move(factory)); 
 }

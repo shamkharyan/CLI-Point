@@ -1,9 +1,9 @@
 #pragma once
 
 #include "cli/commands/ICommand.h"
-#include "cli/CommandRegistry.h"
+#include "cli/meta/CommandRegistry.h"
 #include "cli/parsing/SyntaxParser.h"
-#include "cli/parsing/SemanticAnalizer.h"
+#include "cli/parsing/SemanticParser.h"
 
 #include <istream>
 #include <memory>
@@ -20,6 +20,6 @@ namespace ppt::cli
 		const CommandRegistry& m_commandRegistry;
 		std::istream& m_istream;
 		SyntaxParser m_syntaxParser;
-		SemanticAnalyzer m_semanticAnalyzer;
+		SemanticParser m_semanticParser;
 	};
 }
