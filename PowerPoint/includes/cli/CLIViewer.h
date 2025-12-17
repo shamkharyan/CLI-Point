@@ -34,7 +34,6 @@ namespace ppt::cli
 		void showCommandDescription(const meta::CommandMeta& cmdMeta);
 		void showArgumentsHelp(const meta::CommandMeta& cmdMeta);
 	private:
-		//CLIVisualizer m_visualizer;
 		model::Presentation& m_presentation;
 		std::istream& m_is;
 		std::ostream& m_os;

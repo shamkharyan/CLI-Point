@@ -1,4 +1,5 @@
 #include "cli/CLIViewer.h"
+#include "cli/CLIFormatter.h"
 #include "model/Presentation.h"
 
 #include <iostream>
@@ -12,7 +13,6 @@ CLIViewer::CLIViewer(model::Presentation& presentation, std::istream& is, std::o
 	m_presentation(presentation),
 	m_is(is),
 	m_os(os)
-	//m_visualizer(os)
 {
 }
 
@@ -47,11 +47,6 @@ std::optional<bool> CLIViewer::askConfirmation(const std::string& msg)
 	}
 	return std::nullopt;
 }
-
-//CLIVisualizer& CLIViewer::getVisualizer()
-//{
-//	return m_visualizer;
-//}
 
 std::istream& CLIViewer::getIStream()
 {
@@ -99,7 +94,7 @@ void CLIViewer::showArgumentsHelp(const meta::CommandMeta& cmdMeta)
 	if (cmdMeta.begin() == cmdMeta.end())
 		return;
 
-	m_os << "ARGUMENTS:\n";
+	m_os << "\nARGUMENTS:\n";
 	for (const auto& argMeta : cmdMeta)
 	{
 		std::string aliases;
@@ -108,11 +103,11 @@ void CLIViewer::showArgumentsHelp(const meta::CommandMeta& cmdMeta)
 
 		m_os << " " << std::setw(s_columnWidth) << std::left << aliases << argMeta.getDescription() << '\n';
 		m_os << " " << std::string(s_columnWidth, ' ') <<
-			std::setw(s_columnWidth) << std::left << (*argMeta.begin())->typeName();
+			std::setw(s_columnWidth / 2) << std::left << (*argMeta.begin())->typeName();
 
 		m_os << (argMeta.isRequired() ? " (required) " : " (optional) ");
 		m_os << (argMeta.hasDefaultValue() ?
-			" [default: " + argValueToString(argMeta.getDefaultValue()) + "]" : "");
+			" [default: " + CLIFormatter::toString(argMeta.getDefaultValue()) + "]" : "");
 		m_os << '\n';
 	}
 }
@@ -120,7 +115,7 @@ void CLIViewer::showArgumentsHelp(const meta::CommandMeta& cmdMeta)
 void CLIViewer::showCommandDescription(const meta::CommandMeta& cmdMeta)
 {
 	m_os << "DESCRIPTION:\n";
-	m_os << " " << cmdMeta.getDescription() << "\n\n";
+	m_os << " " << cmdMeta.getDescription() << "\n";
 }
 
 void CLIViewer::showCommandHelp(const meta::CommandMeta& cmdMeta)

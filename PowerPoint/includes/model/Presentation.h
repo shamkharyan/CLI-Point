@@ -32,11 +32,8 @@ namespace ppt::model
 		const_iterator cbegin() const noexcept;
 		const_iterator cend() const noexcept;
 
-		std::shared_ptr<Slide>& operator[](std::size_t pos);
-		const std::shared_ptr<Slide>& operator[](std::size_t pos) const;
-
-		std::shared_ptr<Slide>& getSlide(std::size_t pos);
-		const std::shared_ptr<Slide>& getSlide(std::size_t pos) const;
+		std::shared_ptr<Slide> operator[](std::size_t pos) const;
+		std::shared_ptr<Slide> getSlide(std::size_t pos) const;
 
 		void appendSlide(std::shared_ptr<Slide> slide);
 		void insertSlide(iterator pos, std::shared_ptr<Slide> slide);

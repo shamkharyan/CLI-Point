@@ -51,7 +51,8 @@ ParsedRawCommand SemanticParser::parseRawCommand(const RawCommand& rcmd)
 					"Required argument '" + argMeta.getNameAliases()[0] +
 					"' is missing for command '" + rcmd.name + "'");
 			}
-			parsedCmd.arguments[canonical] = argMeta.getDefaultValue();
+			if (argMeta.hasDefaultValue())
+				parsedCmd.arguments[canonical] = argMeta.getDefaultValue();
 		}
 	}
 

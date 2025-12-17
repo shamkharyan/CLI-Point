@@ -33,5 +33,5 @@ ArgValue SizeTFactory::create(const std::vector<std::string>& argValue) const
 
 std::string SizeTFactory::typeName() const
 {
-	return argValueTypeName(std::size_t{});
+	return "size_t";
 }

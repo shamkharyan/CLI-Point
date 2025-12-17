@@ -12,7 +12,9 @@ HelpCommandFactory::HelpCommandFactory(CommandRegistry& registry, CLIViewer& vie
 
 std::unique_ptr<cmds::ICommand> HelpCommandFactory::createCommand(const ParsedRawCommand& rcmd)
 {
-	auto specificCommandName = std::get<std::string>(rcmd.arguments.at("command"));
+	std::string specificCommandName;
+	if (rcmd.arguments.find("command") != rcmd.arguments.end())
+		specificCommandName = std::get<std::string>(rcmd.arguments.at("command"));
 
 	return std::make_unique<cmds::HelpCommand>(m_registry, m_viewer, specificCommandName);
 }

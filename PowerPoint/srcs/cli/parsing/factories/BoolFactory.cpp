@@ -19,5 +19,5 @@ ArgValue BoolFactory::create(const std::vector<std::string>& argValue) const
 
 std::string BoolFactory::typeName() const
 {
-	return argValueTypeName(bool{});
+	return "bool";
 }

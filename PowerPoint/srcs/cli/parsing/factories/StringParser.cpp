@@ -19,5 +19,5 @@ ArgValue StringFactory::create(const std::vector<std::string>& argValue) const
 
 std::string StringFactory::typeName() const
 {
-	return argValueTypeName(std::string{});
+	return "string";
 }

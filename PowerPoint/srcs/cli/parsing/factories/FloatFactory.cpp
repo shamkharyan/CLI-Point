@@ -33,5 +33,5 @@ ArgValue FloatFactory::create(const std::vector<std::string>& argValue) const
 
 std::string FloatFactory::typeName() const
 {
-	return argValueTypeName(float{});
+	return "float";
 }

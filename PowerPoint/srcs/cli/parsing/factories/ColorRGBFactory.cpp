@@ -36,7 +36,7 @@ namespace
 
 bool ColorRGBFactory::canCreate(const std::vector<std::string>& argValue) const
 {
-	if (argValue.size() != 3)
+	if (argValue.size() != 3 && argValue.size() != 4)
 		return false;
 
 	for (const auto& v : argValue)
@@ -62,12 +62,12 @@ ArgValue ColorRGBFactory::create(const std::vector<std::string>& argValue) const
 	color.r = parseChannel(argValue[0]);
 	color.g = parseChannel(argValue[1]);
 	color.b = parseChannel(argValue[2]);
-	color.a = 255;
+	color.a = argValue.size() == 4 ? parseChannel(argValue[3]) : 255;
 
 	return ArgValue(color);
 }
 
 std::string ColorRGBFactory::typeName() const
 {
-	return argValueTypeName(model::utils::Color{});
+	return "Color";
 }

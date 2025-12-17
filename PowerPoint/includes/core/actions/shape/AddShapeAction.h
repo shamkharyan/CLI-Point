@@ -1,24 +1,24 @@
 //#pragma once
 //
-//#include "model/Shape.h"
-//#include "core/actions/AAction.h"
-//#include "core/actions/utils/AddShapeParams.h"
-//#include "model/utils/Color.h"
-//
-//#include <optional>
+//#include "core/actions/IAction.h"
+//#include "model/Slide.h"
+//#include "model/ShapeData.h"
 //
 //namespace ppt::core::act
 //{
-//	class AddShapeAction : public AAction
+//	class AddShapeAction : public IAction
 //	{
 //	public:
-//		AddShapeAction(const utils::AddShapeParams& params);
+//		AddShapeAction(
+//			model::Slide& slide,
+//			const model::ShapeData& shapeData,
+//			std::size_t zIndex);
 //
-//		bool doAction() override;
-//		bool undoAction() override;
+//		std::unique_ptr<IAction> doAction() override;
+//
 //	private:
-//		utils::AddShapeParams m_params;
-//
-//		std::optional<std::size_t> m_shapeId = std::nullopt;
+//		model::Slide& m_slide;
+//		model::ShapeData m_shapeData;
+//		std::size_t m_zIndex;
 //	};
 //}

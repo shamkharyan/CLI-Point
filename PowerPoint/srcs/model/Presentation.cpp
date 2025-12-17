@@ -43,23 +43,12 @@ namespace ppt::model
 	Presentation::const_iterator Presentation::cbegin() const noexcept { return m_slides.cbegin(); }
 	Presentation::const_iterator Presentation::cend() const noexcept { return m_slides.cend(); }
 
-	std::shared_ptr<Slide>& Presentation::operator[](std::size_t pos)
+	std::shared_ptr<Slide> Presentation::operator[](std::size_t pos) const
 	{
 		return m_slides[pos];
 	}
 
-	const std::shared_ptr<Slide>& Presentation::operator[](std::size_t pos) const
-	{
-		return m_slides[pos];
-	}
-
-	std::shared_ptr<Slide>& Presentation::getSlide(std::size_t pos)
-	{
-		checkIndex(pos);
-		return m_slides[pos];
-	}
-
-	const std::shared_ptr<Slide>& Presentation::getSlide(std::size_t pos) const
+	std::shared_ptr<Slide> Presentation::getSlide(std::size_t pos) const
 	{
 		checkIndex(pos);
 		return m_slides[pos];
