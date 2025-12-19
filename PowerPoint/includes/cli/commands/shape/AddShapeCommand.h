@@ -24,7 +24,6 @@ namespace ppt::cli::cmds
 			model::utils::ShapeType type,
 			const model::utils::GeometryData& geometry,
 			const model::utils::StyleData& style,
-			const std::optional<model::utils::TextData>& text,
 			std::size_t zIndex
 		);
 
@@ -38,7 +37,6 @@ namespace ppt::cli::cmds
 		model::utils::ShapeType m_type;
 		model::utils::GeometryData m_geometry;
 		model::utils::StyleData m_style;
-		std::optional<model::utils::TextData> m_text;
 		std::size_t m_zIndex;
 	};
 }

@@ -5,110 +5,6 @@
 
 namespace ppt::model
 {
-	// ================= ITERATOR =================
-
-	Slide::iterator::iterator(Slide* slide, std::size_t layer, std::size_t index)
-		: m_slide(slide), m_layer(layer), m_index(index)
-	{
-	}
-
-	Slide::iterator::reference Slide::iterator::operator*() const
-	{
-		return m_slide->m_layers[m_layer][m_index];
-	}
-
-	Slide::iterator::pointer Slide::iterator::operator->() const
-	{
-		return &m_slide->m_layers[m_layer][m_index];
-	}
-
-	Slide::iterator& Slide::iterator::operator++()
-	{
-		advanceForward();
-		return *this;
-	}
-
-	Slide::iterator Slide::iterator::operator++(int)
-	{
-		auto tmp = *this;
-		++(*this);
-		return tmp;
-	}
-
-	Slide::iterator& Slide::iterator::operator--()
-	{
-		advanceBackward();
-		return *this;
-	}
-
-	Slide::iterator Slide::iterator::operator--(int)
-	{
-		auto tmp = *this;
-		--(*this);
-		return tmp;
-	}
-
-	bool Slide::iterator::operator==(const iterator& other) const
-	{
-		return m_slide == other.m_slide
-			&& m_layer == other.m_layer
-			&& m_index == other.m_index;
-	}
-
-	bool Slide::iterator::operator!=(const iterator& other) const
-	{
-		return !(*this == other);
-	}
-
-	void Slide::iterator::advanceForward()
-	{
-		if (!m_slide) return;
-
-		++m_index;
-		while (m_layer < m_slide->m_layers.size())
-		{
-			if (m_index < m_slide->m_layers[m_layer].size())
-				return;
-
-			++m_layer;
-			m_index = 0;
-		}
-
-		// end()
-		m_layer = m_slide->m_layers.size();
-		m_index = 0;
-	}
-
-	void Slide::iterator::advanceBackward()
-	{
-		if (!m_slide) return;
-
-		if (m_layer == m_slide->m_layers.size())
-		{
-			--m_layer;
-			m_index = m_slide->m_layers[m_layer].size() - 1;
-			return;
-		}
-
-		if (m_index > 0)
-		{
-			--m_index;
-			return;
-		}
-
-		while (m_layer > 0)
-		{
-			--m_layer;
-			if (!m_slide->m_layers[m_layer].empty())
-			{
-				m_index = m_slide->m_layers[m_layer].size() - 1;
-				return;
-			}
-		}
-	}
-
-	// ================= SLIDE =================
-
 	Slide::Slide()
 		: Slide(utils::Color(255, 255, 255))
 	{
@@ -134,123 +30,74 @@ namespace ppt::model
 		return m_layers.size();
 	}
 
-	std::size_t Slide::shapesCount() const noexcept
-	{
-		return m_shapeCount;
-	}
-
 	bool Slide::empty() const noexcept
 	{
-		return m_shapeCount == 0;
+		return m_layers.empty();
 	}
 
 	Slide::iterator Slide::begin() noexcept
 	{
-		if (m_layers.empty())
-			return end();
-
-		return iterator(this, 0, 0);
+		return m_layers.begin();
 	}
 
 	Slide::iterator Slide::end() noexcept
 	{
-		return iterator(this, m_layers.size(), 0);
+		return m_layers.end();
 	}
 
-	void Slide::appendShape(ShapeData shape)
+	Slide::const_iterator Slide::begin() const noexcept
 	{
-		shape.id = m_nextId++;
-
-		if (m_layers.empty())
-			m_layers.emplace_back();
-
-		m_layers.back().push_back(std::move(shape));
-		++m_shapeCount;
+		return m_layers.cbegin();
 	}
 
-	void Slide::appendShapeToLayer(std::size_t layer, ShapeData shape)
+	Slide::const_iterator Slide::end() const noexcept
 	{
-		if (layer > m_layers.size())
-			throw std::out_of_range("Layer index out of range");
-
-		shape.id = m_nextId++;
-
-		if (layer == m_layers.size())
-			m_layers.emplace_back();
-
-		m_layers[layer].push_back(std::move(shape));
-		++m_shapeCount;
+		return m_layers.cend();
 	}
 
-	void Slide::eraseShape(iterator pos)
+	Slide::const_iterator Slide::cbegin() const noexcept
 	{
-		checkIterator(pos);
-
-		auto& layer = m_layers[pos.m_layer];
-		layer.erase(layer.begin() + pos.m_index);
-		--m_shapeCount;
-
-		if (layer.empty())
-			m_layers.erase(m_layers.begin() + pos.m_layer);
+		return m_layers.cbegin();
 	}
 
-	void Slide::moveForward(iterator pos)
+	Slide::const_iterator Slide::cend() const noexcept
 	{
-		checkIterator(pos);
-
-		auto& layer = m_layers[pos.m_layer];
-		if (pos.m_index + 1 < layer.size())
-			std::swap(layer[pos.m_index], layer[pos.m_index + 1]);
+		return m_layers.cend();
 	}
 
-	void Slide::moveBackward(iterator pos)
+	std::shared_ptr<SlideLayer> Slide::getLayer(std::size_t index) const
 	{
-		checkIterator(pos);
-
-		auto& layer = m_layers[pos.m_layer];
-		if (pos.m_index > 0)
-			std::swap(layer[pos.m_index], layer[pos.m_index - 1]);
+		checkIndex(index);
+		return m_layers[index];
 	}
 
-	void Slide::moveToTop(iterator pos)
+
+	std::shared_ptr<SlideLayer> Slide::operator[](std::size_t index) const
 	{
-		checkIterator(pos);
-
-		ShapeData temp = std::move(*pos);
-		eraseShape(pos);
-
-		if (m_layers.empty())
-			m_layers.emplace_back();
-
-		m_layers.back().push_back(std::move(temp));
+		return getLayer(index);
 	}
 
-	void Slide::moveToBottom(iterator pos)
+	void Slide::appendLayer(std::shared_ptr<SlideLayer> layer)
 	{
-		checkIterator(pos);
-
-		ShapeData temp = std::move(*pos);
-		eraseShape(pos);
-
-		if (m_layers.empty())
-			m_layers.emplace_back();
-
-		m_layers.front().insert(m_layers.front().begin(), std::move(temp));
+		m_layers.push_back(std::move(layer));
 	}
 
-	Slide::iterator Slide::findById(std::size_t id) noexcept
+	void Slide::insertLayer(iterator pos, std::shared_ptr<SlideLayer> layer)
 	{
-		for (std::size_t l = 0; l < m_layers.size(); ++l)
-			for (std::size_t i = 0; i < m_layers[l].size(); ++i)
-				if (m_layers[l][i].id == id)
-					return iterator(this, l, i);
-
-		return end();
+		m_layers.insert(pos, std::move(layer));
 	}
 
-	void Slide::checkIterator(const iterator& it) const
+	std::shared_ptr<SlideLayer> Slide::removeLayer(iterator pos)
 	{
-		if (it.m_slide != this || it.m_layer > m_layers.size())
-			throw std::invalid_argument("Iterator does not belong to this slide");
+		auto layer = *pos;
+		m_layers.erase(pos);
+		return layer;
+	}
+
+	void Slide::checkIndex(std::size_t index) const
+	{
+		if (index >= m_layers.size())
+			throw std::out_of_range("Slide layer index out of range");
 	}
 }
+	

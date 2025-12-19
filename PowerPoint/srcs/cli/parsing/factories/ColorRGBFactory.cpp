@@ -21,50 +21,37 @@ namespace
 		return true;
 	}
 
-	int parseChannel(const std::string& s)
+	std::uint8_t parseChannel(const std::string& s)
 	{
 		if (!isNumber(s))
 			throw std::invalid_argument("RGB value must be a number");
 
-		int v = std::stoi(s);
-		if (v < 0 || v > 255)
+		std::size_t idx = 0;
+		int v = std::stoi(s, &idx);
+		if (idx != s.size() || v < 0 || v > 255)
 			throw std::out_of_range("RGB value must be in range [0, 255]");
 
-		return v;
+		return static_cast<std::uint8_t>(v);
 	}
 }
 
-bool ColorRGBFactory::canCreate(const std::vector<std::string>& argValue) const
+std::optional<ArgValue> ColorRGBFactory::tryCreate(const std::vector<std::string>& argValue) const
 {
-	if (argValue.size() != 3 && argValue.size() != 4)
-		return false;
-
-	for (const auto& v : argValue)
+	if (argValue.size() != 3 || argValue.size() != 4)
+		return std::nullopt;
+	try
 	{
-		if (!isNumber(v))
-			return false;
+		auto r = parseChannel(argValue[0]);
+		auto g = parseChannel(argValue[1]);
+		auto b = parseChannel(argValue[2]);
+		auto a = (argValue.size() == 4) ? parseChannel(argValue[3]) : static_cast<std::uint8_t>(255);
 
-		int value = std::stoi(v);
-		if (value < 0 || value > 255)
-			return false;
+		return model::utils::Color(r, g, b, a);
 	}
-
-	return true;
-}
-
-ArgValue ColorRGBFactory::create(const std::vector<std::string>& argValue) const
-{
-	if (!canCreate(argValue))
-		throw std::invalid_argument("Invalid RGB color format");
-
-	model::utils::Color color;
-
-	color.r = parseChannel(argValue[0]);
-	color.g = parseChannel(argValue[1]);
-	color.b = parseChannel(argValue[2]);
-	color.a = argValue.size() == 4 ? parseChannel(argValue[3]) : 255;
-
-	return ArgValue(color);
+	catch (const std::exception&)
+	{
+		return std::nullopt;
+	}
 }
 
 std::string ColorRGBFactory::typeName() const

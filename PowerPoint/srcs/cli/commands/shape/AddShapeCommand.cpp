@@ -17,7 +17,6 @@
 //	model::utils::ShapeType type,
 //	const model::utils::GeometryData& geometry,
 //	const model::utils::StyleData& style,
-//	const std::optional<model::utils::TextData>& text,
 //	std::size_t zIndex) :
 //	m_model(model),
 //	m_actionManager(actionManager),
@@ -25,7 +24,6 @@
 //	m_type(type),
 //	m_geometry(geometry),
 //	m_style(style),
-//	m_text(text),
 //	m_zIndex(zIndex)
 //{
 //}
@@ -44,7 +42,6 @@
 //	shapeData.type = m_type;
 //	shapeData.geometry = m_geometry;
 //	shapeData.style = m_style;
-//	shapeData.text = m_text;
 //
 //	auto action = std::make_unique<act::AddShapeAction>(*slide, shapeData, m_zIndex);
 //	m_actionManager.doAction(std::move(action));

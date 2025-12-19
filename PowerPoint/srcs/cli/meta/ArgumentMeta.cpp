@@ -12,8 +12,7 @@ ArgumentMeta::ArgumentMeta(
 	bool isRequired) :
 	m_canonicalName(canonicalName),
 	m_description(description),
-	m_isRequired(isRequired),
-	m_defaultValue(std::monostate{})
+	m_isRequired(isRequired)
 {
 }
 

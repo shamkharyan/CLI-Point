@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include <optional>
 
 namespace ppt::cli
 {
@@ -12,8 +13,7 @@ namespace ppt::cli
 	public:
 		virtual ~IArgValueFactory() = default;
 
-		virtual bool canCreate(const std::vector<std::string>& argValue) const = 0;
-		virtual ArgValue create(const std::vector<std::string>& argValue) const = 0;
+		virtual std::optional<ArgValue> tryCreate(const std::vector<std::string>& argValue) const = 0;
 		virtual std::string typeName() const = 0;
 	};
 }

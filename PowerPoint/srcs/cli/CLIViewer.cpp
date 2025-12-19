@@ -106,8 +106,9 @@ void CLIViewer::showArgumentsHelp(const meta::CommandMeta& cmdMeta)
 			std::setw(s_columnWidth / 2) << std::left << (*argMeta.begin())->typeName();
 
 		m_os << (argMeta.isRequired() ? " (required) " : " (optional) ");
-		m_os << (argMeta.hasDefaultValue() ?
-			" [default: " + CLIFormatter::toString(argMeta.getDefaultValue()) + "]" : "");
+		auto defaultValue = argMeta.getDefaultValue();
+		m_os << (defaultValue ?
+			" [default: " + CLIFormatter::toString(*defaultValue) + "]" : "");
 		m_os << '\n';
 	}
 }

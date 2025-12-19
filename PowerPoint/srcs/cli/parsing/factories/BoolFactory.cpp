@@ -4,15 +4,10 @@
 
 using namespace ppt::cli;
 
-bool BoolFactory::canCreate(const std::vector<std::string>& argValue) const
+std::optional<ArgValue> BoolFactory::tryCreate(const std::vector<std::string>& argValue) const
 {
-	return argValue.empty();
-}
-
-ArgValue BoolFactory::create(const std::vector<std::string>& argValue) const
-{
-	if (!canCreate(argValue))
-		throw std::invalid_argument("Boolean flag does not accept values");
+	if (!argValue.empty())
+		return std::nullopt;
 
 	return true;
 }

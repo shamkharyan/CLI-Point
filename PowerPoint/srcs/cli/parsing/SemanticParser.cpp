@@ -26,9 +26,9 @@ ParsedRawCommand SemanticParser::parseRawCommand(const RawCommand& rcmd)
 		bool isParsed = false;
 		for (const auto& valueFactory : *argMeta)
 		{
-			if (valueFactory->canCreate(argValue))
+			if (auto value = valueFactory->tryCreate(argValue))
 			{
-				parsedCmd.arguments[argMeta->getCanonicalName()] = valueFactory->create(argValue);
+				parsedCmd.arguments[argMeta->getCanonicalName()] = std::move(*value);
 				isParsed = true;
 				break;
 			}
@@ -51,8 +51,8 @@ ParsedRawCommand SemanticParser::parseRawCommand(const RawCommand& rcmd)
 					"Required argument '" + argMeta.getNameAliases()[0] +
 					"' is missing for command '" + rcmd.name + "'");
 			}
-			if (argMeta.hasDefaultValue())
-				parsedCmd.arguments[canonical] = argMeta.getDefaultValue();
+			if (auto value = argMeta.getDefaultValue())
+				parsedCmd.arguments[canonical] = *value;
 		}
 	}
 

@@ -1,88 +1,56 @@
 #pragma once
 
-#include "model/ShapeData.h"
+#include "model/SlideLayer.h"
 #include "model/utils/Color.h"
 
 #include <vector>
 #include <cstddef>
+#include <memory>
 
 namespace ppt::model
 {
 	class Slide
 	{
 	public:
-		// ================= ITERATOR =================
-		class iterator
-		{
-		public:
-			using iterator_category = std::bidirectional_iterator_tag;
-			using value_type = ShapeData;
-			using difference_type = std::ptrdiff_t;
-			using pointer = ShapeData*;
-			using reference = ShapeData&;
-
-			iterator() = default;
-
-			reference operator*() const;
-			pointer operator->() const;
-
-			iterator& operator++();
-			iterator operator++(int);
-
-			iterator& operator--();
-			iterator operator--(int);
-
-			bool operator==(const iterator& other) const;
-			bool operator!=(const iterator& other) const;
-
-		private:
-			friend class Slide;
-
-			iterator(Slide* slide, std::size_t layer, std::size_t index);
-
-			void advanceForward();
-			void advanceBackward();
-
-			Slide* m_slide = nullptr;
-			std::size_t m_layer = 0;
-			std::size_t m_index = 0;
-		};
+		using container = std::vector<std::shared_ptr<SlideLayer>>;
+		using iterator = container::iterator;
+		using const_iterator = container::const_iterator;
 
 	public:
-		// ================= SLIDE API =================
+
 		Slide();
 		explicit Slide(utils::Color color);
+
+		std::size_t getNextId() noexcept { return m_nextId++; }
 
 		void setColor(utils::Color color) noexcept;
 		utils::Color getColor() const noexcept;
 
 		std::size_t layersCount() const noexcept;
-		std::size_t shapesCount() const noexcept;
 		bool empty() const noexcept;
 
 		iterator begin() noexcept;
 		iterator end() noexcept;
 
-		void appendShape(ShapeData shape);
-		void appendShapeToLayer(std::size_t layer, ShapeData shape);
+		const_iterator begin() const noexcept;
+		const_iterator end() const noexcept;
+		const_iterator cbegin() const noexcept;
+		const_iterator cend() const noexcept;
 
-		void eraseShape(iterator pos);
+		std::shared_ptr<SlideLayer> getLayer(std::size_t index) const;
+		std::shared_ptr<SlideLayer> operator[](std::size_t index) const;
 
-		void moveForward(iterator pos);
-		void moveBackward(iterator pos);
-		void moveToTop(iterator pos);
-		void moveToBottom(iterator pos);
-
-		iterator findById(std::size_t id) noexcept;
+		void appendLayer(std::shared_ptr<SlideLayer> layer);
+		void insertLayer(iterator pos, std::shared_ptr<SlideLayer> layer);
+		std::shared_ptr<SlideLayer> removeLayer(iterator pos);
 
 	private:
-		void checkIterator(const iterator& it) const;
+		void checkIndex(std::size_t index) const;
 
 	private:
 		std::size_t m_nextId = 1;
-		std::size_t m_shapeCount = 0;
 
-		std::vector<std::vector<ShapeData>> m_layers;
+		container m_layers;
 		utils::Color m_color;
 	};
 }

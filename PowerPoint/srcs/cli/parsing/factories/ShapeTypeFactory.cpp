@@ -1,22 +1,22 @@
-//#include "cli/parsing/factories/ShapeTypeFactory.h"
-//#include "model/ShapeData.h"
-//
-//using namespace ppt::cli;
-//
-//bool ShapeTypeFactory::canCreate(const std::vector<std::string>& argValue) const
-//{
-//	return argValue.size() == 1;
-//}
-//
-//ArgValue ShapeTypeFactory::create(const std::vector<std::string>& argValue) const
-//{
-//	const std::string& value = argValue[0];
-//	if (value == "rectangle" || value == "Rectangle")
-//		return ppt::model::utils::ShapeType::Rectangle;
-//	if (value == "circle" || value == "Circle")
-//		return ppt::model::utils::ShapeType::Circle;
-//	if (value == "triangle" || value == "Triangle")
-//		return ppt::model::utils::ShapeType::Triangle;
-//	throw std::invalid_argument("Invalid shape type: " + value);
-//}
-//
+#include "cli/parsing/factories/ShapeTypeFactory.h"
+#include "model/ShapeData.h"
+
+using namespace ppt::cli;
+
+std::optional<ArgValue> ShapeTypeFactory::tryCreate(const std::vector<std::string>& argValue) const
+{
+	if (argValue.size() != 1)
+		return std::nullopt;
+
+	const std::string& shapeTypeName = argValue[0];
+	auto it = m_shapeTypeMap.find(shapeTypeName);
+	if (it == m_shapeTypeMap.end())
+		return std::nullopt;
+	return it->second;
+}
+
+std::string ShapeTypeFactory::typeName() const
+{
+	return "ShapeType";
+}
+

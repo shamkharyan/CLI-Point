@@ -61,6 +61,11 @@ std::string CLIFormatter::toColorNameString(model::utils::Color color)
 	return "Unknown Color";
 }
 
+std::string CLIFormatter::toString(model::utils::Coord coord)
+{
+	return "(" + toString(coord.x) + ", " + toString(coord.y) + ")";
+}
+
 std::string CLIFormatter::toString(const ArgValue& value)
 {
 	struct ArgValueToStringVisitor
@@ -84,6 +89,14 @@ std::string CLIFormatter::toString(const ArgValue& value)
 		std::string operator()(const ppt::model::utils::Color& color) const
 		{
 			return toHexColorString(color);
+		}
+		std::string operator()(ppt::model::utils::ShapeType type) const
+		{
+			return toString(type);
+		}
+		std::string operator()(ppt::model::utils::Coord coord) const
+		{
+			return toString(coord);
 		}
 		std::string operator()(std::monostate) const
 		{

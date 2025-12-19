@@ -12,6 +12,7 @@
 #include "cli/parsing/factories/ColorNameFactory.h"
 #include "cli/parsing/factories/ColorRGBFactory.h"
 #include "cli/parsing/factories/StringFactory.h"
+#include "cli/parsing/factories/ShapeTypeFactory.h"
 
 #include "cli/factories/utility/ExitCommandFactory.h"
 #include "cli/factories/slide/AddSlideCommandFactory.h"
@@ -19,6 +20,9 @@
 #include "cli/factories/slide/EditSlideCommandFactory.h"
 #include "cli/factories/slide/DuplicateSlideCommandFactory.h"
 #include "cli/factories/slide/MoveSlideCommandFactory.h"
+#include "cli/factories/slide/AddLayerCommandFactory.h"
+#include "cli/factories/slide/RemoveLayerCommandFactory.h"
+#include "cli/factories/slide/MoveLayerCommandFactory.h"
 #include "cli/factories/shape/AddShapeCommandFactory.h"
 #include "cli/factories/utility/UndoCommandFactory.h"
 #include "cli/factories/utility/RedoCommandFactory.h"
@@ -40,7 +44,7 @@ int CLIApplication::execute()
 	return m_controller.run();
 }
 
-CLIApplication::CLIApplication() : 
+CLIApplication::CLIApplication() :
 	m_presentation("Untitled"),
 	m_viewer(m_presentation, std::cin, std::cout),
 	m_controller(m_viewer, m_registry, m_presentation)
@@ -107,7 +111,7 @@ void CLIApplication::registerCommands()
 		colorArgMeta.registerNameAlias("-c");
 		colorArgMeta.registerNameAlias("--color");
 
-		//colorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorNameFactory>());
+		colorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorNameFactory>());
 		colorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorRGBFactory>());
 
 		addSlideMeta.registerArgumentMeta(std::move(colorArgMeta));
@@ -256,6 +260,125 @@ void CLIApplication::registerCommands()
 		m_registry.registerCommandMeta(std::move(moveSlideMeta));
 	}
 
+	// add-layer command
+	{
+		meta::CommandMeta addLayerMeta(
+			"add-layer",
+			"Adds a new layer to a slide",
+			std::make_shared<factories::AddLayerCommandFactory>(m_actionManager, m_presentation)
+		);
+
+		// at argument (slide index)
+		meta::ArgumentMeta atArgMeta(
+			"at",
+			"Index of the slide to add the layer to",
+			true
+		);
+		atArgMeta.registerNameAlias("-a");
+		atArgMeta.registerNameAlias("--at");
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		addLayerMeta.registerArgumentMeta(std::move(atArgMeta));
+
+		// z-index argument (layer index)
+		meta::ArgumentMeta zIndexArgMeta(
+			"z-index",
+			"Z-Index of the layer to add",
+			ArgValue(static_cast<std::size_t>(0))
+		);
+
+		zIndexArgMeta.registerNameAlias("-z");
+		zIndexArgMeta.registerNameAlias("--z-index");
+		zIndexArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		addLayerMeta.registerArgumentMeta(std::move(zIndexArgMeta));
+
+		m_registry.registerCommandMeta(std::move(addLayerMeta));
+	}
+
+	// remove-layer command
+	{
+		meta::CommandMeta removeLayerMeta(
+			"remove-layer",
+			"Removes a layer from a slide",
+			std::make_shared<factories::RemoveLayerCommandFactory>(m_actionManager, m_presentation)
+		);
+
+		// at argument (slide index)
+		meta::ArgumentMeta atArgMeta(
+			"at",
+			"Index of the slide to remove the layer from",
+			true
+		);
+		atArgMeta.registerNameAlias("-a");
+		atArgMeta.registerNameAlias("--at");
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		removeLayerMeta.registerArgumentMeta(std::move(atArgMeta));
+
+		// z-index argument (layer index)
+		meta::ArgumentMeta zIndexArgMeta(
+			"z-index",
+			"Z-Index of the layer to remove",
+			true
+		);
+		zIndexArgMeta.registerNameAlias("-z");
+		zIndexArgMeta.registerNameAlias("--z-index");
+		zIndexArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		removeLayerMeta.registerArgumentMeta(std::move(zIndexArgMeta));
+		m_registry.registerCommandMeta(std::move(removeLayerMeta));
+	}
+
+	// move-layer command
+	{
+		meta::CommandMeta moveLayerMeta(
+			"move-layer",
+			"Moves a layer within a slide",
+			std::make_shared<factories::MoveLayerCommandFactory>(m_actionManager, m_presentation)
+		);
+
+		// at argument (slide index)
+		meta::ArgumentMeta atArgMeta(
+			"at",
+			"Index of the slide containing the layer to move",
+			true
+		);
+
+		atArgMeta.registerNameAlias("-a");
+		atArgMeta.registerNameAlias("--at");
+
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+
+		moveLayerMeta.registerArgumentMeta(std::move(atArgMeta));
+
+		// from-z argument (current layer index)
+		meta::ArgumentMeta fromZArgMeta(
+			"z-from",
+			"Current Z-Index of the layer to move",
+			true
+		);
+
+		fromZArgMeta.registerNameAlias("-f");
+		fromZArgMeta.registerNameAlias("--z-from");
+
+		fromZArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+
+		moveLayerMeta.registerArgumentMeta(std::move(fromZArgMeta));
+
+		// to-z argument (new layer index)
+		meta::ArgumentMeta toZArgMeta(
+			"z-to",
+			"New Z-Index of the layer to move",
+			true
+		);
+
+		toZArgMeta.registerNameAlias("-t");
+		toZArgMeta.registerNameAlias("--z-to");
+
+		toZArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+
+		moveLayerMeta.registerArgumentMeta(std::move(toZArgMeta));
+
+		m_registry.registerCommandMeta(std::move(moveLayerMeta));
+	}
+
 	// undo command
 	{
 		meta::CommandMeta undoMeta(
@@ -295,9 +418,7 @@ void CLIApplication::registerCommands()
 
 	//	atArgMeta.registerNameAlias("-a");
 	//	atArgMeta.registerNameAlias("--at");
-
 	//	atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
-
 	//	addShapeMeta.registerArgumentMeta(std::move(atArgMeta));
 
 	//	// type argument (shape type)
@@ -310,77 +431,49 @@ void CLIApplication::registerCommands()
 	//	typeArgMeta.registerNameAlias("-t");
 	//	typeArgMeta.registerNameAlias("--type");
 
-	//	typeArgMeta.registerArgValueFactory(std::make_shared<cli::StringFactory>());
+	//	typeArgMeta.registerArgValueFactory(std::make_shared<cli::ShapeTypeFactory>());
 
 	//	addShapeMeta.registerArgumentMeta(std::move(typeArgMeta));
 
-	//	// x argument (position x)
-	//	meta::ArgumentMeta xArgMeta(
-	//		"x",
-	//		"X coordinate of the shape position",
+	//	// position argument (x and y)
+	//	meta::ArgumentMeta positionArgMeta(
+	//		"position",
+	//		"Position of the shape as 'x,y' coordinates",
 	//		true
 	//	);
 
-	//	xArgMeta.registerNameAlias("-x");
-	//	xArgMeta.registerNameAlias("--x");
+	//	positionArgMeta.registerNameAlias("-p");
+	//	positionArgMeta.registerNameAlias("--position");
 
-	//	xArgMeta.registerArgValueFactory(std::make_shared<cli::FloatFactory>());
+	//	// positionArgMeta.registerArgValueFactory(std::make_shared<cli::CoordFactory>());
 
-	//	addShapeMeta.registerArgumentMeta(std::move(xArgMeta));
+	//	addShapeMeta.registerArgumentMeta(std::move(positionArgMeta));
 
-	//	// y argument (position y)
-	//	meta::ArgumentMeta yArgMeta(
-	//		"y",
-	//		"Y coordinate of the shape position",
+	//	// size argument (width and height)
+	//	meta::ArgumentMeta sizeArgMeta(
+	//		"size",
+	//		"Size of the shape as 'width,height'",
 	//		true
 	//	);
 
-	//	yArgMeta.registerNameAlias("-y");
-	//	yArgMeta.registerNameAlias("--y");
+	//	sizeArgMeta.registerNameAlias("-s");
+	//	sizeArgMeta.registerNameAlias("--size");
 
-	//	yArgMeta.registerArgValueFactory(std::make_shared<cli::FloatFactory>());
+	//	// sizeArgMeta.registerArgValueFactory(std::make_shared<cli::SizeFactory>());
 
-	//	addShapeMeta.registerArgumentMeta(std::move(yArgMeta));
-
-	//	// width argument
-	//	meta::ArgumentMeta widthArgMeta(
-	//		"width",
-	//		"Width of the shape",
-	//		true
-	//	);
-
-	//	widthArgMeta.registerNameAlias("-w");
-	//	widthArgMeta.registerNameAlias("--width");
-
-	//	widthArgMeta.registerArgValueFactory(std::make_shared<cli::FloatFactory>());
-
-	//	addShapeMeta.registerArgumentMeta(std::move(widthArgMeta));
-
-	//	// height argument
-	//	meta::ArgumentMeta heightArgMeta(
-	//		"height",
-	//		"Height of the shape",
-	//		true
-	//	);
-
-	//	heightArgMeta.registerNameAlias("-h");
-	//	heightArgMeta.registerNameAlias("--height");
-
-	//	heightArgMeta.registerArgValueFactory(std::make_shared<cli::FloatFactory>());
-
-	//	addShapeMeta.registerArgumentMeta(std::move(heightArgMeta));
+	//	addShapeMeta.registerArgumentMeta(std::move(sizeArgMeta));
 
 	//	// fill-color argument (optional)
 	//	meta::ArgumentMeta fillColorArgMeta(
 	//		"fill-color",
 	//		"Fill color of the shape",
-	//		ArgValue(model::utils::White)
+	//		ArgValue(model::utils::Black)
 	//	);
 
-	//	fillColorArgMeta.registerNameAlias("-fc");
 	//	fillColorArgMeta.registerNameAlias("--fill-color");
 
 	//	fillColorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorRGBFactory>());
+	//	fillColorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorNameFactory>());
 
 	//	addShapeMeta.registerArgumentMeta(std::move(fillColorArgMeta));
 
@@ -388,13 +481,12 @@ void CLIApplication::registerCommands()
 	//	meta::ArgumentMeta outlineColorArgMeta(
 	//		"outline-color",
 	//		"Outline color of the shape",
-	//		ArgValue(model::utils::Black)
+	//		ArgValue(model::utils::Red)
 	//	);
 
-	//	outlineColorArgMeta.registerNameAlias("-oc");
 	//	outlineColorArgMeta.registerNameAlias("--outline-color");
-
 	//	outlineColorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorRGBFactory>());
+	//	outlineColorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorNameFactory>());
 
 	//	addShapeMeta.registerArgumentMeta(std::move(outlineColorArgMeta));
 
@@ -405,25 +497,12 @@ void CLIApplication::registerCommands()
 	//		ArgValue(1.0f)
 	//	);
 
-	//	outlineWidthArgMeta.registerNameAlias("-ow");
 	//	outlineWidthArgMeta.registerNameAlias("--outline-width");
-
 	//	outlineWidthArgMeta.registerArgValueFactory(std::make_shared<cli::FloatFactory>());
 
 	//	addShapeMeta.registerArgumentMeta(std::move(outlineWidthArgMeta));
 
-	//	// text argument (optional)
-	//	meta::ArgumentMeta textArgMeta(
-	//		"text",
-	//		"Text content of the shape",
-	//		false
-	//	);
-
-	//	textArgMeta.registerNameAlias("--text");
-
-	//	textArgMeta.registerArgValueFactory(std::make_shared<cli::StringFactory>());
-
-	//	addShapeMeta.registerArgumentMeta(std::move(textArgMeta));
+	//	m_registry.registerCommandMeta(std::move(addShapeMeta));
 
 	//	// z-index argument (optional)
 	//	meta::ArgumentMeta zIndexArgMeta(
@@ -438,8 +517,6 @@ void CLIApplication::registerCommands()
 	//	zIndexArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
 
 	//	addShapeMeta.registerArgumentMeta(std::move(zIndexArgMeta));
-
-	//	m_registry.registerCommandMeta(std::move(addShapeMeta));
 	//}
 
 	// help command

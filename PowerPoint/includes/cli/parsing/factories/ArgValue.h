@@ -8,6 +8,7 @@
 
 #include "model/utils/Color.h"
 #include "model/utils/ShapeType.h"
+#include "model/utils/Coord.h"
 
 namespace ppt::cli
 {
@@ -17,7 +18,7 @@ namespace ppt::cli
 		float,
 		bool,
 		ppt::model::utils::Color,
-		//ppt::model::utils::ShapeType,
-		std::monostate
+		ppt::model::utils::ShapeType,
+		ppt::model::utils::Coord
 	>;
 }

@@ -4,16 +4,10 @@
 
 using namespace ppt::cli;
 
-bool StringFactory::canCreate(const std::vector<std::string>& argValue) const
+std::optional<ArgValue> StringFactory::tryCreate(const std::vector<std::string>& argValue) const
 {
-	return argValue.size() == 1;
-}
-
-ArgValue StringFactory::create(const std::vector<std::string>& argValue) const
-{
-	if (!canCreate(argValue))
-		throw std::invalid_argument("Multiple string values are not allowed");
-
+	if (argValue.size() != 1)
+		return std::nullopt;
 	return argValue[0];
 }
 

@@ -36,10 +36,12 @@ void MoveSlideCommand::execute()
 		--m_to;
 
 	auto action = std::make_unique<act::GroupAction>();
-	auto slideToMove = m_presentation.getSlide(m_at);
+	auto pSlideToMove = m_presentation.getSlide(m_at);
+	if (!pSlideToMove)
+		throw ExecutionError("Slide to move not found");
 
 	action->addAction(std::make_unique<act::RemoveSlideAction>(m_presentation, m_at));
-	action->addAction(std::make_unique<act::AddSlideAction>(m_presentation, slideToMove, m_to));
+	action->addAction(std::make_unique<act::AddSlideAction>(m_presentation, pSlideToMove, m_to));
 
 	m_actionManager.doAction(std::move(action));
 }

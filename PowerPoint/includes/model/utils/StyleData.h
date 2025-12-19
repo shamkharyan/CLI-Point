@@ -6,17 +6,17 @@
 
 namespace ppt::model::utils
 {
-	enum class FillType
+	/*enum class FillType
 	{
 		SolidColor,
 		LinearGradient,
 		RadialGradient,
 		ImageTexture
-	};
+	};*/
 
 	struct StyleData
 	{
-		FillType fillType;
+		//FillType fillType;
 
 		Color outlineColor;
 		float outlineWidth;
@@ -25,19 +25,28 @@ namespace ppt::model::utils
 		Color fillColor;
 
 		// Only for Gradient fill types
-		struct GradientStop
-		{
-			float position; // 0.0 to 1.0
-			Color color;
-		};
-		std::vector<GradientStop> gradientStops;
-		float gradientAngle = 0.0f; // Only for LinearGradient
+		//struct GradientStop
+		//{
+		//	float position; // 0.0 to 1.0
+		//	Color color;
+		//};
+		//std::vector<GradientStop> gradientStops;
+		//float gradientAngle = 0.0f; // Only for LinearGradient
 
 		// Only for ImageTexture
-		std::string imagePath; 
+		//std::string imagePath; 
 
-		StyleData()
+		/*StyleData()
 			: fillType(FillType::SolidColor), fillColor(255, 255, 255), outlineColor(0, 0, 0), outlineWidth(1.0f)
+		{
+		}*/
+		StyleData()
+			: outlineColor(0, 0, 0), outlineWidth(1.0f), fillColor(255, 255, 255)
+		{
+		}
+
+		StyleData(const Color& outlineColor, float outlineWidth, const Color& fillColor)
+			: outlineColor(outlineColor), outlineWidth(outlineWidth), fillColor(fillColor)
 		{
 		}
 	};
