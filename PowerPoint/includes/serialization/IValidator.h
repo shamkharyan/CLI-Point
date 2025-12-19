@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace ppt::serialization
+namespace ppt::ser
 {
 	class IValidator
 	{

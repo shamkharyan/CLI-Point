@@ -1,10 +1,15 @@
 #pragma once
 
 #include "serialization/ISerializer.h"
+#include "model/utils/Color.h"
+#include "model/utils/Coord.h"
+#include "model/SlideLayer.h"
+#include "model/Slide.h"
+#include "model/ShapeData.h"
 
 #include "libs/json.hpp"
 
-namespace ppt::serialization
+namespace ppt::ser
 {
 	class JSONSerializer : public ISerializer
 	{
@@ -14,6 +19,7 @@ namespace ppt::serialization
 	private:
 		void serializePresentation(json& jPresentation, const model::Presentation& presentation) const;
 		void serializeSlide(json& jSlide, const model::Slide& slide) const;
+		void serializeSlideLayer(json& jSlideLayer, const model::SlideLayer& slideLayer) const;
 		void serializeShape(json& jShape, const model::ShapeData& shape) const;
 		void serializeColor(json& jColor, const model::utils::Color& color) const;
 	};

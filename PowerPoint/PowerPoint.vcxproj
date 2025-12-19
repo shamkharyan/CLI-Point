@@ -131,6 +131,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="srcs\cli\commands\utility\OpenCommand.cpp" />
+    <ClCompile Include="srcs\cli\factories\utility\OpenCommandFactory.cpp" />
+    <ClCompile Include="srcs\cli\factories\utility\SaveCommandFactory.cpp" />
+    <ClCompile Include="srcs\serialization\SerializerRegistry.cpp" />
     <ClInclude Include="includes\CLIApplication.h" />
     <ClInclude Include="includes\cli\CLIFormatter.h" />
     <ClInclude Include="includes\cli\commands\ExecutionError.h" />
@@ -147,7 +151,9 @@
     <ClInclude Include="includes\cli\commands\utility\HelpCommand.h" />
     <ClInclude Include="includes\cli\commands\utility\ListCommand.h" />
     <ClInclude Include="includes\cli\commands\slide\MoveSlideCommand.h" />
+    <ClInclude Include="includes\cli\commands\utility\OpenCommand.h" />
     <ClInclude Include="includes\cli\commands\utility\RedoCommand.h" />
+    <ClInclude Include="includes\cli\commands\utility\SaveCommand.h" />
     <ClInclude Include="includes\cli\commands\utility\UndoCommand.h" />
     <ClInclude Include="includes\cli\factories\shape\AddShapeCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\shape\MoveShapeCommandFactory.h" />
@@ -168,11 +174,13 @@
     <ClInclude Include="includes\cli\factories\utility\HelpCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\utility\ListCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\slide\MoveSlideCommandFactory.h" />
+    <ClInclude Include="includes\cli\factories\utility\OpenCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\utility\RedoCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\slide\RemoveSlideCommandFactory.h" />
     <ClInclude Include="includes\cli\errors\InvalidInputException.h" />
     <ClInclude Include="includes\cli\errors\InvalidArgumentValueException.h" />
     <ClInclude Include="includes\cli\errors\UnknownCommandException.h" />
+    <ClInclude Include="includes\cli\factories\utility\SaveCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\utility\UndoCommandFactory.h" />
     <ClInclude Include="includes\cli\meta\CommandMeta.h" />
     <ClInclude Include="includes\cli\meta\ArgumentMeta.h" />
@@ -223,6 +231,7 @@
     <ClInclude Include="includes\serialization\JSONDeserializer.h" />
     <ClInclude Include="includes\serialization\JSONSerializer.h" />
     <ClInclude Include="includes\serialization\JSONValidator.h" />
+    <ClInclude Include="includes\serialization\SerializerRegistry.h" />
     <ClInclude Include="includes\utils\IObserver.h" />
     <ClInclude Include="includes\utils\Observable.h" />
     <ClInclude Include="includes\cli\meta\CommandRegistry.h" />
@@ -243,6 +252,7 @@
     <ClCompile Include="srcs\cli\commands\slide\AddLayerCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\slide\MoveLayerCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\slide\RemoveLayerCommand.cpp" />
+    <ClCompile Include="srcs\cli\commands\utility\SaveCommand.cpp" />
     <ClCompile Include="srcs\cli\factories\slide\AddLayerCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\slide\MoveLayerCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\slide\RemoveLayerCommandFactory.cpp" />

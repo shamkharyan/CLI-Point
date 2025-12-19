@@ -17,7 +17,6 @@ namespace ppt::model
 		using const_iterator = container::const_iterator;
 
 	public:
-
 		Slide();
 		explicit Slide(utils::Color color);
 

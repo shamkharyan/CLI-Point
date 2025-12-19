@@ -9,9 +9,6 @@
 #include "model/utils/StyleData.h"
 #include "model/utils/TextData.h"
 
-#include <optional>
-
-
 namespace ppt::cli::cmds
 {
 	class AddShapeCommand : public ICommand

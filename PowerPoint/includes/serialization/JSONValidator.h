@@ -4,7 +4,7 @@
 
 #include "libs/json.hpp"
 
-namespace ppt::serialization
+namespace ppt::ser
 {
 	class JSONValidator : public IValidator
 	{
