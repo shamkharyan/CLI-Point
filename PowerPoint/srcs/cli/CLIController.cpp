@@ -10,16 +10,18 @@ using namespace ppt::core;
 CLIController::CLIController(
 	CLIViewer& viewer,
 	CommandRegistry& registry,
-	model::Presentation& presentation) : 
-	m_viewer(viewer), 
-	m_registry(registry), 
-	m_presentation(presentation) { }
+	model::Presentation& presentation) :
+	m_viewer(viewer),
+	m_registry(registry),
+	m_presentation(presentation) {
+}
 
 int CLIController::run()
 {
 	m_viewer.showWelcome();
+	auto& inputStream = *m_viewer.getIStream();
 
-	CommandParser parser(m_registry, m_viewer.getIStream());
+	CommandParser parser(m_registry, inputStream);
 
 	while (!m_exit)
 	{
@@ -35,6 +37,7 @@ int CLIController::run()
 			m_viewer.showError(e.what());
 			m_viewer.resetStream();
 		}
+		m_exit = inputStream.eof();
 	}
 
 	return 0;

@@ -4,10 +4,7 @@
 
 int main(int argc, char *argv[])
 {
-	std::ignore = argc;
-	std::ignore = argv;
-
-	auto& app = ppt::CLIApplication::instance();
+	auto& app = ppt::CLIApplication::instance(argc, argv);
 
 	return app.execute();
 }

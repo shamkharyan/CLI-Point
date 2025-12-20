@@ -1,129 +1,130 @@
 #include "cli/parsing/Tokenizer.h"
 
-#include <istream>
-#include <optional>
-#include <string>
-
 using namespace ppt::cli;
 
-Tokenizer::Tokenizer(std::istream& is) : m_is(is), m_error(false), m_eol(false) {}
-
-bool Tokenizer::isError() const noexcept
+Tokenizer::Tokenizer(std::istream& is)
+    : m_is(is), m_error(false), m_eol(false)
 {
-	return m_error;
 }
 
-bool Tokenizer::isEOL() const noexcept
-{
-	return m_eol;
-}
+bool Tokenizer::isError() const noexcept { return m_error; }
+bool Tokenizer::isEOL() const noexcept { return m_eol; }
+void Tokenizer::reset() noexcept { m_error = false; m_eol = false; }
 
 Token Tokenizer::getNextToken()
 {
-	if (isError())
-		return { Token::Type::Error, "" };
+    if (isError()) return { Token::Type::Error, "" };
+    if (isEOL())  return { Token::Type::EOL, "\n" };
 
-	if (isEOL())
-		return { Token::Type::EOL, "\n" };
+    char c;
 
-	char c;
+    while (true)
+    {
+        if (!m_is.get(c))
+        {
+            if (m_is.eof())
+                return eolReturn();
+            return errorReturn();
+        }
 
-	while (m_is.get(c))
-	{
-		if (c == '\n')
-			return eolReturn();
-		if (!std::isspace(c))
-			break;
-	}
+        if (c == '\n')
+            return eolReturn();
 
-	if (c == '"')
-		return getStringToken();
+        if (!std::isspace(static_cast<unsigned char>(c)))
+            break;
+    }
 
-	if (c == ',')
-		return { Token::Type::Comma, "," };
+    if (c == '"') return getStringToken();
+    if (c == ',') return { Token::Type::Comma, "," };
 
-	m_is.unget();
-	return getToken();
+    m_is.unget();
+    return getToken();
 }
 
 Token Tokenizer::getStringToken()
 {
-	char c;
-	std::string token;
-	bool closed = false;
+    char c;
+    std::string token;
+    bool closed = false;
 
-	while (m_is.get(c))
-	{
-		if (c == '\\' && m_is.peek() == '"')
-		{
-			m_is.get(c);
-			token.push_back(c);
-			continue;
-		}
-		if (c == '"')
-		{
-			closed = true;
-			break;
-		}
-		if (c == '\n')
-		{
-			m_is.unget();
-			break;
-		}
-		token.push_back(c);
-	}
+    while (true)
+    {
+        if (!m_is.get(c))
+        {
+            if (m_is.eof()) break;
+            return errorReturn();
+        }
 
-	if (!closed)
-		return errorReturn();
+        if (c == '\\' && m_is.peek() == '"')
+        {
+            m_is.get(c);
+            token.push_back(c);
+            continue;
+        }
 
-	int next = m_is.peek();
-	if (next != EOF &&
-		next != ',' &&
-		!std::isspace(next) &&
-		next != '\n')
-		return errorReturn();
+        if (c == '"')
+        {
+            closed = true;
+            break;
+        }
 
-	return { Token::Type::String, token };
+        if (c == '\n')
+        {
+            m_is.unget();
+            break;
+        }
+
+        token.push_back(c);
+    }
+
+    if (!closed) return errorReturn();
+
+    int next = m_is.peek();
+    if (next != EOF && next != ',' && !std::isspace(next) && next != '\n')
+        return errorReturn();
+
+    return { Token::Type::String, token };
 }
 
 Token Tokenizer::getToken()
 {
-	char c;
-	std::string token;
+    char c;
+    std::string token;
 
-	while (m_is.get(c))
-	{
-		if (c == ',' || isspace(c))
-		{
-			if (c == ',' || c == '\n')
-				m_is.unget();
-			break;
-		}
-		if (!isalnum(c) && c != '_' && c != '-' && c != '#')
-			return errorReturn();
-		token.push_back(c);
-	}
+    while (true)
+    {
+        if (!m_is.get(c))
+        {
+            if (m_is.eof()) break;
+            return errorReturn();
+        }
 
-	if (token.empty())
-		return eolReturn();
+        if (c == ',' || c == '\n' || std::isspace(static_cast<unsigned char>(c)))
+        {
+            if (c == ',' || c == '\n')
+                m_is.unget();
+            break;
+        }
 
-	return { Token::Type::Word, token };
+        if (!std::isalnum(static_cast<unsigned char>(c)) && c != '_' && c != '-' && c != '#')
+            return errorReturn();
+
+        token.push_back(c);
+    }
+
+    if (token.empty()) return eolReturn();
+
+    return { Token::Type::Word, token };
 }
 
 Token Tokenizer::errorReturn() noexcept
 {
-	m_error = true;
-	return { Token::Type::Error, "" };
+    m_error = true;
+    return { Token::Type::Error, "" };
 }
 
 Token Tokenizer::eolReturn() noexcept
 {
-	m_eol = true;
-	return { Token::Type::EOL, "\n" };
-}
-
-void Tokenizer::reset() noexcept
-{
-	m_eol = false;
-	m_error = false;
+    m_eol = true;
+    return { Token::Type::EOL, "\n" };
 }

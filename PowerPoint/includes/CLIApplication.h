@@ -14,7 +14,7 @@ namespace ppt
 	class CLIApplication
 	{
 	public:
-		static CLIApplication& instance();
+		static CLIApplication& instance(int argc = 0, char *argv[] = nullptr);
 		int execute();
 	private:
 		CLIApplication();
@@ -22,6 +22,8 @@ namespace ppt
 		CLIApplication(CLIApplication&&) noexcept = delete;
 		CLIApplication& operator=(const CLIApplication&) = delete;
 		CLIApplication& operator=(CLIApplication&&) noexcept = delete;
+
+		void parseArguments(int argc, char *argv[]);
 
 		void registerCommands();
 		void registerSerializers();

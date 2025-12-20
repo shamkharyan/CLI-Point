@@ -40,13 +40,40 @@
 #include "visualization/factories/TriangleShapeFactory.h"
 
 #include <iostream>
+#include <fstream>
 
 using namespace ppt;
 using namespace ppt::cli;
 
-CLIApplication& CLIApplication::instance()
+void CLIApplication::parseArguments(int argc, char* argv[] = nullptr)
+{
+	std::cout << argc << '\n';
+	for (int i = 1; i < argc; ++i)
+	{
+		std::string arg = argv[i];
+		if (arg == "-i" && i + 1 < argc)
+		{
+			static std::ifstream fin;
+			fin.open(argv[++i]);
+			if (!fin.is_open())
+				throw std::runtime_error("Cannot open input file");
+			m_viewer.setIStream(&fin);
+		}
+		else if (arg == "-o" && i + 1 < argc)
+		{
+			static std::ofstream fout;
+			fout.open(argv[++i]);
+			if (!fout.is_open())
+				throw std::runtime_error("Cannot open output file");
+			m_viewer.setOStream(&fout);
+		}
+	}
+}
+
+CLIApplication& CLIApplication::instance(int argc, char* argv[])
 {
 	static CLIApplication app;
+	app.parseArguments(argc, argv);
 	return app;
 }
 
@@ -57,7 +84,7 @@ int CLIApplication::execute()
 
 CLIApplication::CLIApplication() :
 	m_presentation("Untitled"),
-	m_viewer(m_presentation, std::cin, std::cout),
+	m_viewer(m_presentation, &std::cin, &std::cout),
 	m_controller(m_viewer, m_registry, m_presentation)
 {
 	registerCommands();

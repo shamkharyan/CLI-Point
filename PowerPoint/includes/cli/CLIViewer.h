@@ -12,7 +12,10 @@ namespace ppt::cli
 	class CLIViewer : public core::IViewer
 	{
 	public:
-		CLIViewer(model::Presentation& presentation, std::istream& is, std::ostream& os);
+		CLIViewer(model::Presentation& presentation, std::istream* is, std::ostream* os);
+		void setIStream(std::istream* is);
+		void setOStream(std::ostream* is);
+
 		void showError(const std::string& msg) override;
 		void showWarning(const std::string& msg) override;
 		void showInfo(const std::string& msg) override;
@@ -27,16 +30,16 @@ namespace ppt::cli
 		void showCommandHelp(const meta::CommandMeta& cmdMeta);
 
 		//CLIVisualizer& getVisualizer();
-		std::istream& getIStream();
-		std::ostream& getOStream();
+		std::istream* getIStream();
+		std::ostream* getOStream();
 	private:
 		void showCommandUsage(const meta::CommandMeta& cmdMeta);
 		void showCommandDescription(const meta::CommandMeta& cmdMeta);
 		void showArgumentsHelp(const meta::CommandMeta& cmdMeta);
 	private:
 		model::Presentation& m_presentation;
-		std::istream& m_is;
-		std::ostream& m_os;
+		std::istream* m_is;
+		std::ostream* m_os;
 
 		static constexpr std::size_t s_columnWidth = 20;
 	};

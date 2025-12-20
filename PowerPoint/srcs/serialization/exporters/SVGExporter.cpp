@@ -14,7 +14,7 @@ void SVGExporter::exportSlide(const model::Slide& slide, const std::string& file
 	if (!file.is_open())
 		throw std::runtime_error("Could not open file for writing: " + filePath);
 
-	SVGRenderer renderer(1920, 1080);
+	SVGRenderer renderer(1280, 720);
 	renderer.beginDraw();
 
 	for (const auto& layer : slide)
