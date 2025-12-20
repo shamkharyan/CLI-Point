@@ -16,6 +16,13 @@ namespace ppt::vis
 
 		void drawPath(const Path& path, const Pen& pen, const Brush& brush) override;
 
+		void drawText(
+			const std::string& text,
+			float x,
+			float y,
+			const model::utils::TextStyle& style
+		) override;
+
 		std::string str() const;
 
 	private:

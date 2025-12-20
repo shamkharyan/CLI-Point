@@ -22,4 +22,12 @@ void RectangleShape::draw(IRenderer& renderer) const
 	Brush brush{ m_shapeData.style.fillColor };
 
 	renderer.drawPath(path, pen, brush);
+
+	if (!m_shapeData.text.empty())
+	{
+		float textX = x + width / 2.0f;
+		float textY = y + height / 2.0f;
+
+		renderer.drawText(m_shapeData.text, textX, textY, m_shapeData.textStyle);
+	}
 }

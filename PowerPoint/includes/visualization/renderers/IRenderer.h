@@ -8,6 +8,8 @@
 #include "visualization/utils/Pen.h"
 #include "visualization/utils/Brush.h"
 
+#include "model/utils/TextStyle.h"
+
 namespace ppt::vis
 {
     class IRenderer
@@ -19,5 +21,12 @@ namespace ppt::vis
 		virtual void endDraw() = 0;
 
 		virtual void drawPath(const Path& path, const Pen& pen, const Brush& brush) = 0;
+
+        virtual void drawText(
+            const std::string& text,
+            float x,
+            float y,
+            const model::utils::TextStyle& style
+        ) = 0;
     };
 }

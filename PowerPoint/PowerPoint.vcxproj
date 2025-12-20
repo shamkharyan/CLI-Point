@@ -231,7 +231,7 @@
     <ClInclude Include="includes\model\SlideLayer.h" />
     <ClInclude Include="includes\model\utils\Coord.h" />
     <ClInclude Include="includes\model\utils\GeometryData.h" />
-    <ClInclude Include="includes\model\utils\TextData.h" />
+    <ClInclude Include="includes\model\utils\TextStyle.h" />
     <ClInclude Include="includes\serialization\deserializers\DeserializerRegistry.h" />
     <ClInclude Include="includes\serialization\deserializers\IDeserializer.h" />
     <ClInclude Include="includes\serialization\exporters\IExporter.h" />

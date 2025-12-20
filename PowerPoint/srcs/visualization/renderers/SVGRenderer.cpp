@@ -93,6 +93,20 @@ void SVGRenderer::drawPath(const Path& path, const Pen& pen, const Brush& brush)
 	m_ss << "/>\n";
 }
 
+void SVGRenderer::drawText(
+	const std::string& text,
+	float x,
+	float y,
+	const model::utils::TextStyle& style)
+{
+	m_ss << "  <text x=\"" << x << "\" y=\"" << y << "\" "
+		<< "font-family=\"" << style.fontName << "\" "
+		<< "font-size=\"" << style.fontSize << "\" "
+		<< "fill=\"" << colorToSVG(style.fontColor) << "\">"
+		<< text
+		<< "</text>\n";
+}
+
 std::string SVGRenderer::str() const
 {
 	return m_ss.str();

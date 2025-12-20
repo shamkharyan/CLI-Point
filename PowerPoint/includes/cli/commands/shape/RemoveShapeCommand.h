@@ -7,7 +7,6 @@
 #include "core/ActionManager.h"
 #include "model/utils/GeometryData.h"
 #include "model/utils/StyleData.h"
-#include "model/utils/TextData.h"
 
 namespace ppt::cli::cmds
 {

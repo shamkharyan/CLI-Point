@@ -555,6 +555,50 @@ void CLIApplication::registerCommands()
 
 		addShapeMeta.registerArgumentMeta(std::move(zIndexArgMeta));
 
+		// text argument (optional)
+		meta::ArgumentMeta textArgMeta(
+			"text",
+			"Text to display inside the shape",
+			ArgValue(std::string{})
+		);
+
+		textArgMeta.registerNameAlias("--text");
+		textArgMeta.registerArgValueFactory(std::make_shared<cli::StringParser>());
+		addShapeMeta.registerArgumentMeta(std::move(textArgMeta));
+
+		// font-name argument (optional)
+		meta::ArgumentMeta fontNameArgMeta(
+			"font-name",
+			"Font name for the text",
+			ArgValue(std::string{ "Arial" })
+		);
+
+		fontNameArgMeta.registerNameAlias("--font-name");
+		fontNameArgMeta.registerArgValueFactory(std::make_shared<cli::StringParser>());
+		addShapeMeta.registerArgumentMeta(std::move(fontNameArgMeta));
+
+		// font-size argument (optional)
+		meta::ArgumentMeta fontSizeArgMeta(
+			"font-size",
+			"Font size for the text",
+			ArgValue(12.0f)
+		);
+
+		fontSizeArgMeta.registerNameAlias("--font-size");
+		fontSizeArgMeta.registerArgValueFactory(std::make_shared<cli::FloatParser>());
+		addShapeMeta.registerArgumentMeta(std::move(fontSizeArgMeta));
+
+		// font-color argument (optional)
+		meta::ArgumentMeta fontColorArgMeta(
+			"font-color",
+			"Font color for the text",
+			ArgValue(model::utils::Black)
+		);
+
+		fontColorArgMeta.registerNameAlias("--font-color");
+		fontColorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorParser>());
+		addShapeMeta.registerArgumentMeta(std::move(fontColorArgMeta));
+
 		m_registry.registerCommandMeta(std::move(addShapeMeta));
 	}
 

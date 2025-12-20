@@ -5,7 +5,6 @@
 #include "model/Presentation.h"
 #include "model/ShapeData.h"
 #include "core/ActionManager.h"
-#include "model/utils/TextData.h"
 
 #include "visualization/ShapeRegistry.h"
 
