@@ -3,6 +3,7 @@
 #include "Color.h"
 
 #include <vector>
+#include <optional>
 
 namespace ppt::model::utils
 {
@@ -22,7 +23,7 @@ namespace ppt::model::utils
 		float outlineWidth;
 
 		// Only for SolidColor fill type
-		Color fillColor;
+		std::optional<Color> fillColor;
 
 		// Only for Gradient fill types
 		//struct GradientStop
@@ -41,11 +42,11 @@ namespace ppt::model::utils
 		{
 		}*/
 		StyleData()
-			: outlineColor(0, 0, 0), outlineWidth(1.0f), fillColor(255, 255, 255)
+			: outlineColor(0, 0, 0), outlineWidth(1.0f)
 		{
 		}
 
-		StyleData(const Color& outlineColor, float outlineWidth, const Color& fillColor)
+		StyleData(const Color& outlineColor, float outlineWidth, const std::optional<Color>& fillColor)
 			: outlineColor(outlineColor), outlineWidth(outlineWidth), fillColor(fillColor)
 		{
 		}

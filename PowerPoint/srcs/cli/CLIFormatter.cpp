@@ -1,4 +1,5 @@
 #include "cli/CLIFormatter.h"
+#include "utils/factories/ShapeTypeFactory.h"
 
 using namespace ppt::cli;
 
@@ -19,17 +20,7 @@ std::string CLIFormatter::toString(float value)
 
 std::string CLIFormatter::toString(model::utils::ShapeType type)
 {
-	switch (type)
-	{
-	case model::utils::ShapeType::Rectangle:
-		return "Rectangle";
-	case model::utils::ShapeType::Circle:
-		return "Circle";
-	case model::utils::ShapeType::Triangle:
-		return "Triangle";
-	default:
-		return "Unknown";
-	}
+	return "SomeText";
 }
 
 std::string CLIFormatter::toHexColorString(model::utils::Color color)

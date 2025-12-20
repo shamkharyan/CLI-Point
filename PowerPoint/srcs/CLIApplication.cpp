@@ -6,14 +6,13 @@
 #include "cli/meta/CommandMeta.h"
 #include "cli/meta/ArgumentMeta.h"
 
-#include "cli/parsing/factories/BoolFactory.h"
-#include "cli/parsing/factories/SizeTFactory.h"
-#include "cli/parsing/factories/FloatFactory.h"
-#include "cli/parsing/factories/ColorNameFactory.h"
-#include "cli/parsing/factories/ColorRGBFactory.h"
-#include "cli/parsing/factories/StringFactory.h"
-#include "cli/parsing/factories/ShapeTypeFactory.h"
-#include "cli/parsing/factories/CoordFactory.h"
+#include "cli/parsing/parsers/BoolParser.h"
+#include "cli/parsing/parsers/SizeTParser.h"
+#include "cli/parsing/parsers/FloatParser.h"
+#include "cli/parsing/parsers/ColorParser.h"
+#include "cli/parsing/parsers/StringParser.h"
+#include "cli/parsing/parsers/ShapeTypeParser.h"
+#include "cli/parsing/parsers/CoordParser.h"
 
 #include "cli/factories/utility/ExitCommandFactory.h"
 #include "cli/factories/slide/AddSlideCommandFactory.h"
@@ -80,7 +79,7 @@ void CLIApplication::registerCommands()
 		forceArgMeta.registerNameAlias("-f");
 		forceArgMeta.registerNameAlias("--force");
 
-		forceArgMeta.registerArgValueFactory(std::make_unique<cli::BoolFactory>());
+		forceArgMeta.registerArgValueFactory(std::make_unique<cli::BoolParser>());
 
 		exitMeta.registerArgumentMeta(std::move(forceArgMeta));
 
@@ -105,7 +104,7 @@ void CLIApplication::registerCommands()
 		atArgMeta.registerNameAlias("-a");
 		atArgMeta.registerNameAlias("--at");
 
-		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		addSlideMeta.registerArgumentMeta(std::move(atArgMeta));
 
@@ -119,8 +118,7 @@ void CLIApplication::registerCommands()
 		colorArgMeta.registerNameAlias("-c");
 		colorArgMeta.registerNameAlias("--color");
 
-		colorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorNameFactory>());
-		colorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorRGBFactory>());
+		colorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorParser>());
 
 		addSlideMeta.registerArgumentMeta(std::move(colorArgMeta));
 
@@ -145,7 +143,7 @@ void CLIApplication::registerCommands()
 		atArgMeta.registerNameAlias("-a");
 		atArgMeta.registerNameAlias("--at");
 
-		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		removeSlideMeta.registerArgumentMeta(std::move(atArgMeta));
 
@@ -170,7 +168,7 @@ void CLIApplication::registerCommands()
 		atArgMeta.registerNameAlias("-a");
 		atArgMeta.registerNameAlias("--at");
 
-		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		editSlideMeta.registerArgumentMeta(std::move(atArgMeta));
 
@@ -184,7 +182,7 @@ void CLIApplication::registerCommands()
 		colorArgMeta.registerNameAlias("-c");
 		colorArgMeta.registerNameAlias("--color");
 
-		colorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorRGBFactory>());
+		colorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorParser>());
 
 		editSlideMeta.registerArgumentMeta(std::move(colorArgMeta));
 
@@ -209,7 +207,7 @@ void CLIApplication::registerCommands()
 		atArgMeta.registerNameAlias("-a");
 		atArgMeta.registerNameAlias("--at");
 
-		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		duplicateSlideMeta.registerArgumentMeta(std::move(atArgMeta));
 
@@ -223,7 +221,7 @@ void CLIApplication::registerCommands()
 		toArgMeta.registerNameAlias("-t");
 		toArgMeta.registerNameAlias("--to");
 
-		toArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		toArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		duplicateSlideMeta.registerArgumentMeta(std::move(toArgMeta));
 
@@ -248,7 +246,7 @@ void CLIApplication::registerCommands()
 		atArgMeta.registerNameAlias("-a");
 		atArgMeta.registerNameAlias("--at");
 
-		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		moveSlideMeta.registerArgumentMeta(std::move(atArgMeta));
 
@@ -261,7 +259,7 @@ void CLIApplication::registerCommands()
 		toArgMeta.registerNameAlias("-t");
 		toArgMeta.registerNameAlias("--to");
 
-		toArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		toArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		moveSlideMeta.registerArgumentMeta(std::move(toArgMeta));
 
@@ -284,7 +282,7 @@ void CLIApplication::registerCommands()
 		);
 		atArgMeta.registerNameAlias("-a");
 		atArgMeta.registerNameAlias("--at");
-		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 		addLayerMeta.registerArgumentMeta(std::move(atArgMeta));
 
 		// z-index argument (layer index)
@@ -296,7 +294,7 @@ void CLIApplication::registerCommands()
 
 		zIndexArgMeta.registerNameAlias("-z");
 		zIndexArgMeta.registerNameAlias("--z-index");
-		zIndexArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		zIndexArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 		addLayerMeta.registerArgumentMeta(std::move(zIndexArgMeta));
 
 		m_registry.registerCommandMeta(std::move(addLayerMeta));
@@ -318,7 +316,7 @@ void CLIApplication::registerCommands()
 		);
 		atArgMeta.registerNameAlias("-a");
 		atArgMeta.registerNameAlias("--at");
-		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 		removeLayerMeta.registerArgumentMeta(std::move(atArgMeta));
 
 		// z-index argument (layer index)
@@ -329,7 +327,7 @@ void CLIApplication::registerCommands()
 		);
 		zIndexArgMeta.registerNameAlias("-z");
 		zIndexArgMeta.registerNameAlias("--z-index");
-		zIndexArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		zIndexArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 		removeLayerMeta.registerArgumentMeta(std::move(zIndexArgMeta));
 		m_registry.registerCommandMeta(std::move(removeLayerMeta));
 	}
@@ -352,7 +350,7 @@ void CLIApplication::registerCommands()
 		atArgMeta.registerNameAlias("-a");
 		atArgMeta.registerNameAlias("--at");
 
-		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		moveLayerMeta.registerArgumentMeta(std::move(atArgMeta));
 
@@ -366,7 +364,7 @@ void CLIApplication::registerCommands()
 		fromZArgMeta.registerNameAlias("-f");
 		fromZArgMeta.registerNameAlias("--z-from");
 
-		fromZArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		fromZArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		moveLayerMeta.registerArgumentMeta(std::move(fromZArgMeta));
 
@@ -380,7 +378,7 @@ void CLIApplication::registerCommands()
 		toZArgMeta.registerNameAlias("-t");
 		toZArgMeta.registerNameAlias("--z-to");
 
-		toZArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		toZArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		moveLayerMeta.registerArgumentMeta(std::move(toZArgMeta));
 
@@ -426,7 +424,7 @@ void CLIApplication::registerCommands()
 
 		atArgMeta.registerNameAlias("-a");
 		atArgMeta.registerNameAlias("--at");
-		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 		addShapeMeta.registerArgumentMeta(std::move(atArgMeta));
 
 		// type argument (shape type)
@@ -439,7 +437,7 @@ void CLIApplication::registerCommands()
 		typeArgMeta.registerNameAlias("-t");
 		typeArgMeta.registerNameAlias("--type");
 
-		typeArgMeta.registerArgValueFactory(std::make_shared<cli::ShapeTypeFactory>());
+		typeArgMeta.registerArgValueFactory(std::make_shared<cli::ShapeTypeParser>());
 
 		addShapeMeta.registerArgumentMeta(std::move(typeArgMeta));
 
@@ -453,7 +451,7 @@ void CLIApplication::registerCommands()
 		positionArgMeta.registerNameAlias("-p");
 		positionArgMeta.registerNameAlias("--position");
 
-		positionArgMeta.registerArgValueFactory(std::make_shared<cli::CoordFactory>());
+		positionArgMeta.registerArgValueFactory(std::make_shared<cli::CoordParser>());
 
 		addShapeMeta.registerArgumentMeta(std::move(positionArgMeta));
 
@@ -467,7 +465,7 @@ void CLIApplication::registerCommands()
 		sizeArgMeta.registerNameAlias("-s");
 		sizeArgMeta.registerNameAlias("--size");
 
-		sizeArgMeta.registerArgValueFactory(std::make_shared<cli::CoordFactory>());
+		sizeArgMeta.registerArgValueFactory(std::make_shared<cli::CoordParser>());
 
 		addShapeMeta.registerArgumentMeta(std::move(sizeArgMeta));
 
@@ -480,8 +478,7 @@ void CLIApplication::registerCommands()
 
 		fillColorArgMeta.registerNameAlias("--fill-color");
 
-		fillColorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorRGBFactory>());
-		fillColorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorNameFactory>());
+		fillColorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorParser>());
 
 		addShapeMeta.registerArgumentMeta(std::move(fillColorArgMeta));
 
@@ -493,8 +490,7 @@ void CLIApplication::registerCommands()
 		);
 
 		outlineColorArgMeta.registerNameAlias("--outline-color");
-		outlineColorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorRGBFactory>());
-		outlineColorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorNameFactory>());
+		outlineColorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorParser>());
 
 		addShapeMeta.registerArgumentMeta(std::move(outlineColorArgMeta));
 
@@ -506,7 +502,7 @@ void CLIApplication::registerCommands()
 		);
 
 		outlineWidthArgMeta.registerNameAlias("--outline-width");
-		outlineWidthArgMeta.registerArgValueFactory(std::make_shared<cli::FloatFactory>());
+		outlineWidthArgMeta.registerArgValueFactory(std::make_shared<cli::FloatParser>());
 
 		addShapeMeta.registerArgumentMeta(std::move(outlineWidthArgMeta));
 
@@ -520,7 +516,7 @@ void CLIApplication::registerCommands()
 		zIndexArgMeta.registerNameAlias("-z");
 		zIndexArgMeta.registerNameAlias("--z-index");
 
-		zIndexArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		zIndexArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		addShapeMeta.registerArgumentMeta(std::move(zIndexArgMeta));
 
@@ -545,7 +541,7 @@ void CLIApplication::registerCommands()
 		atArgMeta.registerNameAlias("-a");
 		atArgMeta.registerNameAlias("--at");
 
-		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		removeShapeMeta.registerArgumentMeta(std::move(atArgMeta));
 
@@ -559,7 +555,7 @@ void CLIApplication::registerCommands()
 		idArgMeta.registerNameAlias("-i");
 		idArgMeta.registerNameAlias("--id");
 
-		idArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTFactory>());
+		idArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
 
 		removeShapeMeta.registerArgumentMeta(std::move(idArgMeta));
 
@@ -583,7 +579,7 @@ void CLIApplication::registerCommands()
 		pathArgMeta.registerNameAlias("-p");
 		pathArgMeta.registerNameAlias("--path");
 
-		pathArgMeta.registerArgValueFactory(std::make_shared<cli::StringFactory>());
+		pathArgMeta.registerArgValueFactory(std::make_shared<cli::StringParser>());
 
 		saveMeta.registerArgumentMeta(std::move(pathArgMeta));
 
@@ -607,7 +603,7 @@ void CLIApplication::registerCommands()
 		pathArgMeta.registerNameAlias("-p");
 		pathArgMeta.registerNameAlias("--path");
 
-		pathArgMeta.registerArgValueFactory(std::make_shared<cli::StringFactory>());
+		pathArgMeta.registerArgValueFactory(std::make_shared<cli::StringParser>());
 
 		openMeta.registerArgumentMeta(std::move(pathArgMeta));
 
@@ -631,7 +627,7 @@ void CLIApplication::registerCommands()
 		commandArgMeta.registerNameAlias("-c");
 		commandArgMeta.registerNameAlias("--command");
 
-		commandArgMeta.registerArgValueFactory(std::make_shared<cli::StringFactory>());
+		commandArgMeta.registerArgValueFactory(std::make_shared<cli::StringParser>());
 
 		helpMeta.registerArgumentMeta(std::move(commandArgMeta));
 

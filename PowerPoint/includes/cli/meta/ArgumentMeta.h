@@ -1,7 +1,7 @@
 #pragma once
 
-#include "cli/parsing/factories/IArgValueFactory.h"
-#include "cli/parsing/factories/ArgValue.h"
+#include "cli/parsing/parsers/IArgValueParser.h"
+#include "cli/parsing/parsers/ArgValue.h"
 
 #include <string>
 #include <vector>
@@ -13,7 +13,7 @@ namespace ppt::cli::meta
 	class ArgumentMeta
 	{
 	public:
-		using container = std::vector<std::shared_ptr<IArgValueFactory>>;
+		using container = std::vector<std::shared_ptr<IArgValueParser>>;
 		using iterator = container::iterator;
 		using const_iterator = container::const_iterator;
 
@@ -46,7 +46,7 @@ namespace ppt::cli::meta
 		const_iterator cend() const noexcept { return m_argValueFactories.cend(); }
 
 		void registerNameAlias(const std::string& alias);
-		void registerArgValueFactory(std::shared_ptr<IArgValueFactory> factory);
+		void registerArgValueFactory(std::shared_ptr<IArgValueParser> factory);
 
 	private:
 		std::string m_canonicalName;

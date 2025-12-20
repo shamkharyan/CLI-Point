@@ -1,11 +1,12 @@
 #pragma once
 
 #include "model/utils/Color.h"
+#include <optional>
 
 namespace ppt::vis
 {
     struct Brush
     {
-        model::utils::Color fillColor;
+        std::optional<model::utils::Color> fillColor;
     };
 }

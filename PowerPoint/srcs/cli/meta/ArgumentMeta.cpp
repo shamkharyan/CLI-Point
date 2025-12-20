@@ -1,5 +1,5 @@
 #include "cli/meta/ArgumentMeta.h"
-#include "cli/parsing/factories/ArgValue.h"
+#include "cli/parsing/parsers/ArgValue.h"
 
 #include <stdexcept>
 
@@ -32,7 +32,7 @@ void ArgumentMeta::registerNameAlias(const std::string& alias)
 	m_nameAliases.push_back(alias); 
 }
 
-void ArgumentMeta::registerArgValueFactory(std::shared_ptr<IArgValueFactory> factory) 
+void ArgumentMeta::registerArgValueFactory(std::shared_ptr<IArgValueParser> factory) 
 { 
 	m_argValueFactories.push_back(std::move(factory)); 
 }

@@ -5,7 +5,7 @@ namespace ppt::model::utils
 	enum class ShapeType
 	{
 		Rectangle,
-		Circle,
+		Ellipse,
 		Triangle
 	};
 }
