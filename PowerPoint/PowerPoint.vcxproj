@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="srcs\cli\commands\utility\ExportCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\utility\OpenCommand.cpp" />
+    <ClCompile Include="srcs\cli\factories\utility\ExportCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\OpenCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\SaveCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\parsing\parsers\ColorParser.cpp" />

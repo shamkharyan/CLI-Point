@@ -26,6 +26,7 @@
 #include "cli/factories/shape/RemoveShapeCommandFactory.h"
 #include "cli/factories/utility/SaveCommandFactory.h"
 #include "cli/factories/utility/OpenCommandFactory.h"
+#include "cli/factories/utility/ExportCommandFactory.h"
 #include "cli/factories/utility/UndoCommandFactory.h"
 #include "cli/factories/utility/RedoCommandFactory.h"
 #include "cli/factories/utility/HelpCommandFactory.h"
@@ -621,8 +622,8 @@ void CLIApplication::registerCommands()
 	{
 		meta::CommandMeta exportMeta(
 			"export",
-			"Exports a slide object",
-			std::make_shared<factories::OpenCommandFactory>(m_presentation, m_deserializerRegistry)
+			"Exports a slide object to a file",
+			std::make_shared<factories::ExportCommandFactory>(m_presentation, m_exporterRegistry)
 		);
 
 		// path argument (required)

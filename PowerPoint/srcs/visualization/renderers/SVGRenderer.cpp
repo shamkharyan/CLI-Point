@@ -56,6 +56,11 @@ void SVGRenderer::drawPath(const Path& path, const Pen& pen, const Brush& brush)
 		case PathCommand::Type::LineTo:
 			m_ss << "L " << cmd.p1.x << " " << cmd.p1.y << " ";
 			break;
+		case PathCommand::Type::QuadTo:
+			m_ss << "Q "
+				<< cmd.p1.x << " " << cmd.p1.y << ", "
+				<< cmd.p2.x << " " << cmd.p2.y << " ";
+			break;
 		case PathCommand::Type::CubicTo:
 			m_ss << "C "
 				<< cmd.p1.x << " " << cmd.p1.y << ", "

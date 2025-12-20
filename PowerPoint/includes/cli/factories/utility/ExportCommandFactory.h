@@ -3,17 +3,17 @@
 #include "cli/factories/ICommandFactory.h"
 #include "cli/commands/ICommand.h"
 #include "model/Presentation.h"
-#include "serialization/SerializerRegistry.h"
+#include "serialization/exporters/ExporterRegistry.h"
 
 namespace ppt::cli::factories
 {
-	class SaveCommandFactory : public ICommandFactory
+	class ExportCommandFactory : public ICommandFactory
 	{
 	public:
-		SaveCommandFactory(const model::Presentation& presentation, const ser::SerializerRegistry& registry);
+		ExportCommandFactory(const model::Presentation& presentation, const ser::ExporterRegistry& registry);
 		std::unique_ptr<cmds::ICommand> createCommand(const ParsedRawCommand& args) override;
 	private:
 		const model::Presentation& m_presentation;
-		const ser::SerializerRegistry& m_registry;
+		const ser::ExporterRegistry& m_registry;
 	};
 }
