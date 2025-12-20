@@ -135,6 +135,9 @@
     <ClCompile Include="srcs\cli\factories\utility\OpenCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\SaveCommandFactory.cpp" />
     <ClCompile Include="srcs\serialization\SerializerRegistry.cpp" />
+    <ClCompile Include="srcs\visualization\shapes\EllipseShape.cpp" />
+    <ClCompile Include="srcs\visualization\shapes\RectangleShape.cpp" />
+    <ClCompile Include="srcs\visualization\shapes\TriangleShape.cpp" />
     <ClInclude Include="includes\CLIApplication.h" />
     <ClInclude Include="includes\cli\CLIFormatter.h" />
     <ClInclude Include="includes\cli\commands\ExecutionError.h" />
@@ -148,6 +151,7 @@
     <ClInclude Include="includes\cli\commands\slide\EditSlideCommand.h" />
     <ClInclude Include="includes\cli\commands\slide\MoveLayerCommand.h" />
     <ClInclude Include="includes\cli\commands\slide\RemoveLayerCommand.h" />
+    <ClInclude Include="includes\cli\commands\utility\ExportCommand.h" />
     <ClInclude Include="includes\cli\commands\utility\HelpCommand.h" />
     <ClInclude Include="includes\cli\commands\utility\ListCommand.h" />
     <ClInclude Include="includes\cli\commands\slide\MoveSlideCommand.h" />
@@ -247,6 +251,17 @@
     <ClInclude Include="includes\cli\CLIViewer.h" />
     <ClInclude Include="includes\core\IViewer.h" />
     <ClInclude Include="includes\cli\commands\utility\ExitCommand.h" />
+    <ClInclude Include="includes\visualization\shapes\EllipseShape.h" />
+    <ClInclude Include="includes\visualization\shapes\RectangleShape.h" />
+    <ClInclude Include="includes\visualization\shapes\TriangleShape.h" />
+    <ClInclude Include="includes\visualization\utils\Brush.h" />
+    <ClInclude Include="includes\visualization\renderers\IRenderer.h" />
+    <ClInclude Include="includes\visualization\utils\PathCommand.h" />
+    <ClInclude Include="includes\visualization\utils\Pen.h" />
+    <ClInclude Include="includes\visualization\shapes\IShape.h" />
+    <ClInclude Include="includes\visualization\utils\Path.h" />
+    <ClInclude Include="includes\visualization\utils\Point.h" />
+    <ClInclude Include="includes\visualization\VisualizerRegistry.h" />
     <ClInclude Include="srcs\CLI\Commands\QuitCommand.h" />
     <ClCompile Include="srcs\cli\CLIFormatter.cpp" />
     <ClCompile Include="srcs\cli\commands\slide\AddLayerCommand.cpp" />

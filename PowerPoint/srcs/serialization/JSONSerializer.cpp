@@ -124,6 +124,6 @@ void JSONSerializer::serialize(const model::Presentation& presentation, const st
 	if (!file.is_open())
 		throw std::runtime_error("Could not open file for writing: " + filePath);
 
-	file << jPresentation.dump(4); // Pretty print with 4 spaces indentation
+	file << jPresentation.dump(2); // Pretty print with 2 spaces indentation
 	file.close();
 }
