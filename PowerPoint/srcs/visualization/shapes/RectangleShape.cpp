@@ -2,13 +2,15 @@
 
 using namespace ppt::vis;
 
-void RectangleShape::draw(IRenderer& renderer, const model::ShapeData& shapeData) const
+RectangleShape::RectangleShape(const model::ShapeData& shapeData) : m_shapeData(shapeData) {}
+
+void RectangleShape::draw(IRenderer& renderer) const
 {
 	Path path;
-	float x = shapeData.geometry.topLeft.x;
-	float y = shapeData.geometry.topLeft.y;
-	float width = shapeData.geometry.size.x;
-	float height = shapeData.geometry.size.y;
+	float x = m_shapeData.geometry.topLeft.x;
+	float y = m_shapeData.geometry.topLeft.y;
+	float width = m_shapeData.geometry.size.x;
+	float height = m_shapeData.geometry.size.y;
 
 	path.moveTo(x, y);
 	path.lineTo(x + width, y);
@@ -16,8 +18,8 @@ void RectangleShape::draw(IRenderer& renderer, const model::ShapeData& shapeData
 	path.lineTo(x, y + height);
 	path.close();
 
-	Pen pen{ shapeData.style.outlineColor, shapeData.style.outlineWidth };
-	Brush brush{ shapeData.style.fillColor };
+	Pen pen{ m_shapeData.style.outlineColor, m_shapeData.style.outlineWidth };
+	Brush brush{ m_shapeData.style.fillColor };
 
 	renderer.drawPath(path, pen, brush);
 }

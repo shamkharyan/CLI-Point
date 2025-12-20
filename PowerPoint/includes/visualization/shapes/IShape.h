@@ -9,6 +9,6 @@ namespace ppt::vis
     {
     public:
         virtual ~IShape() = default;
-        virtual void draw(IRenderer& renderer, const model::ShapeData& shapeData) const = 0;
+        virtual void draw(IRenderer& renderer) const = 0;
     };
 }

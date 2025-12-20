@@ -1,5 +1,4 @@
 #include "cli/CLIFormatter.h"
-#include "utils/factories/ShapeTypeFactory.h"
 
 using namespace ppt::cli;
 
@@ -18,11 +17,6 @@ std::string CLIFormatter::toString(float value)
 	return std::to_string(value);
 }
 
-std::string CLIFormatter::toString(model::utils::ShapeType type)
-{
-	return "SomeText";
-}
-
 std::string CLIFormatter::toHexColorString(model::utils::Color color)
 {
 	char buffer[10];
@@ -35,21 +29,6 @@ std::string CLIFormatter::toRGBColorString(model::utils::Color color)
 	char buffer[20];
 	std::snprintf(buffer, sizeof(buffer), "rgba(%d, %d, %d, %d)", color.r, color.g, color.b, color.a);
 	return std::string(buffer);
-}
-
-std::string CLIFormatter::toColorNameString(model::utils::Color color)
-{
-	if (color.r == 255 && color.g == 0 && color.b == 0)
-		return "Red";
-	if (color.r == 0 && color.g == 255 && color.b == 0)
-		return "Green";
-	if (color.r == 0 && color.g == 0 && color.b == 255)
-		return "Blue";
-	if (color.r == 0 && color.g == 0 && color.b == 0)
-		return "Black";
-	if (color.r == 255 && color.g == 255 && color.b == 255)
-		return "White";
-	return "Unknown Color";
 }
 
 std::string CLIFormatter::toString(model::utils::Coord coord)
@@ -80,10 +59,6 @@ std::string CLIFormatter::toString(const ArgValue& value)
 		std::string operator()(const ppt::model::utils::Color& color) const
 		{
 			return toHexColorString(color);
-		}
-		std::string operator()(ppt::model::utils::ShapeType type) const
-		{
-			return toString(type);
 		}
 		std::string operator()(ppt::model::utils::Coord coord) const
 		{

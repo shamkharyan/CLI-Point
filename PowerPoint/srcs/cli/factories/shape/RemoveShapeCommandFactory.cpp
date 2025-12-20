@@ -3,7 +3,6 @@
 #include "core/ActionManager.h"
 #include "model/Presentation.h"
 #include "model/utils/GeometryData.h"
-#include "model/utils/ShapeType.h"
 #include "model/utils/StyleData.h"
 
 using namespace ppt::cli;

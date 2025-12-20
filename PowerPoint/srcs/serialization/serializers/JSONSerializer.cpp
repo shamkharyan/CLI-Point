@@ -1,4 +1,4 @@
-#include "serialization/JSONSerializer.h"
+#include "serialization/serializers/JSONSerializer.h"
 
 #include <fstream>
 
@@ -20,7 +20,7 @@ void JSONSerializer::serializeShape(json& jShape, const model::ShapeData& shape)
 
 	// Basic properties
 	jShape["id"] = shape.id;
-	jShape["type"] = static_cast<int>(shape.type);
+	jShape["type"] = shape.type;
 
 	// Geometry
 	jShape["geometry"] = json::object();

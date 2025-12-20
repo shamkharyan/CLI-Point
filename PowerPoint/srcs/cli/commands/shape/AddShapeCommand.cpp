@@ -14,17 +14,15 @@ using namespace ppt::model;
 AddShapeCommand::AddShapeCommand(
 	model::Presentation& model,
 	core::ActionManager& actionManager,
+	const vis::ShapeRegistry& registry,
 	std::size_t at,
-	model::utils::ShapeType type,
-	const model::utils::GeometryData& geometry,
-	const model::utils::StyleData& style,
+	model::ShapeData data,
 	std::size_t zIndex) :
 	m_model(model),
 	m_actionManager(actionManager),
+	m_registry(registry),
 	m_at(at),
-	m_type(type),
-	m_geometry(geometry),
-	m_style(style),
+	m_data(data),
 	m_zIndex(zIndex)
 {
 }
@@ -42,11 +40,10 @@ void AddShapeCommand::execute()
 	if (!pLayer)
 		throw ExecutionError("Layer not found");
 
-	auto pShapeData = std::make_shared<ShapeData>();
-	pShapeData->id = pSlide->getNextId();
-	pShapeData->type = m_type;
-	pShapeData->geometry = m_geometry;
-	pShapeData->style = m_style;
+	if (!m_registry.getFactory(m_data.type))
+		throw ExecutionError("Invalid shape type");
+
+	auto pShapeData = std::make_shared<ShapeData>(m_data);
 
 	auto action = std::make_unique<act::AddShapeAction>(pLayer, pShapeData, pLayer->shapesCount());
 	m_actionManager.doAction(std::move(action));

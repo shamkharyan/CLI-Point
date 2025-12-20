@@ -16,7 +16,12 @@ AddSlideCommandFactory::AddSlideCommandFactory(core::ActionManager& actionManage
 
 std::unique_ptr<cmds::ICommand> AddSlideCommandFactory::createCommand(const ParsedRawCommand& rcmd)
 {
-	auto at = std::get<std::size_t>(rcmd.arguments.at("at"));
+	std::size_t at;
+	if (rcmd.arguments.find("at") == rcmd.arguments.end())
+		at = m_presentation.slidesCount();
+	else
+		at = std::get<std::size_t>(rcmd.arguments.at("at"));
+
 	auto color = std::get<model::utils::Color>(rcmd.arguments.at("color"));
 
 	return std::make_unique<cmds::AddSlideCommand>(m_actionManager, m_presentation, at, color);

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "serialization/IDeserializer.h"
+#include "IDeserializer.h"
 #include "model/utils/Color.h"
 #include "model/utils/Coord.h"
 #include "model/SlideLayer.h"

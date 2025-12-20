@@ -131,13 +131,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="srcs\cli\commands\utility\ExportCommand.cpp" />
     <ClCompile Include="srcs\cli\commands\utility\OpenCommand.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\OpenCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\SaveCommandFactory.cpp" />
     <ClCompile Include="srcs\cli\parsing\parsers\ColorParser.cpp" />
-    <ClCompile Include="srcs\serialization\SerializerRegistry.cpp" />
+    <ClCompile Include="srcs\serialization\deserializers\DeserializerRegistry.cpp" />
+    <ClCompile Include="srcs\serialization\exporters\ExporterRegistry.cpp" />
+    <ClCompile Include="srcs\serialization\serializers\SerializerRegistry.cpp" />
+    <ClCompile Include="srcs\serialization\exporters\SVGExporter.cpp" />
     <ClCompile Include="srcs\utils\factories\ColorNameFactory.cpp" />
-    <ClCompile Include="srcs\utils\factories\ShapeTypeFactory.cpp" />
     <ClCompile Include="srcs\visualization\renderers\SVGRenderer.cpp" />
     <ClCompile Include="srcs\visualization\shapes\EllipseShape.cpp" />
     <ClCompile Include="srcs\visualization\shapes\RectangleShape.cpp" />
@@ -176,6 +179,7 @@
     <ClInclude Include="includes\cli\errors\MissingArgumentValueException.h" />
     <ClInclude Include="includes\cli\factories\slide\MoveLayerCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\slide\RemoveLayerCommandFactory.h" />
+    <ClInclude Include="includes\cli\factories\utility\ExportCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\utility\HelpCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\utility\ListCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\slide\MoveSlideCommandFactory.h" />
@@ -198,7 +202,6 @@
     <ClInclude Include="includes\cli\parsing\parsers\CoordParser.h" />
     <ClInclude Include="includes\cli\parsing\parsers\FloatParser.h" />
     <ClInclude Include="includes\cli\parsing\parsers\IArgValueParser.h" />
-    <ClInclude Include="includes\cli\parsing\parsers\ShapeTypeParser.h" />
     <ClInclude Include="includes\cli\parsing\parsers\SizeTParser.h" />
     <ClInclude Include="includes\cli\parsing\RawCommand.h" />
     <ClInclude Include="includes\cli\parsing\SemanticParser.h" />
@@ -227,15 +230,17 @@
     <ClInclude Include="includes\model\SlideLayer.h" />
     <ClInclude Include="includes\model\utils\Coord.h" />
     <ClInclude Include="includes\model\utils\GeometryData.h" />
-    <ClInclude Include="includes\model\utils\ShapeType.h" />
     <ClInclude Include="includes\model\utils\TextData.h" />
-    <ClInclude Include="includes\serialization\IDeserializer.h" />
-    <ClInclude Include="includes\serialization\ISerializer.h" />
+    <ClInclude Include="includes\serialization\deserializers\DeserializerRegistry.h" />
+    <ClInclude Include="includes\serialization\deserializers\IDeserializer.h" />
+    <ClInclude Include="includes\serialization\exporters\IExporter.h" />
+    <ClInclude Include="includes\serialization\exporters\ExporterRegistry.h" />
+    <ClInclude Include="includes\serialization\serializers\ISerializer.h" />
     <ClInclude Include="includes\serialization\IValidator.h" />
-    <ClInclude Include="includes\serialization\JSONDeserializer.h" />
-    <ClInclude Include="includes\serialization\JSONSerializer.h" />
+    <ClInclude Include="includes\serialization\deserializers\JSONDeserializer.h" />
+    <ClInclude Include="includes\serialization\serializers\JSONSerializer.h" />
     <ClInclude Include="includes\serialization\JSONValidator.h" />
-    <ClInclude Include="includes\serialization\SerializerRegistry.h" />
+    <ClInclude Include="includes\serialization\serializers\SerializerRegistry.h" />
     <ClInclude Include="includes\cli\meta\CommandRegistry.h" />
     <ClInclude Include="includes\cli\CLIController.h" />
     <ClInclude Include="includes\cli\factories\utility\ExitCommandFactory.h" />
@@ -249,12 +254,16 @@
     <ClInclude Include="includes\cli\CLIViewer.h" />
     <ClInclude Include="includes\core\IViewer.h" />
     <ClInclude Include="includes\cli\commands\utility\ExitCommand.h" />
+    <ClInclude Include="includes\serialization\exporters\SVGExporter.h" />
     <ClInclude Include="includes\utils\factories\ColorNameFactory.h" />
-    <ClInclude Include="includes\utils\factories\ShapeTypeFactory.h" />
-    <ClInclude Include="includes\visualization\IShape.h" />
+    <ClInclude Include="includes\visualization\factories\EllipseShapeFactory.h" />
+    <ClInclude Include="includes\visualization\factories\IShapeFactory.h" />
+    <ClInclude Include="includes\visualization\factories\RectangleShapeFactory.h" />
+    <ClInclude Include="includes\visualization\factories\TriangleShapeFactory.h" />
     <ClInclude Include="includes\visualization\renderers\SVGRenderer.h" />
     <ClInclude Include="includes\visualization\shapes\EllipseShape.h" />
     <ClInclude Include="includes\visualization\shapes\RectangleShape.h" />
+    <ClInclude Include="includes\visualization\ShapeRegistry.h" />
     <ClInclude Include="includes\visualization\shapes\TriangleShape.h" />
     <ClInclude Include="includes\visualization\utils\Brush.h" />
     <ClInclude Include="includes\visualization\renderers\IRenderer.h" />
@@ -263,7 +272,6 @@
     <ClInclude Include="includes\visualization\shapes\IShape.h" />
     <ClInclude Include="includes\visualization\utils\Path.h" />
     <ClInclude Include="includes\visualization\utils\Point.h" />
-    <ClInclude Include="includes\visualization\VisualizerRegistry.h" />
     <ClInclude Include="srcs\CLI\Commands\QuitCommand.h" />
     <ClCompile Include="srcs\cli\CLIFormatter.cpp" />
     <ClCompile Include="srcs\cli\commands\slide\AddLayerCommand.cpp" />
@@ -308,7 +316,6 @@
     <ClCompile Include="srcs\cli\parsing\CommandParser.cpp" />
     <ClCompile Include="srcs\cli\parsing\parsers\CoordParser.cpp" />
     <ClCompile Include="srcs\cli\parsing\parsers\FloatParser.cpp" />
-    <ClCompile Include="srcs\cli\parsing\parsers\ShapeTypeParser.cpp" />
     <ClCompile Include="srcs\cli\parsing\parsers\SizeTParser.cpp" />
     <ClCompile Include="srcs\cli\parsing\SemanticParser.cpp" />
     <ClCompile Include="srcs\cli\parsing\parsers\StringParser.cpp" />
@@ -327,8 +334,8 @@
     <ClCompile Include="srcs\model\Presentation.cpp" />
     <ClCompile Include="srcs\model\Slide.cpp" />
     <ClCompile Include="srcs\model\SlideLayer.cpp" />
-    <ClCompile Include="srcs\serialization\JSONDeserializer.cpp" />
-    <ClCompile Include="srcs\serialization\JSONSerializer.cpp" />
+    <ClCompile Include="srcs\serialization\deserializers\JSONDeserializer.cpp" />
+    <ClCompile Include="srcs\serialization\serializers\JSONSerializer.cpp" />
     <ClCompile Include="srcs\main.cpp" />
     <ClCompile Include="srcs\cli\factories\utility\ExitCommandFactory.cpp" />
     <ClCompile Include="srcs\serialization\JSONValidator.cpp" />

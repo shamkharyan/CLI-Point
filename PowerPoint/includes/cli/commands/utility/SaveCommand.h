@@ -2,7 +2,7 @@
 
 #include "cli/commands/ICommand.h"
 #include "model/Presentation.h"
-#include "serialization/SerializerRegistry.h"
+#include "serialization/serializers/SerializerRegistry.h"
 
 #include <memory>
 

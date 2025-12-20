@@ -7,6 +7,10 @@ namespace ppt::vis
 	class TriangleShape : public IShape
 	{
 	public:
-		void draw(IRenderer& renderer, const model::ShapeData& shapeData) const override;
+		TriangleShape(const model::ShapeData& shapeData);
+
+		void draw(IRenderer& renderer) const override;
+	private:
+		const model::ShapeData& m_shapeData;
 	};
 }

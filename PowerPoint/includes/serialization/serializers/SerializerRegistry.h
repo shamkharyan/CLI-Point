@@ -1,7 +1,6 @@
 #pragma once
 
-#include "serialization/ISerializer.h"
-
+#include "ISerializer.h"
 
 #include <vector>
 #include <string>
@@ -12,20 +11,16 @@ namespace ppt::ser
 	class SerializerRegistry
 	{
 	public:
+		using SerPtr = std::shared_ptr<ISerializer>;
 
-		using container = std::vector<std::pair<SerPtr, DeserPtr>>;
-		using alias_container = std::unordered_map<std::string, std::size_t>;
+		using container = std::vector<SerPtr>;
 		using iterator = container::iterator;
 		using const_iterator = container::const_iterator;
 
+		using alias_container = std::unordered_map<std::string, std::size_t>;
 	public:
-		void registerPair(
-			const std::string& name,
-			SerPtr serializer,
-			DeserPtr deserializer);
-
+		void registerSerializer(const std::string name, SerPtr serializer);
 		SerPtr getSerializer(const std::string& name) const noexcept;
-		DeserPtr getDeserializer(const std::string& name) const noexcept;
 
 		iterator begin() noexcept { return m_serializers.begin(); }
 		iterator end() noexcept { return m_serializers.end(); }
@@ -35,10 +30,8 @@ namespace ppt::ser
 
 		const_iterator cbegin() const noexcept { return m_serializers.cbegin(); }
 		const_iterator cend() const noexcept { return m_serializers.cend(); }
-
 	private:
 		container m_serializers;
-
 		alias_container m_aliasIndexes;
 	};
 }

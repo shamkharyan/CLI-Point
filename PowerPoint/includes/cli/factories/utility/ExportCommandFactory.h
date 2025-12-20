@@ -3,7 +3,7 @@
 #include "cli/factories/ICommandFactory.h"
 #include "cli/commands/ICommand.h"
 #include "model/Presentation.h"
-#include "serialization/serializers/SerializerRegistry.h"
+#include "serialization/SerializerRegistry.h"
 
 namespace ppt::cli::factories
 {

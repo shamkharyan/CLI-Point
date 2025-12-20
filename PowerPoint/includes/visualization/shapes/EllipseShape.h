@@ -4,9 +4,13 @@
 
 namespace ppt::vis
 {
-	class EllipseleShape : public IShape
+	class EllipseShape : public IShape
 	{
 	public:
-		void draw(IRenderer& renderer, const model::ShapeData& shapeData) const override;
+		EllipseShape(const model::ShapeData& shapeData);
+
+		void draw(IRenderer& renderer) const override;
+	private:
+		const model::ShapeData& m_shapeData;
 	};
 }

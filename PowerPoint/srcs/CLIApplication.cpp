@@ -11,7 +11,6 @@
 #include "cli/parsing/parsers/FloatParser.h"
 #include "cli/parsing/parsers/ColorParser.h"
 #include "cli/parsing/parsers/StringParser.h"
-#include "cli/parsing/parsers/ShapeTypeParser.h"
 #include "cli/parsing/parsers/CoordParser.h"
 
 #include "cli/factories/utility/ExitCommandFactory.h"
@@ -31,8 +30,13 @@
 #include "cli/factories/utility/RedoCommandFactory.h"
 #include "cli/factories/utility/HelpCommandFactory.h"
 
-#include "serialization/JSONSerializer.h"
-#include "serialization/JSONDeserializer.h"
+#include "serialization/serializers/JSONSerializer.h"
+#include "serialization/deserializers/JSONDeserializer.h"
+#include "serialization/exporters/SVGExporter.h"
+
+#include "visualization/factories/RectangleShapeFactory.h"
+#include "visualization/factories/EllipseShapeFactory.h"
+#include "visualization/factories/TriangleShapeFactory.h"
 
 #include <iostream>
 
@@ -57,6 +61,9 @@ CLIApplication::CLIApplication() :
 {
 	registerCommands();
 	registerSerializers();
+	registerDeserializers();
+	registerExporters();
+	registerShapes();
 }
 
 void CLIApplication::registerCommands()
@@ -98,7 +105,7 @@ void CLIApplication::registerCommands()
 		meta::ArgumentMeta atArgMeta(
 			"at",
 			"Position in the presentation to add new slide",
-			ArgValue(m_presentation.slidesCount())
+			false
 		);
 
 		atArgMeta.registerNameAlias("-a");
@@ -412,7 +419,7 @@ void CLIApplication::registerCommands()
 		meta::CommandMeta addShapeMeta(
 			"add-shape",
 			"Adds a new shape to a slide",
-			std::make_shared<factories::AddShapeCommandFactory>(m_actionManager, m_presentation)
+			std::make_shared<factories::AddShapeCommandFactory>(m_actionManager, m_presentation, m_shapeRegistry)
 		);
 
 		// at argument (slide index)
@@ -437,7 +444,7 @@ void CLIApplication::registerCommands()
 		typeArgMeta.registerNameAlias("-t");
 		typeArgMeta.registerNameAlias("--type");
 
-		typeArgMeta.registerArgValueFactory(std::make_shared<cli::ShapeTypeParser>());
+		typeArgMeta.registerArgValueFactory(std::make_shared<cli::StringParser>());
 
 		addShapeMeta.registerArgumentMeta(std::move(typeArgMeta));
 
@@ -591,7 +598,7 @@ void CLIApplication::registerCommands()
 		meta::CommandMeta openMeta(
 			"open",
 			"Opens a presentation file",
-			std::make_shared<factories::OpenCommandFactory>(m_presentation, m_serializerRegistry)
+			std::make_shared<factories::OpenCommandFactory>(m_presentation, m_deserializerRegistry)
 		);
 
 		meta::ArgumentMeta pathArgMeta(
@@ -608,6 +615,45 @@ void CLIApplication::registerCommands()
 		openMeta.registerArgumentMeta(std::move(pathArgMeta));
 
 		m_registry.registerCommandMeta(std::move(openMeta));
+	}
+
+	// export command
+	{
+		meta::CommandMeta exportMeta(
+			"export",
+			"Exports a slide object",
+			std::make_shared<factories::OpenCommandFactory>(m_presentation, m_deserializerRegistry)
+		);
+
+		// path argument (required)
+		meta::ArgumentMeta pathArgMeta(
+			"path",
+			"Path to export the slide object",
+			true
+		);
+
+		pathArgMeta.registerNameAlias("-p");
+		pathArgMeta.registerNameAlias("--path");
+
+		pathArgMeta.registerArgValueFactory(std::make_shared<cli::StringParser>());
+
+		exportMeta.registerArgumentMeta(std::move(pathArgMeta));
+
+		// at argument (slide index)
+		meta::ArgumentMeta atArgMeta(
+			"at",
+			"Index of the slide to export",
+			true
+		);
+
+		atArgMeta.registerNameAlias("-a");
+		atArgMeta.registerNameAlias("--at");
+
+		atArgMeta.registerArgValueFactory(std::make_shared<cli::SizeTParser>());
+
+		exportMeta.registerArgumentMeta(std::move(atArgMeta));
+
+		m_registry.registerCommandMeta(std::move(exportMeta));
 	}
 
 	// help command
@@ -637,9 +683,22 @@ void CLIApplication::registerCommands()
 
 void CLIApplication::registerSerializers()
 {
-	m_serializerRegistry.registerPair(
-		".json",
-		std::make_shared<ser::JSONSerializer>(),
-		std::make_shared<ser::JSONDeserializer>()
-	);
+	m_serializerRegistry.registerSerializer(".json", std::make_shared<ser::JSONSerializer>());
+}
+
+void CLIApplication::registerDeserializers()
+{
+	m_deserializerRegistry.registerDeserializer(".json", std::make_shared<ser::JSONDeserializer>());
+}
+
+void CLIApplication::registerExporters()
+{
+	m_exporterRegistry.registerExporter(".svg", std::make_shared<ser::SVGExporter>(m_shapeRegistry));
+}
+
+void CLIApplication::registerShapes()
+{
+	m_shapeRegistry.registerFactory("rectangle", std::make_shared<vis::RectangleShapeFactory>());
+	m_shapeRegistry.registerFactory("triangle", std::make_shared<vis::TriangleShapeFactory>());
+	m_shapeRegistry.registerFactory("ellipse", std::make_shared<vis::EllipseShapeFactory>());
 }

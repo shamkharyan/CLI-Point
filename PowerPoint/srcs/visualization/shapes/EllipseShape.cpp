@@ -2,13 +2,15 @@
 
 using namespace ppt::vis;
 
-void EllipseleShape::draw(IRenderer& renderer, const model::ShapeData& shapeData) const
+EllipseShape::EllipseShape(const model::ShapeData& shapeData) : m_shapeData(shapeData) {}
+
+void EllipseShape::draw(IRenderer& renderer) const
 {
 	// Center and radii
-    float cx = shapeData.geometry.topLeft.x + shapeData.geometry.size.x / 2.0f;
-    float cy = shapeData.geometry.topLeft.y + shapeData.geometry.size.y / 2.0f;
-    float rx = shapeData.geometry.size.x / 2.0f;
-    float ry = shapeData.geometry.size.y / 2.0f;
+    float cx = m_shapeData.geometry.topLeft.x + m_shapeData.geometry.size.x / 2.0f;
+    float cy = m_shapeData.geometry.topLeft.y + m_shapeData.geometry.size.y / 2.0f;
+    float rx = m_shapeData.geometry.size.x / 2.0f;
+    float ry = m_shapeData.geometry.size.y / 2.0f;
 
 	// Approximate ellipse using 4 cubic Bezier curves
 	const float k = 0.552284749831f; // Approximation constant
@@ -33,8 +35,8 @@ void EllipseleShape::draw(IRenderer& renderer, const model::ShapeData& shapeData
     path.close();
 
 	// Style
-    Pen pen{ shapeData.style.outlineColor, shapeData.style.outlineWidth };
-    Brush brush{ shapeData.style.fillColor };
+    Pen pen{ m_shapeData.style.outlineColor, m_shapeData.style.outlineWidth };
+    Brush brush{ m_shapeData.style.fillColor };
 
     // Render
     renderer.drawPath(path, pen, brush);

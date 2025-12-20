@@ -3,30 +3,31 @@
 #include "core/ActionManager.h"
 #include "model/Presentation.h"
 #include "model/utils/GeometryData.h"
-#include "model/utils/ShapeType.h"
 #include "model/utils/StyleData.h"
+#include "visualization/ShapeRegistry.h"
 
 using namespace ppt::cli;
 using namespace ppt::cli::factories;
 
 AddShapeCommandFactory::AddShapeCommandFactory(
 	core::ActionManager& actionManager,
-	model::Presentation& presentation) :
+	model::Presentation& presentation,
+	const vis::ShapeRegistry& registry) :
 	m_actionManager(actionManager),
-	m_presentation(presentation)
+	m_presentation(presentation),
+	m_registry(registry)
 {
 }
 
 std::unique_ptr<cmds::ICommand> AddShapeCommandFactory::createCommand(const ParsedRawCommand& args)
 {
-	model::utils::GeometryData geometryData;
-	model::utils::StyleData styleData;
+	model::ShapeData data;
 
 	auto at = std::get<std::size_t>(args.arguments.at("at"));
-	auto shapeType = std::get<model::utils::ShapeType>(args.arguments.at("type"));
-	geometryData.topLeft = std::get<model::utils::Coord>(args.arguments.at("position"));
-	geometryData.size = std::get<model::utils::Coord>(args.arguments.at("size"));
+	data.type = std::get<std::string>(args.arguments.at("type"));
+	data.geometry.topLeft = std::get<model::utils::Coord>(args.arguments.at("position"));
+	data.geometry.size = std::get<model::utils::Coord>(args.arguments.at("size"));
 	auto zIndex = std::get<std::size_t>(args.arguments.at("z-index"));
 
-	return std::make_unique<cmds::AddShapeCommand>(m_presentation, m_actionManager, at, shapeType, geometryData, styleData, zIndex);
+	return std::make_unique<cmds::AddShapeCommand>(m_presentation, m_actionManager, m_registry, at, data, zIndex);
 }

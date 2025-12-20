@@ -18,7 +18,7 @@ namespace
 
 OpenCommand::OpenCommand(
 	model::Presentation& presentation,
-	const ser::SerializerRegistry& registry,
+	const ser::DeserializerRegistry& registry,
 	const std::string& filePath) :
 	m_presentation(presentation),
 	m_registry(registry),

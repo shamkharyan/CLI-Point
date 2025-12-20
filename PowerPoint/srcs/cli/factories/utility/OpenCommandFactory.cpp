@@ -6,7 +6,7 @@ using namespace ppt::cli::factories;
 
 OpenCommandFactory::OpenCommandFactory(
 	model::Presentation& presentation,
-	const ser::SerializerRegistry& registry) :
+	const ser::DeserializerRegistry& registry) :
 	m_presentation(presentation),
 	m_registry(registry)
 {

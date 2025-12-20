@@ -1,4 +1,4 @@
-#include "serialization/JSONDeserializer.h"
+#include "serialization/deserializers/JSONDeserializer.h"
 
 #include <fstream>
 
@@ -16,7 +16,7 @@ void JSONDeserializer::deserializeShape(const json& jShape, model::ShapeData& sh
 {
 	// Basic properties
 	shape.id = jShape.at("id").get<std::size_t>();
-	shape.type = static_cast<model::utils::ShapeType>(jShape.at("type").get<int>());
+	shape.type = jShape.at("type").get<std::string>();
 
 	// Geometry
 	shape.geometry.topLeft.x = jShape.at("geometry").at("x").get<int>();

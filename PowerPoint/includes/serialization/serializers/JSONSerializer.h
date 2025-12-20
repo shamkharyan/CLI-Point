@@ -1,6 +1,6 @@
 #pragma once
 
-#include "serialization/ISerializer.h"
+#include "ISerializer.h"
 #include "model/utils/Color.h"
 #include "model/utils/Coord.h"
 #include "model/SlideLayer.h"

@@ -5,9 +5,9 @@
 #include "model/Presentation.h"
 #include "model/ShapeData.h"
 #include "core/ActionManager.h"
-#include "model/utils/GeometryData.h"
-#include "model/utils/StyleData.h"
 #include "model/utils/TextData.h"
+
+#include "visualization/ShapeRegistry.h"
 
 namespace ppt::cli::cmds
 {
@@ -17,10 +17,9 @@ namespace ppt::cli::cmds
 		AddShapeCommand(
 			model::Presentation& model,
 			core::ActionManager& actionManager,
+			const vis::ShapeRegistry& registry,
 			std::size_t at,
-			model::utils::ShapeType type,
-			const model::utils::GeometryData& geometry,
-			const model::utils::StyleData& style,
+			model::ShapeData data,
 			std::size_t zIndex
 		);
 
@@ -29,11 +28,10 @@ namespace ppt::cli::cmds
 	private:
 		model::Presentation& m_model;
 		core::ActionManager& m_actionManager;
+		const vis::ShapeRegistry& m_registry;
 
 		std::size_t m_at;
-		model::utils::ShapeType m_type;
-		model::utils::GeometryData m_geometry;
-		model::utils::StyleData m_style;
+		model::ShapeData m_data;
 		std::size_t m_zIndex;
 	};
 }

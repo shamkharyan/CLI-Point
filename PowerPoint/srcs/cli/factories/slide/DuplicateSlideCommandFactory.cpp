@@ -17,8 +17,8 @@ DuplicateSlideCommandFactory::DuplicateSlideCommandFactory(core::ActionManager& 
 std::unique_ptr<cmds::ICommand> DuplicateSlideCommandFactory::createCommand(const ParsedRawCommand& rcmd)
 {
 	auto at = std::get<std::size_t>(rcmd.arguments.at("at"));
-	std::size_t to;
 
+	std::size_t to;
 	if (rcmd.arguments.find("to") == rcmd.arguments.end())
 		to = at + 1;
 	else

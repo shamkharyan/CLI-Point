@@ -3,7 +3,10 @@
 #include "cli/CLIViewer.h"
 #include "cli/CLIController.h"
 #include "cli/meta/CommandRegistry.h"
-#include "serialization/SerializerRegistry.h"
+#include "serialization/serializers/SerializerRegistry.h"
+#include "serialization/deserializers/DeserializerRegistry.h"
+#include "serialization/exporters/ExporterRegistry.h"
+#include "visualization/ShapeRegistry.h"
 #include "core/ActionManager.h"
 
 namespace ppt
@@ -22,12 +25,18 @@ namespace ppt
 
 		void registerCommands();
 		void registerSerializers();
+		void registerDeserializers();
+		void registerExporters();
+		void registerShapes();
 	private:
 		model::Presentation m_presentation;
 		core::ActionManager m_actionManager;
 		cli::CLIViewer m_viewer;
 		cli::CommandRegistry m_registry;
 		ser::SerializerRegistry m_serializerRegistry;
+		ser::DeserializerRegistry m_deserializerRegistry;
+		ser::ExporterRegistry m_exporterRegistry;
+		vis::ShapeRegistry m_shapeRegistry;
 		cli::CLIController m_controller;
 	};
 }

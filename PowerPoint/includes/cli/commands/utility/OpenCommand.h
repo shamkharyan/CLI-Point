@@ -2,7 +2,7 @@
 
 #include "cli/commands/ICommand.h"
 #include "model/Presentation.h"
-#include "serialization/SerializerRegistry.h"
+#include "serialization/deserializers/DeserializerRegistry.h"
 
 #include <memory>
 
@@ -13,13 +13,13 @@ namespace ppt::cli::cmds
 	public:
 		OpenCommand(
 			model::Presentation& presentation,
-			const ser::SerializerRegistry& registry,
+			const ser::DeserializerRegistry& registry,
 			const std::string& filePath);
 
 		void execute() override;
 	private:
 		model::Presentation& m_presentation;
-		const ser::SerializerRegistry& m_registry;
+		const ser::DeserializerRegistry& m_registry;
 		std::string m_filePath;
 	};
 }
