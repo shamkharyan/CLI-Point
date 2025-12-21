@@ -24,5 +24,5 @@ std::optional<ArgValue> FloatVecParser::tryCreate(const std::vector<std::string>
 
 std::string FloatVecParser::typeName() const
 {
-	return "float[]";
+	return "float...";
 }

@@ -19,10 +19,7 @@ void TrapezoidShape::draw(IRenderer& renderer) const
     float w = m_shapeData.geometry.width;
     float h = m_shapeData.geometry.height;
 
-    const auto& adj = m_shapeData.adjustments;
-    float topRatio = (adj.size() > 0) ? adj[0] : kDefaultTopRatio;
-    if (topRatio < 0.0f) topRatio = 0.0f;
-    if (topRatio > 1.0f) topRatio = 1.0f;
+    float topRatio = m_shapeData.adjustments[0];
 
     float topWidth = w * topRatio;
     float delta = (w - topWidth) / 2.0f;

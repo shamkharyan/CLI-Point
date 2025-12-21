@@ -199,8 +199,10 @@
     <ClInclude Include="includes\cli\errors\UnknownCommandException.h" />
     <ClInclude Include="includes\cli\factories\utility\SaveCommandFactory.h" />
     <ClInclude Include="includes\cli\factories\utility\UndoCommandFactory.h" />
+    <ClInclude Include="includes\cli\meta\ValueSpecification.h" />
     <ClInclude Include="includes\cli\meta\CommandMeta.h" />
     <ClInclude Include="includes\cli\meta\ArgumentMeta.h" />
+    <ClInclude Include="includes\cli\meta\ValueSpecificationGroup.h" />
     <ClInclude Include="includes\cli\parsing\parsers\ArgValue.h" />
     <ClInclude Include="includes\cli\parsing\parsers\BoolParser.h" />
     <ClInclude Include="includes\cli\parsing\parsers\ColorParser.h" />

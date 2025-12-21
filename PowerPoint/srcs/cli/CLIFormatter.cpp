@@ -14,7 +14,9 @@ std::string CLIFormatter::toString(std::size_t value)
 
 std::string CLIFormatter::toString(float value)
 {
-	return std::to_string(value);
+	char buffer[32];
+	std::snprintf(buffer, sizeof(buffer), "%.4f", value);
+	return std::string(buffer);
 }
 
 std::string CLIFormatter::toString(const std::vector<float>& value)

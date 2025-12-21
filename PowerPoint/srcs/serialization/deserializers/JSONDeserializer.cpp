@@ -53,6 +53,17 @@ void JSONDeserializer::deserializeShape(const json& jShape, model::ShapeData& sh
 	//if (shape.style.fillType == model::utils::FillType::ImageTexture)
 	//	shape.style.imagePath = jShape.at("style").at("imagePath").get<std::string>();
 
+	if (jShape.contains("adjustments"))
+	{
+		const auto& jAdjustments = jShape.at("adjustments");
+		if (jAdjustments.is_array())
+		{
+			shape.adjustments.clear();
+			for (const auto& val : jAdjustments)
+				shape.adjustments.push_back(val.get<float>());
+		}
+	}
+
 	// Text data
 	if (jShape.contains("text"))
 	{

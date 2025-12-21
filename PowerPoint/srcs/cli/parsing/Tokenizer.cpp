@@ -1,5 +1,7 @@
 #include "cli/parsing/Tokenizer.h"
 
+#include <iostream>
+
 using namespace ppt::cli;
 
 Tokenizer::Tokenizer(std::istream& is)

@@ -2,6 +2,7 @@
 
 #include "cli/parsing/parsers/IArgValueParser.h"
 #include "cli/parsing/parsers/ArgValue.h"
+#include "cli/meta/ValueSpecificationGroup.h"
 
 #include <string>
 #include <vector>
@@ -14,7 +15,7 @@ namespace ppt::cli::meta
 	{
 	public:
 		using container = std::vector<std::shared_ptr<IArgValueParser>>;
-		using notes_container = std::vector<std::string>;
+		using value_specs_container = std::vector<ValueSpecificationGroup>;
 		using iterator = container::iterator;
 		using const_iterator = container::const_iterator;
 
@@ -37,8 +38,10 @@ namespace ppt::cli::meta
 		std::optional<ArgValue> getDefaultValue() const noexcept { return m_defaultValue; }
 		bool isRequired() const noexcept { return m_isRequired; }
 
-		void addNote(const std::string& note) { m_notes.push_back(note); }
-		const std::vector<std::string>& getNotes() const { return m_notes; }
+		void addValueSpecGroup(ValueSpecificationGroup spec) { m_valueSpecs.push_back(std::move(spec)); }
+		const value_specs_container& getValueSpecGroups() const noexcept { return m_valueSpecs; }
+
+		bool hasValueSpecGroups() const noexcept { return !m_valueSpecs.empty(); }
 
 		iterator begin() noexcept { return m_argValueFactories.begin(); }
 		iterator end() noexcept { return m_argValueFactories.end(); }
@@ -49,6 +52,8 @@ namespace ppt::cli::meta
 		const_iterator cbegin() const noexcept { return m_argValueFactories.cbegin(); }
 		const_iterator cend() const noexcept { return m_argValueFactories.cend(); }
 
+		const container& getValueFactories() const { return m_argValueFactories; }
+
 		void registerNameAlias(const std::string& alias);
 		void registerArgValueFactory(std::shared_ptr<IArgValueParser> factory);
 
@@ -57,9 +62,23 @@ namespace ppt::cli::meta
 		std::string m_description;
 		std::vector<std::string> m_nameAliases;
 
-		notes_container m_notes;
+		value_specs_container m_valueSpecs;
 		container m_argValueFactories;
+
 		bool m_isRequired;
 		std::optional<ArgValue> m_defaultValue;
 	};
 }
+
+// --argument		Argument description (type)
+//					(required) [default: value]
+//					
+//					SPECIFICATIONS:
+//					Specification group1
+//						spec-name1	Specification description [default: value]
+//						spec-name2	Specification description [default: value]
+// 
+//					Specification group1
+//						spec-name1	Specification description [default: value]
+//						spec-name2	Specification description [default: value]
+

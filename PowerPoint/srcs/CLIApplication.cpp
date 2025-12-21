@@ -486,8 +486,8 @@ void CLIApplication::registerCommands()
 
 		// x coord
 		meta::ArgumentMeta xArgMeta(
-			"x", 
-			"X coordinate of the top-left corner", 
+			"x",
+			"X coordinate of the top-left corner",
 			true
 		);
 
@@ -498,7 +498,7 @@ void CLIApplication::registerCommands()
 
 		// y coord
 		meta::ArgumentMeta yArgMeta(
-			"y", 
+			"y",
 			"Y coordinate of the top-left corner",
 			true
 		);
@@ -621,38 +621,27 @@ void CLIApplication::registerCommands()
 		// adjustments
 		meta::ArgumentMeta adjustmentsMeta(
 			"adjustments",
-			"Adjustments for the shape",
+			"Shape-specific parameters",
 			false
 		);
 
 		adjustmentsMeta.registerNameAlias("--adjustments");
 		adjustmentsMeta.registerArgValueFactory(std::make_shared<cli::FloatVecParser>());
 
-		for (auto it = m_shapeRegistry.begin(); it != m_shapeRegistry.end(); ++it)
+		for (const auto& shapeMeta : m_shapeRegistry)
 		{
-			const auto& shapeMeta = *it;
-
-			if (shapeMeta.begin() == shapeMeta.end())
+			meta::ValueSpecificationGroup group;
+			group.name = shapeMeta.getName();
+			for (const auto& adjMeta : shapeMeta)
 			{
-				continue;
+				meta::ValueSpecification item;
+				item.name = adjMeta.getName();
+				item.description = adjMeta.getDescription();
+				item.defaultValue = adjMeta.getDefaultValue();
+				group.items.push_back(std::move(item));
 			}
-
-			// Заголовок для конкретной фигуры
-			std::string headNote = shapeMeta.getName() + ":";
-			adjustmentsMeta.addNote(headNote);
-
-			// Проходим по каждому adjustment этой фигуры
-			for (auto adjIt = shapeMeta.begin(); adjIt != shapeMeta.end(); ++adjIt)
-			{
-				const auto& adj = *adjIt;
-
-				// Форматируем строку: имя, описание и дефолт
-				// Пример: "  - inner-ratio: Ratio of inner radius (default: 0.5)"
-				std::string adjNote = "  - " + adj.getName() + ": " + adj.getDescription();
-				adjNote += " (default: " + std::to_string(adj.getDefaultValue()) + ")";
-
-				adjustmentsMeta.addNote(adjNote);
-			}
+			if (!group.items.empty())
+				adjustmentsMeta.addValueSpecGroup(std::move(group));
 		}
 
 		addShapeMeta.registerArgumentMeta(std::move(adjustmentsMeta));
@@ -834,7 +823,6 @@ void CLIApplication::registerShapes()
 		constexpr float kPi = 3.14f;
 
 		vis::ShapeMeta triangleMeta("triangle", std::make_shared<vis::TriangleShapeFactory>());
-		triangleMeta.registerAdjustmentMeta({ "top-angle", "Top angle in radians", k60deg, 0.1f, kPi });
 		m_shapeRegistry.registerShapeMeta(std::move(triangleMeta));
 	}
 
@@ -849,7 +837,6 @@ void CLIApplication::registerShapes()
 	// parallelogram
 	{
 		vis::ShapeMeta paraMeta("parallelogram", std::make_shared<vis::ParallelogramShapeFactory>());
-		// Сдвиг от -1.0 до 1.0 (в долях от ширины)
 		paraMeta.registerAdjustmentMeta({ "skew", "Horizontal skew ratio", 0.3f, -1.0f, 1.0f });
 		m_shapeRegistry.registerShapeMeta(std::move(paraMeta));
 	}

@@ -9,6 +9,77 @@
 
 using namespace ppt::cli;
 
+namespace
+{
+	void printArgument(
+		std::ostream& os,
+		const ppt::cli::meta::ArgumentMeta& argMeta,
+		std::size_t indent = 1
+	)
+	{
+		const std::size_t columnWidth = 20;
+		const std::string pad(indent * 2, ' ');
+
+		// aliases
+		std::string aliases;
+		for (const auto& alias : argMeta.getNameAliases())
+			aliases += alias + " ";
+
+		if (aliases.empty())
+			aliases = "--" + argMeta.getCanonicalName();
+
+		aliases = pad + aliases;
+
+		// type
+		std::string typeName = "group";
+		if (!argMeta.getValueFactories().empty())
+			typeName = argMeta.getValueFactories().front()->typeName();
+
+		// main argument line
+		os << std::left
+			<< std::setw(columnWidth) << aliases
+			<< argMeta.getDescription();
+
+		if (!argMeta.getValueFactories().empty())
+			os << " (" << typeName << ")";
+
+		os << '\n';
+
+		// required / default
+		os << std::string(columnWidth, ' ') << pad
+			<< (argMeta.isRequired() ? "required" : "optional");
+
+		if (auto def = argMeta.getDefaultValue())
+			os << "  [default: " << CLIFormatter::toString(*def) << "]";
+
+		os << "\n\n";
+
+		// specifications (valueSpecGroups)
+		if (argMeta.hasValueSpecGroups())
+		{
+			os << std::string(columnWidth, ' ') << "SPECIFICATIONS:\n";
+
+			for (const auto& group : argMeta.getValueSpecGroups())
+			{
+				os << std::string(columnWidth + 2, ' ') << group.name << '\n';
+
+				for (const auto& item : group.items)
+				{
+					os << std::string(columnWidth + 4, ' ')
+						<< std::left << std::setw(16)
+						<< item.name
+						<< item.description;
+
+					os << " [default: " << CLIFormatter::toString(item.defaultValue) << "]";
+
+					os << '\n';
+				}
+				os << '\n';
+			}
+		}
+	}
+}
+
 CLIViewer::CLIViewer(model::Presentation& presentation, std::istream* is, std::ostream* os) :
 	m_presentation(presentation),
 	m_is(is),
@@ -104,32 +175,10 @@ void CLIViewer::showArgumentsHelp(const meta::CommandMeta& cmdMeta)
 	if (cmdMeta.begin() == cmdMeta.end())
 		return;
 
-	*m_os << "\nARGUMENTS:\n";
+	*m_os << "\nARGUMENTS:\n\n";
+
 	for (const auto& argMeta : cmdMeta)
-	{
-		std::string aliases = " ";
-		for (const auto& alias : argMeta.getNameAliases())
-			aliases += alias + " ";
-
-		std::string typeName = (*argMeta.begin())->typeName();
-
-		*m_os << std::left << std::setw(20) << aliases
-			<< argMeta.getDescription() << " (" << typeName << ")\n";
-
-		*m_os << std::string(20, ' ')
-			<< (argMeta.isRequired() ? "required" : "optional");
-
-		if (auto defaultValue = argMeta.getDefaultValue())
-			*m_os << "  [default: " << CLIFormatter::toString(*defaultValue) << "]";
-
-		*m_os << '\n';
-
-		const auto& notes = argMeta.getNotes();
-		for (const auto& note : notes)
-			*m_os << std::string(20, ' ') << " - " << note << '\n';
-
-		*m_os << '\n';
-	}
+		printArgument(*m_os, argMeta, 0);
 }
 
 void CLIViewer::showCommandDescription(const meta::CommandMeta& cmdMeta)

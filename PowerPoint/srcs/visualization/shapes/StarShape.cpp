@@ -21,11 +21,9 @@ void StarShape::draw(IRenderer& renderer) const
     float y = m_shapeData.geometry.y;
     float w = m_shapeData.geometry.width;
     float h = m_shapeData.geometry.height;
-    const auto& adj = m_shapeData.adjustments;
 
-    float innerRatio = (adj.size() > 0) ? adj[0] : kDefaultInnerRatio;
-    int numPoints = (adj.size() > 1) ? static_cast<int>(adj[1]) : kDefaultNumPoints;
-    if (numPoints < kMinStarPoints) numPoints = kMinStarPoints;
+    float innerRatio = m_shapeData.adjustments[0];
+    int numPoints = m_shapeData.adjustments[1];
 
     float centerX = x + w / 2.0f;
     float centerY = y + h / 2.0f;
