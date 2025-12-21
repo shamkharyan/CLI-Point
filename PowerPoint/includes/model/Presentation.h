@@ -46,8 +46,5 @@ namespace ppt::model
 	private:
 		std::string m_name;
 		container m_slides;
-
-		std::size_t m_width;
-		std::size_t m_height;
 	};
 }

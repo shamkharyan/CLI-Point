@@ -58,18 +58,16 @@ void JSONSerializer::serializeShape(json& jShape, const model::ShapeData& shape)
 	//if (shape.style.fillType == model::utils::FillType::ImageTexture)
 	//	jShape["style"]["imagePath"] = shape.style.imagePath;
 
-	//// Text data
-	//if (shape.text.has_value())
-	//{
-	//	const auto& textData = shape.text.value();
-	//	jShape["text"] = json::object();
-	//	jShape["text"]["content"] = textData.content;
-	//	jShape["text"]["fontName"] = textData.fontName;
-	//	jShape["text"]["fontSize"] = textData.fontSize;
-	//	serializeColor(jShape["text"]["textColor"], textData.textColor);
-	//	jShape["text"]["hAlign"] = static_cast<int>(textData.hAlign);
-	//	jShape["text"]["vAlign"] = static_cast<int>(textData.vAlign);
-	//}
+	// Text data
+	if (!shape.text.empty())
+	{
+		jShape["text"] = shape.text;
+		jShape["textStyle"]["fontName"] = shape.textStyle.fontName;
+		serializeColor(jShape["textStyle"]["fontColor"], shape.textStyle.fontColor);
+		jShape["textStyle"]["fontSize"] = shape.textStyle.fontSize;
+		/*jShape["textStyle"]["hAlign"] = static_cast<int>(textData.hAlign);
+		jShape["textStyle"]["vAlign"] = static_cast<int>(textData.vAlign);*/
+	}
 }
 
 void JSONSerializer::serializeSlideLayer(json& jSlideLayer, const model::SlideLayer& slideLayer) const

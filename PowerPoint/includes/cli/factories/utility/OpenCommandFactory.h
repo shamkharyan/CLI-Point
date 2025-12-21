@@ -13,7 +13,7 @@ namespace ppt::cli::factories
 		OpenCommandFactory(model::Presentation& presentation, const ser::DeserializerRegistry& registry);
 		std::unique_ptr<cmds::ICommand> createCommand(const ParsedRawCommand& args) override;
 	private:
-		model::Presentation m_presentation;
+		model::Presentation& m_presentation;
 		const ser::DeserializerRegistry& m_registry;
 	};
 }

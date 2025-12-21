@@ -5,8 +5,6 @@
 #include "model/Presentation.h"
 #include "model/ShapeData.h"
 #include "core/ActionManager.h"
-#include "model/utils/GeometryData.h"
-#include "model/utils/StyleData.h"
 
 namespace ppt::cli::cmds
 {

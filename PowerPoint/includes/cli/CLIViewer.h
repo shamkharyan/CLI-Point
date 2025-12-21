@@ -29,7 +29,6 @@ namespace ppt::cli
 		void showHelp(const CommandRegistry& registry);
 		void showCommandHelp(const meta::CommandMeta& cmdMeta);
 
-		//CLIVisualizer& getVisualizer();
 		std::istream* getIStream();
 		std::ostream* getOStream();
 	private:

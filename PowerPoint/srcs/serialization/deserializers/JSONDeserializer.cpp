@@ -53,21 +53,19 @@ void JSONDeserializer::deserializeShape(const json& jShape, model::ShapeData& sh
 	//if (shape.style.fillType == model::utils::FillType::ImageTexture)
 	//	shape.style.imagePath = jShape.at("style").at("imagePath").get<std::string>();
 
-	//// Text data
-	//if (jShape.contains("text"))
-	//{
-	//	shape.text = model::utils::TextData();
-	//	const auto& jText = jShape.at("text");
-	//	shape.text->content = jText.at("content").get<std::string>();
-	//	shape.text->fontName = jText.at("fontName").get<std::string>();
-	//	shape.text->fontSize = jText.at("fontSize").get<float>();
-	//	deserializeColor(jText.at("textColor"), shape.text->textColor);
-	//	
-	//	shape.text->hAlign = static_cast<model::utils::TextData::HorizontalAlignment>(
-	//		jText.at("hAlign").get<int>());
-	//	shape.text->vAlign = static_cast<model::utils::TextData::VerticalAlignment>(
-	//		jText.at("vAlign").get<int>());
-	//}
+	// Text data
+	if (jShape.contains("text"))
+	{
+		shape.text = jShape.at("text");
+		shape.textStyle.fontName = jShape["textStyle"].at("fontName").get<std::string>();
+		deserializeColor(jShape["textStyle"].at("fontColor"), shape.textStyle.fontColor);
+		shape.textStyle.fontSize = jShape["textStyle"].at("fontSize").get<float>();
+		
+		/*shape.text->hAlign = static_cast<model::utils::TextData::HorizontalAlignment>(
+			jText.at("hAlign").get<int>());
+		shape.text->vAlign = static_cast<model::utils::TextData::VerticalAlignment>(
+			jText.at("vAlign").get<int>());*/
+	}
 }
 
 void JSONDeserializer::deserializeSlideLayer(const json& jSlideLayer, model::SlideLayer& slideLayer) const
