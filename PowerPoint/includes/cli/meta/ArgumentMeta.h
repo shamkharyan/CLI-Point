@@ -14,6 +14,7 @@ namespace ppt::cli::meta
 	{
 	public:
 		using container = std::vector<std::shared_ptr<IArgValueParser>>;
+		using notes_container = std::vector<std::string>;
 		using iterator = container::iterator;
 		using const_iterator = container::const_iterator;
 
@@ -36,6 +37,9 @@ namespace ppt::cli::meta
 		std::optional<ArgValue> getDefaultValue() const noexcept { return m_defaultValue; }
 		bool isRequired() const noexcept { return m_isRequired; }
 
+		void addNote(const std::string& note) { m_notes.push_back(note); }
+		const std::vector<std::string>& getNotes() const { return m_notes; }
+
 		iterator begin() noexcept { return m_argValueFactories.begin(); }
 		iterator end() noexcept { return m_argValueFactories.end(); }
 
@@ -52,6 +56,8 @@ namespace ppt::cli::meta
 		std::string m_canonicalName;
 		std::string m_description;
 		std::vector<std::string> m_nameAliases;
+
+		notes_container m_notes;
 		container m_argValueFactories;
 		bool m_isRequired;
 		std::optional<ArgValue> m_defaultValue;

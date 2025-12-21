@@ -24,10 +24,10 @@ void JSONSerializer::serializeShape(json& jShape, const model::ShapeData& shape)
 
 	// Geometry
 	jShape["geometry"] = json::object();
-	jShape["geometry"]["x"] = shape.geometry.topLeft.x;
-	jShape["geometry"]["y"] = shape.geometry.topLeft.y;
-	jShape["geometry"]["width"] = shape.geometry.size.x;
-	jShape["geometry"]["height"] = shape.geometry.size.y;
+	jShape["geometry"]["x"] = shape.geometry.x;
+	jShape["geometry"]["y"] = shape.geometry.y;
+	jShape["geometry"]["width"] = shape.geometry.width;
+	jShape["geometry"]["height"] = shape.geometry.height;
 
 	// Basic style
 	jShape["style"] = json::object();

@@ -106,7 +106,7 @@ Token Tokenizer::getToken()
             break;
         }
 
-        if (!std::isalnum(static_cast<unsigned char>(c)) && c != '_' && c != '-' && c != '#')
+        if (!std::isalnum(static_cast<unsigned char>(c)) && c != '_' && c != '-' && c != '#' && c != '.')
             return errorReturn();
 
         token.push_back(c);

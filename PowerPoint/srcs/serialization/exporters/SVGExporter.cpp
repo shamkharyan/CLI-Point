@@ -17,13 +17,14 @@ void SVGExporter::exportSlide(const model::Slide& slide, const std::string& file
 	SVGRenderer renderer(1280, 720);
 	renderer.beginDraw();
 
+	renderer.clear(slide.getColor());
 	for (const auto& layer : slide)
 	{
 		for (const auto& shapeData : *layer)
 		{
-			if (auto factory = m_registry.getFactory(shapeData->type))
+			if (auto meta = m_registry.getShapeMeta(shapeData->type))
 			{
-				auto shape = factory->create(*shapeData);
+				auto shape = meta->getFactory()->create(*shapeData);
 				shape->draw(renderer);
 			}
 		}

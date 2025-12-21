@@ -6,7 +6,7 @@
 #include "serialization/serializers/SerializerRegistry.h"
 #include "serialization/deserializers/DeserializerRegistry.h"
 #include "serialization/exporters/ExporterRegistry.h"
-#include "visualization/ShapeRegistry.h"
+#include "visualization/meta/ShapeRegistry.h"
 #include "core/ActionManager.h"
 
 namespace ppt

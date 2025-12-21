@@ -4,7 +4,6 @@
 
 #include "IDeserializer.h"
 #include "model/utils/Color.h"
-#include "model/utils/Coord.h"
 #include "model/SlideLayer.h"
 #include "model/Slide.h"
 #include "model/ShapeData.h"

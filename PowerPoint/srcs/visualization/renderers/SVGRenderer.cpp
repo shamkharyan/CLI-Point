@@ -23,6 +23,22 @@ namespace
 
 		return ss.str();
 	}
+
+	std::string escapeXML(const std::string& data) {
+		std::string buffer;
+		buffer.reserve(data.size());
+		for (size_t pos = 0; pos != data.size(); ++pos) {
+			switch (data[pos]) {
+			case '&':  buffer.append("&amp;");       break;
+			case '\"': buffer.append("&quot;");      break;
+			case '\'': buffer.append("&apos;");      break;
+			case '<':  buffer.append("&lt;");        break;
+			case '>':  buffer.append("&gt;");        break;
+			default:   buffer.append(1, data[pos]); break;
+			}
+		}
+		return buffer;
+	}
 }
 
 SVGRenderer::SVGRenderer(float width, float height) : m_width(width), m_height(height) {}
@@ -95,16 +111,31 @@ void SVGRenderer::drawPath(const Path& path, const Pen& pen, const Brush& brush)
 
 void SVGRenderer::drawText(
 	const std::string& text,
-	float x,
-	float y,
+	const model::utils::GeometryData& geometry,
 	const model::utils::TextStyle& style)
 {
-	m_ss << "  <text x=\"" << x << "\" y=\"" << y << "\" "
+	float x = geometry.x + (geometry.width / 2.0f);
+	float y = geometry.y + (geometry.height / 2.0f);
+
+	m_ss << "  <text "
+		<< "x=\"" << x << "\" "
+		<< "y=\"" << y << "\" "
 		<< "font-family=\"" << style.fontName << "\" "
 		<< "font-size=\"" << style.fontSize << "\" "
-		<< "fill=\"" << colorToSVG(style.fontColor) << "\">"
-		<< text
+		<< "fill=\"" << colorToSVG(style.fontColor) << "\" "
+		<< "text-anchor=\"middle\" "
+		<< "dominant-baseline=\"central\">"
+		<< escapeXML(text) 
 		<< "</text>\n";
+}
+
+void SVGRenderer::clear(const model::utils::Color& color)
+{
+	m_ss << "  <rect "
+		<< "width=\"" << m_width << "\" "
+		<< "height=\"" << m_height << "\" "
+		<< "fill=\"" << colorToSVG(color) << "\" "
+		<< "stroke=\"none\" />\n";
 }
 
 std::string SVGRenderer::str() const

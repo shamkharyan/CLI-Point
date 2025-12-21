@@ -107,18 +107,27 @@ void CLIViewer::showArgumentsHelp(const meta::CommandMeta& cmdMeta)
 	*m_os << "\nARGUMENTS:\n";
 	for (const auto& argMeta : cmdMeta)
 	{
-		std::string aliases;
+		std::string aliases = " ";
 		for (const auto& alias : argMeta.getNameAliases())
 			aliases += alias + " ";
 
-		*m_os << " " << std::setw(s_columnWidth) << std::left << aliases << argMeta.getDescription() << '\n';
-		*m_os << " " << std::string(s_columnWidth, ' ') <<
-			std::setw(s_columnWidth / 2) << std::left << (*argMeta.begin())->typeName();
+		std::string typeName = (*argMeta.begin())->typeName();
 
-		*m_os << (argMeta.isRequired() ? " (required) " : " (optional) ");
-		auto defaultValue = argMeta.getDefaultValue();
-		*m_os << (defaultValue ?
-			" [default: " + CLIFormatter::toString(*defaultValue) + "]" : "");
+		*m_os << std::left << std::setw(20) << aliases
+			<< argMeta.getDescription() << " (" << typeName << ")\n";
+
+		*m_os << std::string(20, ' ')
+			<< (argMeta.isRequired() ? "required" : "optional");
+
+		if (auto defaultValue = argMeta.getDefaultValue())
+			*m_os << "  [default: " << CLIFormatter::toString(*defaultValue) << "]";
+
+		*m_os << '\n';
+
+		const auto& notes = argMeta.getNotes();
+		for (const auto& note : notes)
+			*m_os << std::string(20, ' ') << " - " << note << '\n';
+
 		*m_os << '\n';
 	}
 }

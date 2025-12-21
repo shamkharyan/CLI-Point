@@ -1,16 +1,23 @@
 #pragma once
 
-#include "Coord.h"
-
 namespace ppt::model::utils
 {
 	struct GeometryData
 	{
-		Coord topLeft;
-		Coord size;
+		float x;
+		float y;
+		float width;
+		float height;
 
-		GeometryData(Coord topLeft = {0, 0}, Coord size = {0, 0})
-			: topLeft(topLeft), size(size)
+		GeometryData(
+			float x = 0,
+			float y = 0,
+			float width = 0,
+			float height = 0) :
+			x(x),
+			y(y),
+			width(width),
+			height(height)
 		{
 		}
 	};

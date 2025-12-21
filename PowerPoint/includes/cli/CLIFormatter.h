@@ -3,7 +3,6 @@
 #include <string>
 
 #include "model/utils/Color.h"
-#include "model/utils/Coord.h"
 #include "cli/parsing/parsers/ArgValue.h"
 
 namespace ppt::cli
@@ -17,7 +16,7 @@ namespace ppt::cli
 		static std::string toString(bool value);
 		static std::string toString(std::size_t value);
 		static std::string toString(float value);
-		static std::string toString(model::utils::Coord coord);
+		static std::string toString(const std::vector<float>& value);
 		static std::string toHexColorString(model::utils::Color color);
 		static std::string toRGBColorString(model::utils::Color color);
 	};

@@ -4,7 +4,7 @@
 #include "model/utils/StyleData.h"
 #include "model/utils/TextStyle.h"
 
-#include <optional>
+#include <vector>
 
 namespace ppt::model
 {
@@ -16,5 +16,7 @@ namespace ppt::model
 		utils::StyleData style;
 		std::string text;
 		utils::TextStyle textStyle;
+
+		std::vector<float> adjustments;
 	};
 }

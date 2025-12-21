@@ -4,10 +4,10 @@
 
 namespace ppt::vis
 {
-	class TriangleShape : public IShape
+	class StarShape : public IShape
 	{
 	public:
-		explicit TriangleShape(const model::ShapeData& shapeData);
+		explicit StarShape(const model::ShapeData& shapeData);
 
 		void draw(IRenderer& renderer) const override;
 	private:

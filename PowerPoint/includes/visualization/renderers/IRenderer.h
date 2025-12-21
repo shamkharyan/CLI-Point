@@ -9,6 +9,7 @@
 #include "visualization/utils/Brush.h"
 
 #include "model/utils/TextStyle.h"
+#include "model/utils/GeometryData.h"
 
 namespace ppt::vis
 {
@@ -24,9 +25,10 @@ namespace ppt::vis
 
         virtual void drawText(
             const std::string& text,
-            float x,
-            float y,
+            const model::utils::GeometryData& geometry,
             const model::utils::TextStyle& style
         ) = 0;
+
+        virtual void clear(const model::utils::Color& color) = 0;
     };
 }

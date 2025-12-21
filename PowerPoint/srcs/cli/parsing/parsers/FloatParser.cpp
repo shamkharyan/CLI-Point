@@ -2,21 +2,34 @@
 
 #include <stdexcept>
 #include <string>
+#include <cmath>
 
 using namespace ppt::cli;
 
 std::optional<ArgValue> FloatParser::tryCreate(const std::vector<std::string>& argValue) const
 {
-	if (argValue.size() != 1)
-		return std::nullopt;
+    if (argValue.size() != 1)
+        return std::nullopt;
 
-	try
-	{
-		return ArgValue(std::stof(argValue[0]));
-	}
-	catch (...) {}
+    const std::string& s = argValue[0];
+    std::size_t pos = 0;
 
-	return std::nullopt;
+    try
+    {
+        float value = std::stof(s, &pos);
+
+        if (pos != s.size())
+            return std::nullopt;
+
+        if (!std::isfinite(value))
+            return std::nullopt;
+
+        return ArgValue(value);
+    }
+    catch (...)
+    {
+        return std::nullopt;
+    }
 }
 
 std::string FloatParser::typeName() const

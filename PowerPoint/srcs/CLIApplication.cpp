@@ -9,9 +9,10 @@
 #include "cli/parsing/parsers/BoolParser.h"
 #include "cli/parsing/parsers/SizeTParser.h"
 #include "cli/parsing/parsers/FloatParser.h"
+#include "cli/parsing/parsers/FloatVecParser.h"
 #include "cli/parsing/parsers/ColorParser.h"
 #include "cli/parsing/parsers/StringParser.h"
-#include "cli/parsing/parsers/CoordParser.h"
+#include "cli/parsing/parsers/ShapeTypeParser.h"
 
 #include "cli/factories/utility/ExitCommandFactory.h"
 #include "cli/factories/slide/AddSlideCommandFactory.h"
@@ -38,6 +39,13 @@
 #include "visualization/factories/RectangleShapeFactory.h"
 #include "visualization/factories/EllipseShapeFactory.h"
 #include "visualization/factories/TriangleShapeFactory.h"
+#include "visualization/factories/StarShapeFactory.h"
+#include "visualization/factories/ParallelogramShapeFactory.h"
+#include "visualization/factories/TrapezoidShapeFactory.h"
+
+#include "visualization/meta/AdjustmentMeta.h"
+#include "visualization/meta/ShapeMeta.h"
+#include "visualization/meta/ShapeRegistry.h"
 
 #include <iostream>
 #include <fstream>
@@ -87,11 +95,11 @@ CLIApplication::CLIApplication() :
 	m_viewer(m_presentation, &std::cin, &std::cout),
 	m_controller(m_viewer, m_registry, m_presentation)
 {
-	registerCommands();
+	registerShapes();
 	registerSerializers();
 	registerDeserializers();
 	registerExporters();
-	registerShapes();
+	registerCommands();
 }
 
 void CLIApplication::registerCommands()
@@ -472,37 +480,47 @@ void CLIApplication::registerCommands()
 		typeArgMeta.registerNameAlias("-t");
 		typeArgMeta.registerNameAlias("--type");
 
-		typeArgMeta.registerArgValueFactory(std::make_shared<cli::StringParser>());
+		typeArgMeta.registerArgValueFactory(std::make_shared<cli::ShapeTypeParser>(m_shapeRegistry));
 
 		addShapeMeta.registerArgumentMeta(std::move(typeArgMeta));
 
-		// position argument (x and y)
-		meta::ArgumentMeta positionArgMeta(
-			"position",
-			"Position of the shape as 'x,y' coordinates",
+		// x coord
+		meta::ArgumentMeta xArgMeta(
+			"x", 
+			"X coordinate of the top-left corner", 
 			true
 		);
 
-		positionArgMeta.registerNameAlias("-p");
-		positionArgMeta.registerNameAlias("--position");
+		xArgMeta.registerNameAlias("-x");
+		xArgMeta.registerNameAlias("--x");
+		xArgMeta.registerArgValueFactory(std::make_shared<cli::FloatParser>());
+		addShapeMeta.registerArgumentMeta(std::move(xArgMeta));
 
-		positionArgMeta.registerArgValueFactory(std::make_shared<cli::CoordParser>());
-
-		addShapeMeta.registerArgumentMeta(std::move(positionArgMeta));
-
-		// size argument (width and height)
-		meta::ArgumentMeta sizeArgMeta(
-			"size",
-			"Size of the shape as 'width,height'",
+		// y coord
+		meta::ArgumentMeta yArgMeta(
+			"y", 
+			"Y coordinate of the top-left corner",
 			true
 		);
 
-		sizeArgMeta.registerNameAlias("-s");
-		sizeArgMeta.registerNameAlias("--size");
+		yArgMeta.registerNameAlias("-y");
+		yArgMeta.registerNameAlias("--y");
+		yArgMeta.registerArgValueFactory(std::make_shared<cli::FloatParser>());
+		addShapeMeta.registerArgumentMeta(std::move(yArgMeta));
 
-		sizeArgMeta.registerArgValueFactory(std::make_shared<cli::CoordParser>());
+		// width
+		meta::ArgumentMeta wArgMeta("width", "Width of the shape (positive)", true);
+		wArgMeta.registerNameAlias("-w");
+		wArgMeta.registerNameAlias("--width");
+		wArgMeta.registerArgValueFactory(std::make_shared<cli::FloatParser>());
+		addShapeMeta.registerArgumentMeta(std::move(wArgMeta));
 
-		addShapeMeta.registerArgumentMeta(std::move(sizeArgMeta));
+		// height
+		meta::ArgumentMeta hArgMeta("height", "Height of the shape (positive)", true);
+		hArgMeta.registerNameAlias("-h");
+		hArgMeta.registerNameAlias("--height");
+		hArgMeta.registerArgValueFactory(std::make_shared<cli::FloatParser>());
+		addShapeMeta.registerArgumentMeta(std::move(hArgMeta));
 
 		// fill-color argument (optional)
 		meta::ArgumentMeta fillColorArgMeta(
@@ -598,6 +616,46 @@ void CLIApplication::registerCommands()
 		fontColorArgMeta.registerNameAlias("--font-color");
 		fontColorArgMeta.registerArgValueFactory(std::make_shared<cli::ColorParser>());
 		addShapeMeta.registerArgumentMeta(std::move(fontColorArgMeta));
+
+
+		// adjustments
+		meta::ArgumentMeta adjustmentsMeta(
+			"adjustments",
+			"Adjustments for the shape",
+			false
+		);
+
+		adjustmentsMeta.registerNameAlias("--adjustments");
+		adjustmentsMeta.registerArgValueFactory(std::make_shared<cli::FloatVecParser>());
+
+		for (auto it = m_shapeRegistry.begin(); it != m_shapeRegistry.end(); ++it)
+		{
+			const auto& shapeMeta = *it;
+
+			if (shapeMeta.begin() == shapeMeta.end())
+			{
+				continue;
+			}
+
+			// Заголовок для конкретной фигуры
+			std::string headNote = shapeMeta.getName() + ":";
+			adjustmentsMeta.addNote(headNote);
+
+			// Проходим по каждому adjustment этой фигуры
+			for (auto adjIt = shapeMeta.begin(); adjIt != shapeMeta.end(); ++adjIt)
+			{
+				const auto& adj = *adjIt;
+
+				// Форматируем строку: имя, описание и дефолт
+				// Пример: "  - inner-ratio: Ratio of inner radius (default: 0.5)"
+				std::string adjNote = "  - " + adj.getName() + ": " + adj.getDescription();
+				adjNote += " (default: " + std::to_string(adj.getDefaultValue()) + ")";
+
+				adjustmentsMeta.addNote(adjNote);
+			}
+		}
+
+		addShapeMeta.registerArgumentMeta(std::move(adjustmentsMeta));
 
 		m_registry.registerCommandMeta(std::move(addShapeMeta));
 	}
@@ -770,7 +828,36 @@ void CLIApplication::registerExporters()
 
 void CLIApplication::registerShapes()
 {
-	m_shapeRegistry.registerFactory("rectangle", std::make_shared<vis::RectangleShapeFactory>());
-	m_shapeRegistry.registerFactory("triangle", std::make_shared<vis::TriangleShapeFactory>());
-	m_shapeRegistry.registerFactory("ellipse", std::make_shared<vis::EllipseShapeFactory>());
+	// triangle
+	{
+		constexpr float k60deg = 1.0472f;
+		constexpr float kPi = 3.14f;
+
+		vis::ShapeMeta triangleMeta("triangle", std::make_shared<vis::TriangleShapeFactory>());
+		triangleMeta.registerAdjustmentMeta({ "top-angle", "Top angle in radians", k60deg, 0.1f, kPi });
+		m_shapeRegistry.registerShapeMeta(std::move(triangleMeta));
+	}
+
+	// star
+	{
+		vis::ShapeMeta starMeta("star", std::make_shared<vis::StarShapeFactory>());
+		starMeta.registerAdjustmentMeta({ "inner-ratio", "Ratio of inner to outer radius", 0.5f, 0.05f, 0.95f });
+		starMeta.registerAdjustmentMeta({ "points", "Number of star points", 5.0f, 3.0f, 100.0f });
+		m_shapeRegistry.registerShapeMeta(std::move(starMeta));
+	}
+
+	// parallelogram
+	{
+		vis::ShapeMeta paraMeta("parallelogram", std::make_shared<vis::ParallelogramShapeFactory>());
+		// Сдвиг от -1.0 до 1.0 (в долях от ширины)
+		paraMeta.registerAdjustmentMeta({ "skew", "Horizontal skew ratio", 0.3f, -1.0f, 1.0f });
+		m_shapeRegistry.registerShapeMeta(std::move(paraMeta));
+	}
+
+	// trapezoid
+	{
+		vis::ShapeMeta trapMeta("trapezoid", std::make_shared<vis::TrapezoidShapeFactory>());
+		trapMeta.registerAdjustmentMeta({ "top-width-ratio", "Top width ratio", 0.5f, 0.0f, 1.0f });
+		m_shapeRegistry.registerShapeMeta(std::move(trapMeta));
+	}
 }

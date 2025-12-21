@@ -2,51 +2,50 @@
 #include "utils/factories/ColorNameFactory.h"
 
 #include <stdexcept>
+#include <array>
 
 using namespace ppt::utils::fact;
 using namespace ppt::cli;
 
-namespace
-{
-	std::uint8_t createUInt8T(const std::string& rawValue)
-	{
-		auto value = std::stoul(rawValue);
-		if (value > 255)
-			throw std::out_of_range("Value out of range for uint8_t: " + rawValue);
-		return static_cast<std::uint8_t>(value);
-	}
-}
-
 std::optional<ArgValue> ColorParser::tryCreate(const std::vector<std::string>& argValue) const
 {
-	if (argValue.size() == 1)
-	{
-		try
-		{
-			auto color = ColorNameFactory::create(argValue[0]);
-			return ArgValue(color);
-		}
-		catch (...) {}
-	}
-	if (argValue.size() == 3 || argValue.size() == 4)
-	{
-		try
-		{
-			auto r = createUInt8T(argValue[0]);
-			auto g = createUInt8T(argValue[1]);
-			auto b = createUInt8T(argValue[2]);
-			if (argValue.size() == 4)
-			{
-				auto a = createUInt8T(argValue[3]);
-				return ArgValue(model::utils::Color(r, g, b, a));
-			}
-			return ArgValue(model::utils::Color(r, g, b));
-		}
-		catch (...) {}
-	}
+    if (argValue.size() == 1)
+    {
+        try
+        {
+            auto color = ColorNameFactory::create(argValue[0]);
+            return ArgValue(color);
+        }
+        catch (const std::exception&)
+        {
+            return std::nullopt;
+        }
+    }
 
-	return std::nullopt;
+    if (argValue.size() == 3 || argValue.size() == 4)
+    {
+        try
+        {
+            std::array<std::uint8_t, 4> rgba = { 0, 0, 0, 255 };
+            for (size_t i = 0; i < argValue.size(); ++i)
+            {
+                std::size_t pos = 0;
+                unsigned long value = std::stoul(argValue[i], &pos);
+                if (pos != argValue[i].size() || value > 255)
+                    return std::nullopt;
+                rgba[i] = static_cast<std::uint8_t>(value);
+            }
+            return ArgValue(model::utils::Color(rgba[0], rgba[1], rgba[2], rgba[3]));
+        }
+        catch (...)
+        {
+            return std::nullopt;
+        }
+    }
+
+    return std::nullopt;
 }
+
 
 std::string ColorParser::typeName() const
 {

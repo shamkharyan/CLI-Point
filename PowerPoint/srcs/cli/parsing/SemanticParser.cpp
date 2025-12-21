@@ -48,7 +48,7 @@ ParsedRawCommand SemanticParser::parseRawCommand(const RawCommand& rcmd)
 			if (argMeta.isRequired())
 			{
 				throw SemanticException(
-					"Required argument '" + argMeta.getNameAliases()[0] +
+					"Required argument '" + argMeta.getNameAliases().front() +
 					"' is missing for command '" + rcmd.name + "'");
 			}
 			if (auto value = argMeta.getDefaultValue())

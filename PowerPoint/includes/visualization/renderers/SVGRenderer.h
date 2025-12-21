@@ -18,10 +18,11 @@ namespace ppt::vis
 
 		void drawText(
 			const std::string& text,
-			float x,
-			float y,
+			const model::utils::GeometryData& geometry,
 			const model::utils::TextStyle& style
 		) override;
+
+		void clear(const model::utils::Color& color) override;
 
 		std::string str() const;
 

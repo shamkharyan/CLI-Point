@@ -3,7 +3,7 @@
 #include "cli/factories/ICommandFactory.h"
 #include "core/ActionManager.h"
 #include "model/Presentation.h"
-#include "visualization/ShapeRegistry.h"
+#include "visualization/meta/ShapeRegistry.h"
 
 namespace ppt::cli::factories
 {
@@ -17,6 +17,8 @@ namespace ppt::cli::factories
 		);
 
 		std::unique_ptr<cmds::ICommand> createCommand(const ParsedRawCommand& args) override;
+	private:
+		void prepareAdjustments(const std::string& type, std::vector<float>& adjustments);
 	private:
 		core::ActionManager& m_actionManager;
 		model::Presentation& m_presentation;

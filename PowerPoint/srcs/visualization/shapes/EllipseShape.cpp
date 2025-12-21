@@ -6,10 +6,10 @@ EllipseShape::EllipseShape(const model::ShapeData& shapeData) : m_shapeData(shap
 
 void EllipseShape::draw(IRenderer& renderer) const
 {
-    float x = m_shapeData.geometry.topLeft.x;
-    float y = m_shapeData.geometry.topLeft.y;
-    float w = m_shapeData.geometry.size.x;
-    float h = m_shapeData.geometry.size.y;
+    float x = m_shapeData.geometry.x;
+    float y = m_shapeData.geometry.y;
+    float w = m_shapeData.geometry.width;
+    float h = m_shapeData.geometry.height;
 
     float cx = x + w / 2.0f;
     float cy = y + h / 2.0f;
@@ -62,9 +62,5 @@ void EllipseShape::draw(IRenderer& renderer) const
     renderer.drawPath(path, pen, brush);
 
     if (!m_shapeData.text.empty())
-    {
-        float textX = cx;
-        float textY = cy;
-        renderer.drawText(m_shapeData.text, textX, textY, m_shapeData.textStyle);
-    }
+        renderer.drawText(m_shapeData.text, m_shapeData.geometry, m_shapeData.textStyle);
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IExporter.h"
-#include "visualization/ShapeRegistry.h"
+#include "visualization/meta/ShapeRegistry.h"
 
 namespace ppt::ser
 {

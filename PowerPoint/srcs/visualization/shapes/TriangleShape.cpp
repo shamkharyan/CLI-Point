@@ -6,17 +6,17 @@ TriangleShape::TriangleShape(const model::ShapeData& shapeData) : m_shapeData(sh
 
 void TriangleShape::draw(IRenderer& renderer) const
 {
-    float x = m_shapeData.geometry.topLeft.x;
-    float y = m_shapeData.geometry.topLeft.y;
-    float width = m_shapeData.geometry.size.x;
-    float height = m_shapeData.geometry.size.y;
+    float x = m_shapeData.geometry.x;
+    float y = m_shapeData.geometry.y;
+    float w = m_shapeData.geometry.width;
+    float h = m_shapeData.geometry.height;
 
-    float x0 = x + width / 2.0f;
+    float x0 = x + w / 2.0f;
     float y0 = y;
     float x1 = x;                 
-    float y1 = y + height;
-    float x2 = x + width;         
-    float y2 = y + height;
+    float y1 = y + h;
+    float x2 = x + w;         
+    float y2 = y + h;
 
     Path path;
     path.moveTo(x0, y0);
@@ -30,10 +30,5 @@ void TriangleShape::draw(IRenderer& renderer) const
     renderer.drawPath(path, pen, brush);
 
     if (!m_shapeData.text.empty())
-    {
-        float textX = x + width / 2.0f;
-        float textY = y + height / 2.0f;
-
-        renderer.drawText(m_shapeData.text, textX, textY, m_shapeData.textStyle);
-    }
+        renderer.drawText(m_shapeData.text, m_shapeData.geometry, m_shapeData.textStyle);
 }

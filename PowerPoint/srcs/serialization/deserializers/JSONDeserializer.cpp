@@ -19,10 +19,10 @@ void JSONDeserializer::deserializeShape(const json& jShape, model::ShapeData& sh
 	shape.type = jShape.at("type").get<std::string>();
 
 	// Geometry
-	shape.geometry.topLeft.x = jShape.at("geometry").at("x").get<int>();
-	shape.geometry.topLeft.y = jShape.at("geometry").at("y").get<int>();
-	shape.geometry.size.x = jShape.at("geometry").at("width").get<int>();
-	shape.geometry.size.y = jShape.at("geometry").at("height").get<int>();
+	shape.geometry.x = jShape.at("geometry").at("x").get<float>();
+	shape.geometry.y = jShape.at("geometry").at("y").get<float>();
+	shape.geometry.width = jShape.at("geometry").at("width").get<float>();
+	shape.geometry.height = jShape.at("geometry").at("height").get<float>();
 
 	// Basic style
 	//shape.style.fillType = static_cast<model::utils::FillType>(jShape.at("style").at("fillType").get<int>());
