@@ -238,8 +238,6 @@
     <ClInclude Include="includes\core\actions\slide\EditSlideAction.h" />
     <ClInclude Include="includes\core\actions\slide\RemoveLayerAction.h" />
     <ClInclude Include="includes\core\actions\slide\RemoveSlideAction.h" />
-    <ClInclude Include="includes\core\actions\utils\AddShapeParams.h" />
-    <ClInclude Include="includes\core\errors\EmptyPresentationException.h" />
     <ClInclude Include="includes\core\IController.h" />
     <ClInclude Include="includes\libs\json.hpp" />
     <ClInclude Include="includes\model\SlideLayer.h" />
@@ -258,7 +256,6 @@
     <ClInclude Include="includes\cli\meta\CommandRegistry.h" />
     <ClInclude Include="includes\cli\CLIController.h" />
     <ClInclude Include="includes\cli\factories\utility\ExitCommandFactory.h" />
-    <ClInclude Include="includes\core\errors\MissingPresentationException.h" />
     <ClInclude Include="includes\model\utils\Color.h" />
     <ClInclude Include="includes\model\Presentation.h" />
     <ClInclude Include="includes\model\ShapeData.h" />
