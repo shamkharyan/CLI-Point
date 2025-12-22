@@ -23,7 +23,7 @@ void StarShape::draw(IRenderer& renderer) const
     float h = m_shapeData.geometry.height;
 
     float innerRatio = m_shapeData.adjustments[0];
-    int numPoints = m_shapeData.adjustments[1];
+    int numPoints = static_cast<int>(m_shapeData.adjustments[1]);
 
     float centerX = x + w / 2.0f;
     float centerY = y + h / 2.0f;

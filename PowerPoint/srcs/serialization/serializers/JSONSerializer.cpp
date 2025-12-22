@@ -34,6 +34,7 @@ void JSONSerializer::serializeShape(json& jShape, const model::ShapeData& shape)
 	//jShape["style"]["fillType"] = static_cast<int>(shape.style.fillType);
 	serializeColor(jShape["style"]["outlineColor"], shape.style.outlineColor);
 	jShape["style"]["outlineWidth"] = shape.style.outlineWidth;
+	serializeColor(jShape["style"]["fillColor"], shape.style.fillColor);
 
 	if (!shape.adjustments.empty())
 	{

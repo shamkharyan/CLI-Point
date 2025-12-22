@@ -55,7 +55,6 @@ using namespace ppt::cli;
 
 void CLIApplication::parseArguments(int argc, char* argv[] = nullptr)
 {
-	std::cout << argc << '\n';
 	for (int i = 1; i < argc; ++i)
 	{
 		std::string arg = argv[i];

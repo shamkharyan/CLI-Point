@@ -28,6 +28,7 @@ void JSONDeserializer::deserializeShape(const json& jShape, model::ShapeData& sh
 	//shape.style.fillType = static_cast<model::utils::FillType>(jShape.at("style").at("fillType").get<int>());
 	deserializeColor(jShape.at("style").at("outlineColor"), shape.style.outlineColor);
 	shape.style.outlineWidth = jShape.at("style").at("outlineWidth").get<float>();
+	deserializeColor(jShape.at("style").at("fillColor"), shape.style.fillColor);
 
 	// Solid style
 	//if (shape.style.fillType == model::utils::FillType::SolidColor)
@@ -68,9 +69,9 @@ void JSONDeserializer::deserializeShape(const json& jShape, model::ShapeData& sh
 	if (jShape.contains("text"))
 	{
 		shape.text = jShape.at("text");
-		shape.textStyle.fontName = jShape["textStyle"].at("fontName").get<std::string>();
-		deserializeColor(jShape["textStyle"].at("fontColor"), shape.textStyle.fontColor);
-		shape.textStyle.fontSize = jShape["textStyle"].at("fontSize").get<float>();
+		shape.textStyle.fontName = jShape.at("textStyle").at("fontName").get<std::string>();
+		deserializeColor(jShape.at("textStyle").at("fontColor"), shape.textStyle.fontColor);
+		shape.textStyle.fontSize = jShape.at("textStyle").at("fontSize").get<float>();
 		
 		/*shape.text->hAlign = static_cast<model::utils::TextData::HorizontalAlignment>(
 			jText.at("hAlign").get<int>());
@@ -130,5 +131,7 @@ void JSONDeserializer::deserialize(model::Presentation& presentation, const std:
 	inputFile >> jPresentation;
 
 	// Deserialize presentation
-	deserializePresentation(jPresentation, presentation);
+	model::Presentation temp;
+	deserializePresentation(jPresentation, temp);
+	presentation = temp;
 }

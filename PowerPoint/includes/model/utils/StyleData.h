@@ -23,7 +23,7 @@ namespace ppt::model::utils
 		float outlineWidth;
 
 		// Only for SolidColor fill type
-		std::optional<Color> fillColor;
+		Color fillColor;
 
 		// Only for Gradient fill types
 		//struct GradientStop
@@ -46,7 +46,7 @@ namespace ppt::model::utils
 		{
 		}
 
-		StyleData(const Color& outlineColor, float outlineWidth, const std::optional<Color>& fillColor)
+		StyleData(const Color& outlineColor, float outlineWidth, const Color& fillColor)
 			: outlineColor(outlineColor), outlineWidth(outlineWidth), fillColor(fillColor)
 		{
 		}
