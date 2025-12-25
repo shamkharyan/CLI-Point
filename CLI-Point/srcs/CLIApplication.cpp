@@ -91,8 +91,10 @@ int CLIApplication::execute()
 
 CLIApplication::CLIApplication() :
 	m_presentation("Untitled"),
+	m_actionManager(m_presentation),
 	m_viewer(m_presentation, &std::cin, &std::cout),
 	m_controller(m_viewer, m_registry, m_presentation)
+
 {
 	registerShapes();
 	registerSerializers();
@@ -108,7 +110,7 @@ void CLIApplication::registerCommands()
 		meta::CommandMeta exitMeta(
 			"exit",
 			"Exit the application",
-			std::make_shared<factories::ExitCommandFactory>(m_controller, m_viewer)
+			std::make_shared<factories::ExitCommandFactory>(m_controller, m_viewer, m_presentation)
 		);
 
 		// force argument
@@ -692,7 +694,7 @@ void CLIApplication::registerCommands()
 		meta::CommandMeta saveMeta(
 			"save",
 			"Saves the current presentation to a file",
-			std::make_shared<factories::SaveCommandFactory>(m_presentation, m_serializerRegistry)
+			std::make_shared<factories::SaveCommandFactory>(m_presentation, m_serializerRegistry, m_actionManager)
 		);
 
 		meta::ArgumentMeta pathArgMeta(

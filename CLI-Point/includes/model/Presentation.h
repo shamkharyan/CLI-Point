@@ -40,10 +40,14 @@ namespace ppt::model
 		void eraseSlide(iterator pos);
 		std::shared_ptr<Slide> removeSlide(iterator pos);
 
+		bool isModified() const noexcept { return m_isModified; }
+		void setModified(bool isModified) { m_isModified = isModified; }
+
 	private:
 		void checkIndex(std::size_t index) const;
 
 	private:
+		bool m_isModified;
 		std::string m_name;
 		container m_slides;
 	};

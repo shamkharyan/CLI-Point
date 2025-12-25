@@ -153,6 +153,8 @@ void CLIViewer::showText(const std::string& msg)
 
 void CLIViewer::showPrompt()
 {
+	if (m_presentation.isModified())
+		*m_os << '*';
 	*m_os << m_presentation.getName() << " >> ";
 }
 

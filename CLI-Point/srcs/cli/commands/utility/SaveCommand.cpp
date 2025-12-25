@@ -18,9 +18,11 @@ namespace
 SaveCommand::SaveCommand(
 	const model::Presentation& presentation,
 	const ser::SerializerRegistry& registry,
+	core::ActionManager& actionManager,
 	const std::string& filePath) :
 	m_presentation(presentation),
 	m_registry(registry),
+	m_actionManager(actionManager),
 	m_filePath(filePath)
 {
 }
@@ -32,4 +34,5 @@ void SaveCommand::execute()
 		throw ExecutionError("Unknown file extention");
 
 	serializer->serialize(m_presentation, m_filePath);
+	m_actionManager.markSaved();
 }

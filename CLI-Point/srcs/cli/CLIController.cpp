@@ -37,7 +37,8 @@ int CLIController::run()
 			m_viewer.showError(e.what());
 			m_viewer.resetStream();
 		}
-		m_exit = inputStream.eof();
+		if (!m_exit)
+			m_exit = inputStream.eof();
 	}
 
 	return 0;
