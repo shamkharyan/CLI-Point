@@ -24,7 +24,7 @@
     <ProjectGuid>{10b58947-27fa-4979-9043-978a1b1de1f7}</ProjectGuid>
     <RootNamespace>PowerPoint</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>PowerPoint-CLI</ProjectName>
+    <ProjectName>CLI-Point</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
