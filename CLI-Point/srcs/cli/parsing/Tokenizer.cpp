@@ -32,6 +32,14 @@ Token Tokenizer::getNextToken()
         if (c == '\n')
             return eolReturn();
 
+        if (c == '#')
+        {
+            while (m_is.get(c) && c != '\n');
+            if (c == '\n' || m_is.eof())
+                return eolReturn();
+            return errorReturn();
+        }
+
         if (!std::isspace(static_cast<unsigned char>(c)))
             break;
     }
@@ -101,6 +109,19 @@ Token Tokenizer::getToken()
             return errorReturn();
         }
 
+        if (c == '#')
+        {
+            while (m_is.get(c) && c != '\n');
+            if (c == '\n')
+            {
+                m_is.unget();
+                return { Token::Type::Word, token };
+            }
+            if (m_is.eof())
+                return eolReturn();
+            return errorReturn();
+        }
+
         if (c == ',' || c == '\n' || std::isspace(static_cast<unsigned char>(c)))
         {
             if (c == ',' || c == '\n')
@@ -108,7 +129,7 @@ Token Tokenizer::getToken()
             break;
         }
 
-        if (!std::isalnum(static_cast<unsigned char>(c)) && c != '_' && c != '-' && c != '#' && c != '.')
+        if (!std::isalnum(static_cast<unsigned char>(c)) && c != '_' && c != '-' && c != '.')
             return errorReturn();
 
         token.push_back(c);
