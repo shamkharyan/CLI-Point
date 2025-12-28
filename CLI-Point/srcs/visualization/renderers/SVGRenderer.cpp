@@ -24,7 +24,8 @@ namespace
 		return ss.str();
 	}
 
-	std::string escapeXML(const std::string& data) {
+	std::string escapeXML(const std::string& data) 
+	{
 		std::string buffer;
 		buffer.reserve(data.size());
 		for (size_t pos = 0; pos != data.size(); ++pos) {
